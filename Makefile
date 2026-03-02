@@ -5,7 +5,7 @@ SERVICE_PHP  := php
 RUN          := $(COMPOSE) exec -T $(SERVICE_PHP)
 
 .PHONY: help up down shell install test test-coverage cs-check cs-fix qa clean ensure-up
-.PHONY: release-check release-check-demos composer-sync assets
+.PHONY: release-check release-check-demos composer-sync assets build
 .PHONY: up-symfony7 up-symfony8 down-symfony7 down-symfony8
 
 help:
@@ -27,6 +27,7 @@ help:
 	@echo "  composer-sync  Validate composer.json and align composer.lock (no install)"
 	@echo "  clean          Remove vendor, cache, coverage"
 	@echo "  assets         Build frontend (TypeScript → dist/ via Vite; requires pnpm on host)"
+	@echo "  build          Rebuild Docker image (bundle root docker-compose, no cache)"
 	@echo ""
 	@echo "Demos:"
 	@echo "  up-symfony7    Start demo Symfony 7 (http://localhost:8007)"
@@ -85,6 +86,9 @@ down-symfony7:
 
 down-symfony8:
 	$(MAKE) -C demo/symfony8 down
+
+build:
+	$(COMPOSE) build --no-cache
 
 composer-sync: ensure-up
 	$(RUN) composer validate --strict

@@ -42,7 +42,7 @@ ensure-up:
 		$(COMPOSE) up -d; \
 		sleep 5; \
 		$(COMPOSE) exec -T -e COMPOSER_MEMORY_LIMIT=-1 $(SERVICE_PHP) composer install --no-interaction; \
-		$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/assets $(SERVICE_PHP) sh -c "pnpm install && pnpm build"; \
+		$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/assets $(SERVICE_PHP) sh -c "/usr/local/bin/pnpm install && /usr/local/bin/pnpm build"; \
 	fi
 
 ensure-install: ensure-up
@@ -52,7 +52,7 @@ ensure-install: ensure-up
 install: ensure-install
 
 assets: ensure-up
-	$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/assets $(SERVICE_PHP) sh -c "pnpm install && pnpm build"
+	$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/assets $(SERVICE_PHP) sh -c "/usr/local/bin/pnpm install && /usr/local/bin/pnpm build"
 
 shell: ensure-up
 	$(COMPOSE) exec $(SERVICE_PHP) sh
