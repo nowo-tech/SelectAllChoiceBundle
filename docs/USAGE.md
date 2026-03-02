@@ -41,9 +41,41 @@ $builder->add('tags', ChoiceType::class, [
 | `select_all` | bool | `false` | Enable the "Select all" toggle. |
 | `select_all_label` | string\|null | bundle config | Translation key for the toggle label. |
 | `select_all_position` | `'before' \| 'after'` | bundle config | Position of the toggle. |
-| `select_all_css_class` | string | bundle config | CSS class for the toggle input. |
-| `select_all_container_css_class` | string | bundle config | CSS class for the toggle wrapper. |
+| `select_all_css_class` | string | bundle config | CSS class for the toggle checkbox input. |
+| `select_all_wrapper_css_class` | string | bundle config | CSS class for the wrapper (toggle + label). |
+| `select_all_label_css_class` | string | bundle config | CSS class for the toggle label. |
+| `select_all_container_css_class` | string | bundle config | CSS class for the outer wrapper (toggle + choices). |
 | `select_all_translation_domain` | string\|null | bundle config | Translation domain for the label. |
+
+### Per-field CSS classes (Bootstrap, Tailwind, custom)
+
+Override any of the CSS options per field to match your framework or design:
+
+**Bootstrap (default):** no overrides needed.
+
+**Tailwind on one field:**
+
+```php
+$builder->add('tags', ChoiceType::class, [
+    'choices' => [...],
+    'multiple' => true,
+    'expanded' => true,
+    'select_all' => true,
+    'select_all_css_class'            => 'rounded border-gray-300 text-primary-600',
+    'select_all_wrapper_css_class'     => 'flex items-center gap-2',
+    'select_all_label_css_class'      => 'text-sm font-medium text-gray-700 cursor-pointer',
+    'select_all_container_css_class'  => 'mb-4',
+]);
+```
+
+**Custom classes:**
+
+```php
+'select_all_css_class'            => 'my-toggle',
+'select_all_wrapper_css_class'     => 'my-toggle-row',
+'select_all_label_css_class'      => 'my-toggle-label',
+'select_all_container_css_class'  => 'my-select-all-block',
+```
 
 ## Full FormType example
 
@@ -74,6 +106,10 @@ class ExampleFormType extends AbstractType
     }
 }
 ```
+
+## Overriding the template
+
+To fully customize the HTML (e.g. change structure or add wrappers), override the bundle’s form theme blocks in your app. See [THEMING.md](THEMING.md#overriding-the-form-theme) for how to override `choice_widget_expanded` and `choice_widget_collapsed`.
 
 ## Behaviour
 

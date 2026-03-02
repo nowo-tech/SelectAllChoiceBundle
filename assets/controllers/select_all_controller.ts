@@ -10,13 +10,14 @@
 import { Controller } from '@hotwired/stimulus';
 
 export default class SelectAllController extends Controller {
-    /** Stimulus value definitions (position, expanded, label, toggleClass, wrapperClass). */
+    /** Stimulus value definitions (position, expanded, label, toggleClass, wrapperClass, labelClass). */
     static values = {
         position: { type: String, default: 'before' },
         expanded: { type: Boolean, default: true },
         label: { type: String, default: 'Select all' },
         toggleClass: { type: String, default: 'form-check-input' },
         wrapperClass: { type: String, default: 'form-check' },
+        labelClass: { type: String, default: 'form-check-label' },
     };
 
     /** Stimulus target: element containing the choice inputs or select. */
@@ -27,6 +28,7 @@ export default class SelectAllController extends Controller {
     declare readonly labelValue: string;
     declare readonly toggleClassValue: string;
     declare readonly wrapperClassValue: string;
+    declare readonly labelClassValue: string;
     declare readonly hasChoicesTarget: boolean;
     declare readonly choicesTarget: HTMLElement;
 
@@ -61,7 +63,7 @@ export default class SelectAllController extends Controller {
         checkbox.addEventListener('change', () => this.toggleAll());
 
         const labelEl = document.createElement('label');
-        labelEl.className = 'form-check-label';
+        labelEl.className = this.labelClassValue;
         labelEl.setAttribute('data-select-all-target', 'toggleLabel');
         labelEl.textContent = this.labelValue;
         const id = `select-all-${Math.random().toString(36).slice(2, 9)}`;

@@ -9,7 +9,7 @@ make up
 # App: http://localhost:8007
 ```
 
-`make up` runs Composer install, then `pnpm install` and `vite build` (with the bundle mounted at `/var/select-all-choice-bundle`).
+`make up` runs Composer install, then `pnpm install` and `vite build` (with the bundle mounted at `/var/select-all-choice-bundle`). The app runs with `APP_ENV=dev` and `APP_DEBUG=1`; the **Web Profiler** toolbar is available at the bottom of each page.
 
 **Language switch:** The locale is in the URL (`/en`, `/es`). Use the **Language** dropdown in the navbar to switch, or go directly to `http://localhost:8007/en` or `http://localhost:8007/es`.
 

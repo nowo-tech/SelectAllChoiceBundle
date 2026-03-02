@@ -22,6 +22,8 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
      * @param string $defaultLabel Default translation key for the toggle label
      * @param string $defaultPosition Default position: "before" or "after"
      * @param string $defaultToggleCssClass Default CSS class for the toggle input
+     * @param string $defaultWrapperCssClass Default CSS class for the wrapper (toggle + label)
+     * @param string $defaultLabelCssClass Default CSS class for the toggle label
      * @param string $defaultContainerCssClass Default CSS class for the outer wrapper
      * @param string $translationDomain Default translation domain for the label
      */
@@ -29,6 +31,8 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
         private readonly string $defaultLabel,
         private readonly string $defaultPosition,
         private readonly string $defaultToggleCssClass,
+        private readonly string $defaultWrapperCssClass,
+        private readonly string $defaultLabelCssClass,
         private readonly string $defaultContainerCssClass,
         private readonly string $translationDomain,
     ) {
@@ -52,18 +56,22 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'select_all'                     => false,
-            'select_all_label'               => null,
-            'select_all_position'            => $this->defaultPosition,
-            'select_all_css_class'           => $this->defaultToggleCssClass,
-            'select_all_container_css_class' => $this->defaultContainerCssClass,
-            'select_all_translation_domain'  => null,
+            'select_all'                      => false,
+            'select_all_label'                => null,
+            'select_all_position'             => $this->defaultPosition,
+            'select_all_css_class'            => $this->defaultToggleCssClass,
+            'select_all_wrapper_css_class'    => $this->defaultWrapperCssClass,
+            'select_all_label_css_class'      => $this->defaultLabelCssClass,
+            'select_all_container_css_class'  => $this->defaultContainerCssClass,
+            'select_all_translation_domain'   => null,
         ]);
 
         $resolver->setAllowedTypes('select_all', 'bool');
         $resolver->setAllowedTypes('select_all_label', ['null', 'string']);
         $resolver->setAllowedValues('select_all_position', ['before', 'after']);
         $resolver->setAllowedTypes('select_all_css_class', 'string');
+        $resolver->setAllowedTypes('select_all_wrapper_css_class', 'string');
+        $resolver->setAllowedTypes('select_all_label_css_class', 'string');
         $resolver->setAllowedTypes('select_all_container_css_class', 'string');
         $resolver->setAllowedTypes('select_all_translation_domain', ['null', 'string']);
     }
@@ -86,10 +94,12 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
             return;
         }
 
-        $view->vars['select_all_label']               = $options['select_all_label'] ?? $this->defaultLabel;
-        $view->vars['select_all_position']            = $options['select_all_position'];
-        $view->vars['select_all_css_class']           = $options['select_all_css_class'];
-        $view->vars['select_all_container_css_class'] = $options['select_all_container_css_class'];
-        $view->vars['select_all_translation_domain']  = $options['select_all_translation_domain'] ?? $this->translationDomain;
+        $view->vars['select_all_label']                = $options['select_all_label'] ?? $this->defaultLabel;
+        $view->vars['select_all_position']             = $options['select_all_position'];
+        $view->vars['select_all_css_class']            = $options['select_all_css_class'];
+        $view->vars['select_all_wrapper_css_class']    = $options['select_all_wrapper_css_class'];
+        $view->vars['select_all_label_css_class']      = $options['select_all_label_css_class'];
+        $view->vars['select_all_container_css_class']  = $options['select_all_container_css_class'];
+        $view->vars['select_all_translation_domain']   = $options['select_all_translation_domain'] ?? $this->translationDomain;
     }
 }

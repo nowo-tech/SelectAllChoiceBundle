@@ -11,6 +11,8 @@ demo:
   form_submitted: "Formulario enviado. Seleccionado: %data%"
   roles_label: "Roles (expandido, con Seleccionar todo)"
   tags_label: "Etiquetas (multi-select, con Seleccionar todo)"
+  categories_label: "Categorías (clases estilo Tailwind por campo)"
+  styles_hint: "El campo de abajo usa clases estilo Tailwind (select_all_css_class, select_all_wrapper_css_class, etc.). Arriba Bootstrap; clases custom en config o por campo."
   language_switch_hint: "Cambiar idioma con el menú de la barra o por la URL:"
 
 form:

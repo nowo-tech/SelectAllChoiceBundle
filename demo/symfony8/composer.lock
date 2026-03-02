@@ -8,11 +8,11 @@
     "packages": [
         {
             "name": "nowo-tech/select-all-choice-bundle",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "/var/select-all-choice-bundle",
-                "reference": "b1040ba1b3b02227c3209df23ddbae5fe4900f0b"
+                "reference": "dfb9db87efd1338376631e78f1222916e760944a"
             },
             "require": {
                 "php": ">=8.2",

@@ -30,6 +30,8 @@ final class SelectAllChoiceExtension extends Extension
         $container->setParameter('nowo_select_all_choice.default_label', $config['default_label']);
         $container->setParameter('nowo_select_all_choice.default_position', $config['default_position']);
         $container->setParameter('nowo_select_all_choice.default_toggle_css_class', $config['default_toggle_css_class']);
+        $container->setParameter('nowo_select_all_choice.default_wrapper_css_class', $config['default_wrapper_css_class']);
+        $container->setParameter('nowo_select_all_choice.default_label_css_class', $config['default_label_css_class']);
         $container->setParameter('nowo_select_all_choice.default_container_css_class', $config['default_container_css_class']);
         $container->setParameter('nowo_select_all_choice.translation_domain', $config['translation_domain']);
 

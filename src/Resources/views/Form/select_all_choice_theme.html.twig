@@ -13,7 +13,8 @@
              data-select-all-expanded-value="true"
              data-select-all-label-value="{{ form.vars.select_all_label|trans({}, form.vars.select_all_translation_domain)|e('html_attr') }}"
              data-select-all-toggle-class-value="{{ form.vars.select_all_css_class }}"
-             data-select-all-wrapper-class-value="form-check">
+             data-select-all-wrapper-class-value="{{ form.vars.select_all_wrapper_css_class }}"
+             data-select-all-label-class-value="{{ form.vars.select_all_label_css_class }}">
             <div data-select-all-target="choices">
                 {{ block('form_layout_choice_widget_expanded') }}
             </div>
@@ -31,7 +32,8 @@
              data-select-all-expanded-value="false"
              data-select-all-label-value="{{ form.vars.select_all_label|trans({}, form.vars.select_all_translation_domain)|e('html_attr') }}"
              data-select-all-toggle-class-value="{{ form.vars.select_all_css_class }}"
-             data-select-all-wrapper-class-value="form-check">
+             data-select-all-wrapper-class-value="{{ form.vars.select_all_wrapper_css_class }}"
+             data-select-all-label-class-value="{{ form.vars.select_all_label_css_class }}">
             <div data-select-all-target="choices">
                 {{ block('form_layout_choice_widget_collapsed') }}
             </div>

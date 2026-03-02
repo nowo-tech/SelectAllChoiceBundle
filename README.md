@@ -108,8 +108,9 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 | Document | Description |
 |----------|-------------|
 | [**Installation**](docs/INSTALLATION.md) | Requirements, bundle registration, form theme, Vite integration, translations |
-| [**Configuration**](docs/CONFIGURATION.md) | All options and defaults |
+| [**Configuration**](docs/CONFIGURATION.md) | All options and defaults, Bootstrap/Tailwind/custom presets |
 | [**Usage**](docs/USAGE.md) | Per-field options, expanded/collapsed examples, FormType example |
+| [**Theming**](docs/THEMING.md) | CSS classes, overriding the form theme (custom HTML) |
 | [**Contributing**](docs/CONTRIBUTING.md) | How to contribute and code style |
 | [**Changelog**](docs/CHANGELOG.md) | Version history |
 | [**Upgrading**](docs/UPGRADING.md) | Upgrade notes between versions |
