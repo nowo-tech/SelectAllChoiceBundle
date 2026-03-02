@@ -2,10 +2,10 @@
 
 This document describes how to cut a new release of SelectAllChoiceBundle.
 
-## Pre-release (v1.0.0)
+## Pre-release (v1.0.1)
 
-- [x] CHANGELOG: [1.0.0] with date and full feature list; [Unreleased] empty.
-- [x] UPGRADING: 1.0.0 (first release) and 1.x → 2.x (future) sections.
+- [x] CHANGELOG: [1.0.1] with date and changes; [Unreleased] empty.
+- [x] UPGRADING: 1.0.0 → 1.0.1 section.
 - [ ] Run `make release-check` from the bundle root (composer-sync, cs-fix, cs-check, test-coverage, demo verify).
 - [ ] Commit all release-related file changes.
 
@@ -18,9 +18,18 @@ This document describes how to cut a new release of SelectAllChoiceBundle.
 ## Tag and release
 
 1. Commit the changelog and version bumps.
-2. Create an annotated tag, e.g. `git tag -a v1.0.0 -m "Release 1.0.0"`.
-3. Push the tag: `git push origin v1.0.0`.
+2. Create an annotated tag: `git tag -a v1.0.1 -m "Release 1.0.1"`.
+3. Push the tag: `git push origin v1.0.1` (or your default branch name, e.g. `main`).
 4. If the project uses GitHub Releases or CI, the tag push may trigger release notes and artifact uploads; complete any manual steps required by your workflow.
+
+**From the bundle repo root (if this is a standalone repo):**
+```bash
+git add docs/CHANGELOG.md docs/UPGRADING.md docs/RELEASE.md README.md
+git commit -m "Release v1.0.1: changelog, upgrading, release doc, README"
+git tag -a v1.0.1 -m "Release 1.0.1"
+git push origin main
+git push origin v1.0.1
+```
 
 ## Post-release
 
