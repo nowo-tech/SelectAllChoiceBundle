@@ -30,6 +30,10 @@
                     <div class="mb-4">
                         {{ form_row(form.tags) }}
                     </div>
+                    <div class="mb-4">
+                        <p class="small text-muted mb-1">{{ 'demo.styles_hint'|trans }}</p>
+                        {{ form_row(form.categories) }}
+                    </div>
                     <button type="submit" class="btn btn-primary">{{ 'demo.submit'|trans }}</button>
                 {{ form_end(form) }}
             </div>

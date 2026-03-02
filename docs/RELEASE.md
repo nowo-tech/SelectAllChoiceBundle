@@ -2,7 +2,14 @@
 
 This document describes how to cut a new release of SelectAllChoiceBundle.
 
-## Pre-release
+## Pre-release (v1.0.0)
+
+- [x] CHANGELOG: [1.0.0] with date and full feature list; [Unreleased] empty.
+- [x] UPGRADING: 1.0.0 (first release) and 1.x → 2.x (future) sections.
+- [ ] Run `make release-check` from the bundle root (composer-sync, cs-fix, cs-check, test-coverage, demo verify).
+- [ ] Commit all release-related file changes.
+
+## Pre-release (every release)
 
 1. Run full QA: `make release-check` (or `composer-sync`, `cs-fix`, `cs-check`, `test-coverage`, and optionally demo verification).
 2. Update [CHANGELOG.md](CHANGELOG.md): move "Unreleased" changes under a new version and set the release date.

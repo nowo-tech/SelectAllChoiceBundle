@@ -19,7 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Opt-in via `select_all => true`; configurable label, position and CSS; translations (EN, ES) in domain `nowo_select_all_choice`.
 - Frontend-driven toggle: backend passes config via data attributes; Stimulus controller creates and manages the checkbox in the DOM.
 - TypeScript and Vite for bundle assets; consuming app’s Vite build compiles the bundle (no Encore/Importmap).
-- Demos (Symfony 7 and 8) with locale in the URL (`/en`, `/es`), navbar language dropdown and visible EN|ES switch on the demo page; documentation for language switching in demo READMEs.
+- Configurable CSS for Bootstrap, Tailwind or custom: `default_wrapper_css_class`, `default_label_css_class` and per-field `select_all_wrapper_css_class`, `select_all_label_css_class` (see [CONFIGURATION](CONFIGURATION.md) and [THEMING](THEMING.md)).
+- [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
+- Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
 [Unreleased]: https://github.com/nowo-tech/select-all-choice-bundle/compare/v1.0.0...HEAD
 [1.0.0]: https://github.com/nowo-tech/select-all-choice-bundle/releases/tag/v1.0.0

@@ -23,8 +23,8 @@ cd symfony7 && make up
 
 | Demo      | Port | Description                                                                 |
 |-----------|------|-----------------------------------------------------------------------------|
-| symfony7  | 8007 | Symfony 7.x + Select all (expanded & collapsed), Vite + Stimulus            |
-| symfony8  | 8008 | Symfony 8.x + Select all (expanded & collapsed), Vite + Stimulus           |
+| symfony7  | 8007 | Symfony 7.x + Select all (expanded & collapsed), Vite + Stimulus, Web Profiler (dev) |
+| symfony8  | 8008 | Symfony 8.x + Select all (expanded & collapsed), Vite + Stimulus, Web Profiler (dev) |
 
 ## Language switch (locale by route)
 

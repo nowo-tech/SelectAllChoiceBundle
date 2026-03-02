@@ -20,6 +20,8 @@ final class SelectAllChoiceExtensionTest extends TestCase
         self::assertSame('form.select_all', $container->getParameter('nowo_select_all_choice.default_label'));
         self::assertSame('before', $container->getParameter('nowo_select_all_choice.default_position'));
         self::assertSame('form-check-input', $container->getParameter('nowo_select_all_choice.default_toggle_css_class'));
+        self::assertSame('form-check', $container->getParameter('nowo_select_all_choice.default_wrapper_css_class'));
+        self::assertSame('form-check-label', $container->getParameter('nowo_select_all_choice.default_label_css_class'));
         self::assertSame('form-check mb-2', $container->getParameter('nowo_select_all_choice.default_container_css_class'));
         self::assertSame('nowo_select_all_choice', $container->getParameter('nowo_select_all_choice.translation_domain'));
         self::assertTrue($container->hasDefinition(\Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension::class));

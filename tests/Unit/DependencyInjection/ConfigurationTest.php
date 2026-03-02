@@ -20,6 +20,8 @@ final class ConfigurationTest extends TestCase
         self::assertSame('form.select_all', $processed['default_label']);
         self::assertSame('before', $processed['default_position']);
         self::assertSame('form-check-input', $processed['default_toggle_css_class']);
+        self::assertSame('form-check', $processed['default_wrapper_css_class']);
+        self::assertSame('form-check-label', $processed['default_label_css_class']);
         self::assertSame('form-check mb-2', $processed['default_container_css_class']);
         self::assertSame('nowo_select_all_choice', $processed['translation_domain']);
     }
@@ -33,6 +35,8 @@ final class ConfigurationTest extends TestCase
             'default_label'               => 'my.select_all',
             'default_position'            => 'after',
             'default_toggle_css_class'    => 'custom-input',
+            'default_wrapper_css_class'   => 'custom-wrapper',
+            'default_label_css_class'     => 'custom-label',
             'default_container_css_class' => 'custom-wrap',
             'translation_domain'          => 'messages',
         ]]);
@@ -40,6 +44,8 @@ final class ConfigurationTest extends TestCase
         self::assertSame('my.select_all', $processed['default_label']);
         self::assertSame('after', $processed['default_position']);
         self::assertSame('custom-input', $processed['default_toggle_css_class']);
+        self::assertSame('custom-wrapper', $processed['default_wrapper_css_class']);
+        self::assertSame('custom-label', $processed['default_label_css_class']);
         self::assertSame('custom-wrap', $processed['default_container_css_class']);
         self::assertSame('messages', $processed['translation_domain']);
     }

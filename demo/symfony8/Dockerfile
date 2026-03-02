@@ -1,9 +1,11 @@
 # FrankenPHP + Node for SelectAllChoiceBundle Demo (Symfony 8, Vite)
 FROM dunglas/frankenphp:1-php8.4-alpine
 
-RUN apk add --no-cache git unzip bash nodejs npm
+RUN apk add --no-cache git unzip bash nodejs curl
 
-RUN npm install -g pnpm
+ENV PNPM_HOME="/usr/local/share/pnpm"
+ENV PATH="${PNPM_HOME}:${PATH}"
+RUN curl -fsSL https://get.pnpm.io/install.sh | sh -
 
 RUN install-php-extensions zip intl
 
