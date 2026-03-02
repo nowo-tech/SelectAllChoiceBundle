@@ -1,10 +1,10 @@
 # Select All Choice Bundle
 
-[![CI](https://github.com/nowo-tech/select-all-choice-bundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/select-all-choice-bundle/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7%20%7C%208-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/select-all-choice-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/select-all-choice-bundle)
+[![CI](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7%20%7C%208-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/select-all-choice-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/SelectAllChoiceBundle)
 
 **Symfony bundle that adds an optional "Select all" checkbox for `ChoiceType` fields with `multiple=true`** — for both expanded (checkboxes) and collapsed (`<select multiple>`) rendering. **Frontend-driven**: the backend marks the field and passes config via data attributes; a **Stimulus** controller creates and manages the toggle in the browser. Built with **TypeScript** and **Vite** (no Webpack Encore, no Importmap). For **Symfony 7 and 8** · PHP 8.2+.
 
-> ⭐ **Found this useful?** Give it a **star** on [GitHub](https://github.com/nowo-tech/select-all-choice-bundle) so more developers can find it.
+> ⭐ **Found this useful?** Give it a **star** on [GitHub](https://github.com/nowo-tech/SelectAllChoiceBundle) so more developers can find it.
 
 ## Table of contents
 
