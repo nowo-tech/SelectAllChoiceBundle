@@ -1,0 +1,37 @@
+# SelectAllChoiceBundle demo – Symfony 7
+
+Demo app showing the "Select all" choice field (expanded checkboxes and multi-select). Frontend is built with **Vite** and uses the bundle’s Stimulus controller.
+
+## Quick start
+
+```bash
+make up
+# App: http://localhost:8007
+```
+
+`make up` runs Composer install, then `pnpm install` and `vite build` (with the bundle mounted at `/var/select-all-choice-bundle`).
+
+**Language switch:** The locale is in the URL (`/en`, `/es`). Use the **Language** dropdown in the navbar to switch, or go directly to `http://localhost:8007/en` or `http://localhost:8007/es`.
+
+## Makefile targets
+
+- `make up` – Start container, Composer install, build assets (Vite)
+- `make down` – Stop container
+- `make restart` – Restart container
+- `make build` – Rebuild image (no cache)
+- `make install` – Composer + pnpm install and vite build
+- `make assets` – Run `pnpm install && pnpm build` in container
+- `make update-bundle` – Update bundle from path repo
+- `make shell` – Shell in container
+- `make test` – Run PHPUnit (if tests exist)
+
+## Local dev (without Docker)
+
+From this directory:
+
+```bash
+pnpm install
+pnpm build   # or pnpm dev for watch
+```
+
+The bundle is resolved as `../../assets`; in Docker, `BUNDLE_PATH=/var/select-all-choice-bundle/assets` is set for the build.

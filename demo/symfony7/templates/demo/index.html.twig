@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'demo.page_title'|trans }} – {{ 'demo.symfony_version'|trans }}{% endblock %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <h1 class="mb-3">{{ 'demo.heading'|trans }}</h1>
+        <p class="lead text-muted">{{ 'demo.description'|trans }}</p>
+        <p class="text-muted small mb-4">
+            {{ 'demo.language_switch_hint'|trans }}
+            <a href="{{ path('demo_index', { _locale: 'en' }) }}" class="text-primary {{ app.request.locale == 'en' ? 'fw-bold' : '' }}">EN</a>
+            <span class="text-muted">|</span>
+            <a href="{{ path('demo_index', { _locale: 'es' }) }}" class="text-primary {{ app.request.locale == 'es' ? 'fw-bold' : '' }}">ES</a>
+        </p>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                {{ form_start(form, { attr: { class: 'needs-validation' } }) }}
+                    <div class="mb-4">
+                        {{ form_row(form.roles) }}
+                    </div>
+                    <div class="mb-4">
+                        {{ form_row(form.tags) }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">{{ 'demo.submit'|trans }}</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+nowo_select_all_choice:
+  default_label: 'form.select_all'
+  default_position: 'before'
+  translation_domain: 'nowo_select_all_choice'

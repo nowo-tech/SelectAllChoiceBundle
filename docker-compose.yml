@@ -1,0 +1,24 @@
+name: select-all-choice-bundle
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: select-all-choice-bundle-php
+    working_dir: /app
+    volumes:
+      - .:/app
+      - composer-cache:/root/.composer/cache
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+    command: ["tail", "-f", "/dev/null"]
+    networks:
+      - select-all-choice-bundle-network
+
+volumes:
+  composer-cache:
+    driver: local
+
+networks:
+  select-all-choice-bundle-network:
+    driver: bridge

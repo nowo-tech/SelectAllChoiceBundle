@@ -1,0 +1,17 @@
+# Demo UI – Español
+demo:
+  title: SelectAllChoiceBundle demo
+  brand: SelectAllChoice
+  page_title: SelectAllChoiceBundle demo
+  symfony_version: Symfony 7
+  heading: Demo SelectAllChoiceBundle
+  description: "Seleccionar todo en campos múltiples (expandido y listado). Hecho con Vite + Stimulus."
+  language: Idioma
+  submit: Enviar
+  form_submitted: "Formulario enviado. Seleccionado: %data%"
+  roles_label: "Roles (expandido, con Seleccionar todo)"
+  tags_label: "Etiquetas (multi-select, con Seleccionar todo)"
+  language_switch_hint: "Cambiar idioma con el menú de la barra o por la URL:"
+
+form:
+  select_all: "Seleccionar todo"

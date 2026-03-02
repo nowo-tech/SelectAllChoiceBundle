@@ -1,0 +1,67 @@
+{
+    "name": "nowo-tech/select-all-choice-bundle",
+    "description": "Symfony bundle that adds a 'Select all' checkbox for ChoiceType fields with multiple=true (expanded or select).",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "keywords": [
+        "symfony",
+        "symfony-bundle",
+        "form",
+        "choice",
+        "select-all",
+        "multiple",
+        "stimulus",
+        "vite"
+    ],
+    "homepage": "https://github.com/nowo-tech/select-all-choice-bundle",
+    "support": {
+        "issues": "https://github.com/nowo-tech/select-all-choice-bundle/issues",
+        "source": "https://github.com/nowo-tech/select-all-choice-bundle"
+    },
+    "authors": [
+        {
+            "name": "Nowo.tech",
+            "homepage": "https://nowo.tech"
+        }
+    ],
+    "require": {
+        "php": ">=8.2",
+        "symfony/config": "^7.0 || ^8.0",
+        "symfony/dependency-injection": "^7.0 || ^8.0",
+        "symfony/form": "^7.0 || ^8.0",
+        "symfony/framework-bundle": "^7.0 || ^8.0",
+        "symfony/http-kernel": "^7.0 || ^8.0",
+        "symfony/translation": "^7.0 || ^8.0",
+        "symfony/twig-bundle": "^7.0 || ^8.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpunit/phpunit": "^10.0",
+        "symfony/yaml": "^7.0 || ^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nowo\\SelectAllChoiceBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nowo\\SelectAllChoiceBundle\\Tests\\": "tests/"
+        }
+    },
+    "archive": {
+        "exclude": ["/demo"]
+    },
+    "scripts": {
+        "cs-check": "php-cs-fixer fix --dry-run --diff",
+        "cs-fix": "php-cs-fixer fix",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-text --coverage-html=coverage --coverage-clover=coverage.xml",
+        "qa": ["@cs-check", "@test"]
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}

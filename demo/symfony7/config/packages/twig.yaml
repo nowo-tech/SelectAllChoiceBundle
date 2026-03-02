@@ -1,0 +1,3 @@
+twig:
+  form_themes:
+    - '@NowoSelectAllChoice/Form/select_all_choice_theme.html.twig'

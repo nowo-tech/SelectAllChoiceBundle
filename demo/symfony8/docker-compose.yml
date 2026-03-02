@@ -1,0 +1,30 @@
+name: select-all-choice-bundle-demo-symfony-8
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: select-all-choice-demo-symfony8-php
+    working_dir: /app
+    restart: unless-stopped
+    volumes:
+      - .:/app
+      - ../..:/var/select-all-choice-bundle
+      - composer-cache:/root/.composer/cache
+    environment:
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - APP_ENV=dev
+      - APP_SECRET=change-me
+      - PORT=8008
+    ports:
+      - "${PORT:-8008}:80"
+    networks:
+      - select-all-choice-demo-network
+
+volumes:
+  composer-cache:
+    driver: local
+
+networks:
+  select-all-choice-demo-network:
+    driver: bridge

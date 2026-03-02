@@ -1,0 +1,42 @@
+{#
+  Form theme for ChoiceType: when select_all is true, only wraps the widget
+  and passes config via data attributes. The Stimulus controller creates
+  and manages the "Select all" toggle in the frontend.
+#}
+{% use "form_div_layout.html.twig" with choice_widget_expanded as form_layout_choice_widget_expanded, choice_widget_collapsed as form_layout_choice_widget_collapsed %}
+
+{% block choice_widget_expanded %}
+    {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
+        <div class="{{ form.vars.select_all_container_css_class }}"
+             data-controller="select-all"
+             data-select-all-position-value="{{ form.vars.select_all_position }}"
+             data-select-all-expanded-value="true"
+             data-select-all-label-value="{{ form.vars.select_all_label|trans({}, form.vars.select_all_translation_domain)|e('html_attr') }}"
+             data-select-all-toggle-class-value="{{ form.vars.select_all_css_class }}"
+             data-select-all-wrapper-class-value="form-check">
+            <div data-select-all-target="choices">
+                {{ block('form_layout_choice_widget_expanded') }}
+            </div>
+        </div>
+    {% else %}
+        {{ block('form_layout_choice_widget_expanded') }}
+    {% endif %}
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
+        <div class="{{ form.vars.select_all_container_css_class }}"
+             data-controller="select-all"
+             data-select-all-position-value="{{ form.vars.select_all_position }}"
+             data-select-all-expanded-value="false"
+             data-select-all-label-value="{{ form.vars.select_all_label|trans({}, form.vars.select_all_translation_domain)|e('html_attr') }}"
+             data-select-all-toggle-class-value="{{ form.vars.select_all_css_class }}"
+             data-select-all-wrapper-class-value="form-check">
+            <div data-select-all-target="choices">
+                {{ block('form_layout_choice_widget_collapsed') }}
+            </div>
+        </div>
+    {% else %}
+        {{ block('form_layout_choice_widget_collapsed') }}
+    {% endif %}
+{% endblock %}

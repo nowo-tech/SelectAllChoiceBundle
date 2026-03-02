@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension:
+    arguments:
+      $defaultLabel: '%nowo_select_all_choice.default_label%'
+      $defaultPosition: '%nowo_select_all_choice.default_position%'
+      $defaultToggleCssClass: '%nowo_select_all_choice.default_toggle_css_class%'
+      $defaultContainerCssClass: '%nowo_select_all_choice.default_container_css_class%'
+      $translationDomain: '%nowo_select_all_choice.translation_domain%'
