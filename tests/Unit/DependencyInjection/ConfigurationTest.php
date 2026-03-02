@@ -32,13 +32,13 @@ final class ConfigurationTest extends TestCase
         $configuration = new Configuration();
 
         $processed = $processor->processConfiguration($configuration, [[
-            'default_label'                => 'my.select_all',
-            'default_position'             => 'after',
-            'default_toggle_css_class'     => 'custom-input',
-            'default_wrapper_css_class'    => 'custom-wrapper',
-            'default_label_css_class'      => 'custom-label',
-            'default_container_css_class'  => 'custom-wrap',
-            'translation_domain'           => 'messages',
+            'default_label'               => 'my.select_all',
+            'default_position'            => 'after',
+            'default_toggle_css_class'    => 'custom-input',
+            'default_wrapper_css_class'   => 'custom-wrapper',
+            'default_label_css_class'     => 'custom-label',
+            'default_container_css_class' => 'custom-wrap',
+            'translation_domain'          => 'messages',
         ]]);
 
         self::assertSame('my.select_all', $processed['default_label']);

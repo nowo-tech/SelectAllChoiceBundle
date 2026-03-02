@@ -57,14 +57,14 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
         $this->extension->configureOptions($resolver);
 
         $resolved = $resolver->resolve([
-            'select_all'                      => true,
-            'select_all_label'                => 'custom.label',
-            'select_all_position'             => 'after',
-            'select_all_css_class'            => 'custom-input',
-            'select_all_wrapper_css_class'    => 'custom-wrapper',
-            'select_all_label_css_class'      => 'custom-label',
-            'select_all_container_css_class'  => 'custom-wrap',
-            'select_all_translation_domain'   => 'messages',
+            'select_all'                     => true,
+            'select_all_label'               => 'custom.label',
+            'select_all_position'            => 'after',
+            'select_all_css_class'           => 'custom-input',
+            'select_all_wrapper_css_class'   => 'custom-wrapper',
+            'select_all_label_css_class'     => 'custom-label',
+            'select_all_container_css_class' => 'custom-wrap',
+            'select_all_translation_domain'  => 'messages',
         ]);
 
         self::assertTrue($resolved['select_all']);
@@ -93,15 +93,15 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
         $form = $this->createMock(FormInterface::class);
 
         $this->extension->buildView($view, $form, [
-            'multiple'                        => true,
-            'select_all'                      => true,
-            'select_all_label'                => null,
-            'select_all_position'             => 'after',
-            'select_all_css_class'            => 'form-check-input',
-            'select_all_wrapper_css_class'    => 'form-check',
-            'select_all_label_css_class'      => 'form-check-label',
-            'select_all_container_css_class'  => 'form-check mb-2',
-            'select_all_translation_domain'   => null,
+            'multiple'                       => true,
+            'select_all'                     => true,
+            'select_all_label'               => null,
+            'select_all_position'            => 'after',
+            'select_all_css_class'           => 'form-check-input',
+            'select_all_wrapper_css_class'   => 'form-check',
+            'select_all_label_css_class'     => 'form-check-label',
+            'select_all_container_css_class' => 'form-check mb-2',
+            'select_all_translation_domain'  => null,
         ]);
 
         self::assertTrue($view->vars['select_all_enabled']);
@@ -146,15 +146,15 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
         $form = $this->createMock(FormInterface::class);
 
         $this->extension->buildView($view, $form, [
-            'multiple'                        => true,
-            'select_all'                      => true,
-            'select_all_label'                => 'my.custom_label',
-            'select_all_position'             => 'before',
-            'select_all_css_class'            => 'form-check-input',
-            'select_all_wrapper_css_class'    => 'form-check',
-            'select_all_label_css_class'      => 'form-check-label',
-            'select_all_container_css_class'  => 'form-check mb-2',
-            'select_all_translation_domain'   => 'messages',
+            'multiple'                       => true,
+            'select_all'                     => true,
+            'select_all_label'               => 'my.custom_label',
+            'select_all_position'            => 'before',
+            'select_all_css_class'           => 'form-check-input',
+            'select_all_wrapper_css_class'   => 'form-check',
+            'select_all_label_css_class'     => 'form-check-label',
+            'select_all_container_css_class' => 'form-check mb-2',
+            'select_all_translation_domain'  => 'messages',
         ]);
 
         self::assertSame('my.custom_label', $view->vars['select_all_label']);

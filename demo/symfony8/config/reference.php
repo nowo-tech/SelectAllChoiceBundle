@@ -742,7 +742,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     default_label?: scalar|Param|null, // Default translation key for the "Select all" label when not overridden per field. // Default: "form.select_all"
  *     default_position?: scalar|Param|null, // Default position of the toggle: "before" or "after" the choices. // Default: "before"
  *     default_toggle_css_class?: scalar|Param|null, // Default CSS class for the "Select all" checkbox/input. // Default: "form-check-input"
- *     default_container_css_class?: scalar|Param|null, // Default CSS class for the wrapper div around the "Select all" toggle. // Default: "form-check mb-2"
+ *     default_wrapper_css_class?: scalar|Param|null, // Default CSS class for the wrapper div that contains the toggle checkbox and its label (e.g. form-check for Bootstrap). // Default: "form-check"
+ *     default_label_css_class?: scalar|Param|null, // Default CSS class for the "Select all" label (e.g. form-check-label for Bootstrap). // Default: "form-check-label"
+ *     default_container_css_class?: scalar|Param|null, // Default CSS class for the outer wrapper div (toggle + choices). // Default: "form-check mb-2"
  *     translation_domain?: scalar|Param|null, // Default translation domain for the "Select all" label (bundle uses nowo_select_all_choice). // Default: "nowo_select_all_choice"
  * }
  * @psalm-type ConfigType = array{

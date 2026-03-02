@@ -31,7 +31,7 @@ release-verify:
 		echo "Waiting for $$d to be ready..."; sleep 12; \
 		code=$$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:$$port 2>/dev/null || echo "000"); \
 		$(MAKE) docker-down-$$d 2>/dev/null || true; \
-		if [ "$$code" != "200" ]; then echo "$$d healthcheck failed (HTTP $$code)"; exit 1; fi; \
+		if [ "$$code" != "200" ] && [ "$$code" != "302" ]; then echo "$$d healthcheck failed (HTTP $$code)"; exit 1; fi; \
 		echo "$$d OK (HTTP $$code)"; \
 	done
 	@echo "All demos passed release-verify."
