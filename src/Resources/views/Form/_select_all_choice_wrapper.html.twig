@@ -1,0 +1,16 @@
+{#
+  Shared wrapper for "Select all" choice widgets.
+  Included by each form theme; receives form, expanded (true|false), and inner_content (captured block output).
+#}
+<div class="{{ form.vars.select_all_container_css_class }}"
+     data-controller="select-all"
+     data-select-all-position-value="{{ form.vars.select_all_position }}"
+     data-select-all-expanded-value="{{ expanded ? 'true' : 'false' }}"
+     data-select-all-label-value="{{ form.vars.select_all_label|trans({}, form.vars.select_all_translation_domain)|e('html_attr') }}"
+     data-select-all-toggle-class-value="{{ form.vars.select_all_css_class }}"
+     data-select-all-wrapper-class-value="{{ form.vars.select_all_wrapper_css_class }}"
+     data-select-all-label-class-value="{{ form.vars.select_all_label_css_class }}">
+    <div data-select-all-target="choices">
+        {{ inner_content|raw }}
+    </div>
+</div>

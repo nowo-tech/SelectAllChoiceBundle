@@ -19,10 +19,16 @@ final class NowoSelectAllChoiceBundle extends Bundle
     /**
      * Returns the container extension that loads the bundle configuration and services.
      *
-     * @return ExtensionInterface|null The extension instance (cached after first call)
+     * @return ExtensionInterface The extension instance (cached after first call)
      */
-    public function getContainerExtension(): ?ExtensionInterface
+    public function getContainerExtension(): ExtensionInterface
     {
-        return $this->extension ??= new SelectAllChoiceExtension();
+        if ($this->extension instanceof ExtensionInterface) {
+            return $this->extension;
+        }
+
+        $this->extension = new SelectAllChoiceExtension();
+
+        return $this->extension;
     }
 }

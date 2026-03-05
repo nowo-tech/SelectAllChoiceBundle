@@ -5,7 +5,8 @@ SERVICE_PHP  := php
 RUN          := $(COMPOSE) exec -T $(SERVICE_PHP)
 
 .PHONY: help up down shell install test test-coverage cs-check cs-fix qa clean ensure-up
-.PHONY: release-check release-check-demos composer-sync assets build
+.PHONY: release-check release-check-demos composer-sync assets build rector rector-dry phpstan update validate
+.PHONY: assets-test assets-dev assets-watch assets-clean
 .PHONY: up-symfony7 up-symfony8 down-symfony7 down-symfony8
 
 help:
@@ -16,24 +17,32 @@ help:
 	@echo "Targets:"
 	@echo "  up             Start Docker container (bundle root)"
 	@echo "  down           Stop container"
+	@echo "  build          Rebuild Docker image (no cache)"
 	@echo "  shell          Open shell in container"
 	@echo "  install        Install Composer dependencies"
+	@echo "  assets         Build frontend (TypeScript via Vite; requires pnpm on host)"
 	@echo "  test           Run PHPUnit tests"
-	@echo "  test-coverage  Run tests with code coverage (PCOV)"
+	@echo "  test-coverage  Run tests with code coverage (PCOV, console)"
 	@echo "  cs-check       Check code style (PHP-CS-Fixer)"
 	@echo "  cs-fix         Fix code style"
+	@echo "  rector         Apply Rector refactoring"
+	@echo "  rector-dry     Rector dry-run (no changes)"
+	@echo "  phpstan        Run PHPStan static analysis"
 	@echo "  qa             Run all QA (cs-check + test)"
-	@echo "  release-check  Pre-release: composer-sync, cs-fix, cs-check, test-coverage, release-check-demos"
+	@echo "  release-check  Pre-release: composer-sync, cs-fix, cs-check, rector-dry, phpstan, test-coverage, release-check-demos"
 	@echo "  composer-sync  Validate composer.json and align composer.lock (no install)"
 	@echo "  clean          Remove vendor, cache, coverage"
-	@echo "  assets         Build frontend (TypeScript → dist/ via Vite; requires pnpm on host)"
-	@echo "  build          Rebuild Docker image (bundle root docker-compose, no cache)"
+	@echo "  update         Update Composer dependencies"
+	@echo "  validate       Validate composer.json (composer validate --strict)"
+	@echo ""
+	@echo "Bundle-specific (assets):"
+	@echo "  assets-test     Alias of test-ts"
+	@echo "  assets-dev      Build assets in development mode"
+	@echo "  assets-watch    Watch assets for changes"
+	@echo "  assets-clean    Clean built assets"
 	@echo ""
 	@echo "Demos:"
-	@echo "  up-symfony7    Start demo Symfony 7 (http://localhost:8007)"
-	@echo "  up-symfony8    Start demo Symfony 8 (http://localhost:8008)"
-	@echo "  down-symfony7  Stop demo Symfony 7"
-	@echo "  down-symfony8  Stop demo Symfony 8"
+	@echo "  (use make -C demo or make -C demo/symfonyX)"
 	@echo ""
 
 ensure-up:
@@ -55,11 +64,12 @@ shell: ensure-up
 install: ensure-up
 	$(RUN) composer install
 
-test: install
-	$(RUN) composer test
+# No -T so PHPUnit gets a TTY and can show colors in console
+test: ensure-up
+	$(COMPOSE) exec $(SERVICE_PHP) composer test
 
-test-coverage: install
-	$(RUN) composer test-coverage
+test-coverage: ensure-up
+	$(COMPOSE) exec $(SERVICE_PHP) composer test-coverage
 
 cs-check: install
 	$(RUN) composer cs-check
@@ -70,7 +80,22 @@ cs-fix: install
 qa: install
 	$(RUN) composer qa
 
-release-check: ensure-up composer-sync cs-fix cs-check test-coverage release-check-demos
+rector: ensure-up
+	$(RUN) composer rector
+
+rector-dry: ensure-up
+	$(RUN) composer rector-dry
+
+phpstan: ensure-up
+	$(RUN) composer phpstan
+
+update: ensure-up
+	$(RUN) composer update --no-interaction
+
+validate: ensure-up
+	$(RUN) composer validate --strict
+
+release-check: ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage release-check-demos
 
 release-check-demos:
 	@$(MAKE) -C demo release-verify
@@ -100,3 +125,17 @@ clean: ensure-up
 assets:
 	@command -v pnpm >/dev/null 2>&1 || { echo "Error: pnpm is required to build assets. Install it with: npm install -g pnpm"; exit 1; }
 	pnpm install && pnpm build
+
+assets-test:
+	@command -v pnpm >/dev/null 2>&1 || { echo "Error: pnpm is required. Install it with: npm install -g pnpm"; exit 1; }
+	pnpm install && pnpm run typecheck
+
+assets-dev:
+	@command -v pnpm >/dev/null 2>&1 || { echo "Error: pnpm is required. Install it with: npm install -g pnpm"; exit 1; }
+	pnpm install && pnpm exec vite
+
+assets-watch: assets-dev
+
+assets-clean:
+	rm -rf dist .vite node_modules/.vite 2>/dev/null || true
+	@echo "Assets build artifacts cleaned."

@@ -1,0 +1,23 @@
+{#
+  Form theme for ChoiceType (Bootstrap 3 horizontal base). When select_all is true, wraps the widget
+  and passes config via data attributes; Stimulus creates and manages the "Select all" toggle.
+#}
+{% use "bootstrap_3_horizontal_layout.html.twig" with choice_widget_expanded as form_layout_choice_widget_expanded, choice_widget_collapsed as form_layout_choice_widget_collapsed %}
+
+{% block choice_widget_expanded %}
+    {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
+        {% set inner_content %}{{ block('form_layout_choice_widget_expanded') }}{% endset %}
+        {% include '@NowoSelectAllChoice/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: true, inner_content: inner_content } %}
+    {% else %}
+        {{ block('form_layout_choice_widget_expanded') }}
+    {% endif %}
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
+        {% set inner_content %}{{ block('form_layout_choice_widget_collapsed') }}{% endset %}
+        {% include '@NowoSelectAllChoice/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: false, inner_content: inner_content } %}
+    {% else %}
+        {{ block('form_layout_choice_widget_collapsed') }}
+    {% endif %}
+{% endblock %}

@@ -1,4 +1,5 @@
 nowo_select_all_choice:
+  form_theme: 'form_div_layout.html.twig'
   default_label: 'form.select_all'
   default_position: 'before'
   translation_domain: 'nowo_select_all_choice'

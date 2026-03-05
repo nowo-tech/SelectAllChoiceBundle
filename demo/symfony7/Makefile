@@ -3,7 +3,7 @@ COMPOSE_FILE := docker-compose.yml
 COMPOSE     := docker compose -f $(COMPOSE_FILE)
 SERVICE_PHP := php
 
-.PHONY: help up down restart build install shell logs cache-clear update-bundle ensure-up ensure-install test test-coverage assets
+.PHONY: help up down restart build install shell logs cache-clear update-bundle ensure-up ensure-install test test-coverage assets verify
 
 help:
 	@echo "SelectAllChoiceBundle Demo - Symfony 7"
@@ -16,6 +16,11 @@ help:
 	@echo "  make ensure-install ensure-up + composer install + assets"
 	@echo "  make assets        Build frontend (pnpm install + vite build; needs ensure-up)"
 	@echo "  make update-bundle Update bundle from path repo"
+	@echo "  make shell         Open shell in PHP container"
+	@echo "  make logs          Show container logs"
+	@echo "  make test          Run tests"
+	@echo "  make test-coverage  Run tests with coverage"
+	@echo "  make verify        Ensure up and check HTTP 200"
 	@echo ""
 
 up:
@@ -66,8 +71,14 @@ cache-clear: ensure-up
 update-bundle: ensure-up
 	$(COMPOSE) exec -T $(SERVICE_PHP) composer update nowo-tech/select-all-choice-bundle --with-all-dependencies
 
+# No -T so PHPUnit gets a TTY and shows colors in console
 test: ensure-install
-	$(COMPOSE) exec -T $(SERVICE_PHP) vendor/bin/phpunit 2>/dev/null || true
+	$(COMPOSE) exec $(SERVICE_PHP) vendor/bin/phpunit 2>/dev/null || true
 
 test-coverage: ensure-install
-	$(COMPOSE) exec -T $(SERVICE_PHP) vendor/bin/phpunit --coverage-text 2>/dev/null || true
+	$(COMPOSE) exec $(SERVICE_PHP) vendor/bin/phpunit --coverage-text 2>/dev/null || true
+
+verify: ensure-up
+	@port=$$(grep '^PORT=' .env 2>/dev/null | cut -d= -f2 | tr -d '\r'); [ -z "$$port" ] && port=8007; \
+	code=$$(curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:$$port 2>/dev/null || echo "000"); \
+	if [ "$$code" = "200" ] || [ "$$code" = "302" ]; then echo "OK (HTTP $$code)"; else echo "Failed (HTTP $$code)"; exit 1; fi

@@ -62,6 +62,10 @@ final class Configuration implements ConfigurationInterface
                     ->info('Default translation domain for the "Select all" label (bundle uses nowo_select_all_choice).')
                     ->defaultValue('nowo_select_all_choice')
                 ->end()
+                ->scalarNode('form_theme')
+                    ->info('Base form layout template used for choice widgets. Must match one of Symfony\'s form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md.')
+                    ->defaultValue('form_div_layout.html.twig')
+                ->end()
             ->end();
 
         return $treeBuilder;

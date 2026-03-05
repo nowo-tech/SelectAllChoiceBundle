@@ -53,13 +53,7 @@ return [
 ];
 ```
 
-**2. Activate the form theme** in `config/packages/twig.yaml` (add **before** your app theme):
-
-```yaml
-twig:
-  form_themes:
-    - '@NowoSelectAllChoice/Form/select_all_choice_theme.html.twig'
-```
+**2. Form theme**: The bundle **automatically** adds its form theme from the `form_theme` option (see Configuration). Set `form_theme` in `config/packages/nowo_select_all_choice.yaml` to match your app (e.g. `bootstrap_5_layout.html.twig`). You do not need to add it to `twig.form_themes` unless you want to control the order.
 
 **3. Integrate assets with Vite** — add an alias to the bundle’s `assets` directory in your `vite.config.ts` and import the bundle entry in your main JS/TS (see [docs/INSTALLATION.md](docs/INSTALLATION.md)).
 
@@ -73,14 +67,15 @@ Create `config/packages/nowo_select_all_choice.yaml` to override defaults:
 
 ```yaml
 nowo_select_all_choice:
+  form_theme: 'form_div_layout.html.twig'   # or 'bootstrap_5_layout.html.twig', etc.
   default_label: 'form.select_all'
-  default_position: 'before'           # 'before' | 'after'
+  default_position: 'before'                 # 'before' | 'after'
   default_toggle_css_class: 'form-check-input'
   default_container_css_class: 'form-check mb-2'
   translation_domain: 'nowo_select_all_choice'
 ```
 
-See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for all options.
+Set `form_theme` to match your app’s form layout (e.g. `bootstrap_5_layout.html.twig`). See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for all options and available Symfony form themes.
 
 ## Usage
 
@@ -105,17 +100,18 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 
 ## Documentation
 
-| Document | Description |
-|----------|-------------|
-| [**Installation**](docs/INSTALLATION.md) | Requirements, bundle registration, form theme, Vite integration, translations |
-| [**Configuration**](docs/CONFIGURATION.md) | All options and defaults, Bootstrap/Tailwind/custom presets |
-| [**Usage**](docs/USAGE.md) | Per-field options, expanded/collapsed examples, FormType example |
-| [**Theming**](docs/THEMING.md) | CSS classes, overriding the form theme (custom HTML) |
-| [**Contributing**](docs/CONTRIBUTING.md) | How to contribute and code style |
-| [**Changelog**](docs/CHANGELOG.md) | Version history |
-| [**Upgrading**](docs/UPGRADING.md) | Upgrade notes between versions |
-| [**Release**](docs/RELEASE.md) | Release checklist (for maintainers) |
-| [**Security**](docs/SECURITY.md) | Reporting vulnerabilities |
+- [**Installation**](docs/INSTALLATION.md)
+- [**Configuration**](docs/CONFIGURATION.md)
+- [**Usage**](docs/USAGE.md)
+- [**Contributing**](docs/CONTRIBUTING.md)
+- [**Changelog**](docs/CHANGELOG.md)
+- [**Upgrading**](docs/UPGRADING.md)
+- [**Release**](docs/RELEASE.md)
+- [**Security**](docs/SECURITY.md)
+
+### Additional documentation
+
+- [**Theming**](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML)
 
 ## Requirements
 

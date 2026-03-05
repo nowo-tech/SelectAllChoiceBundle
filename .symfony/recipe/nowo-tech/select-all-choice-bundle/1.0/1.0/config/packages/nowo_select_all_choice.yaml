@@ -1,7 +1,10 @@
 # SelectAllChoiceBundle - default configuration
 # https://github.com/nowo-tech/SelectAllChoiceBundle
+# Set form_theme to match your app form layout (e.g. bootstrap_5_layout.html.twig).
+# See docs/CONFIGURATION.md for available Symfony form themes.
 
 nowo_select_all_choice:
+    form_theme: 'form_div_layout.html.twig'
     default_label: 'form.select_all'
     default_position: 'before'
     default_toggle_css_class: 'form-check-input'

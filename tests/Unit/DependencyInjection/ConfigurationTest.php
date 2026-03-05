@@ -24,6 +24,7 @@ final class ConfigurationTest extends TestCase
         self::assertSame('form-check-label', $processed['default_label_css_class']);
         self::assertSame('form-check mb-2', $processed['default_container_css_class']);
         self::assertSame('nowo_select_all_choice', $processed['translation_domain']);
+        self::assertSame('form_div_layout.html.twig', $processed['form_theme']);
     }
 
     public function testProcessesCustomConfig(): void
@@ -32,6 +33,7 @@ final class ConfigurationTest extends TestCase
         $configuration = new Configuration();
 
         $processed = $processor->processConfiguration($configuration, [[
+            'form_theme'                  => 'bootstrap_5_layout.html.twig',
             'default_label'               => 'my.select_all',
             'default_position'            => 'after',
             'default_toggle_css_class'    => 'custom-input',
@@ -48,6 +50,7 @@ final class ConfigurationTest extends TestCase
         self::assertSame('custom-label', $processed['default_label_css_class']);
         self::assertSame('custom-wrap', $processed['default_container_css_class']);
         self::assertSame('messages', $processed['translation_domain']);
+        self::assertSame('bootstrap_5_layout.html.twig', $processed['form_theme']);
     }
 
     public function testRejectsInvalidPosition(): void

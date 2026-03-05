@@ -80,7 +80,7 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
      * Passes "Select all" options to the view for the Twig theme and Stimulus controller.
      *
      * @param FormView $view The form view
-     * @param FormInterface $form The form
+     * @param FormInterface<mixed> $form The form
      * @param array<string, mixed> $options The resolved options
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
