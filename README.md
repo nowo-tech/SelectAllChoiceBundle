@@ -27,7 +27,7 @@ Looking for **Symfony ChoiceType select all**, **multiple choice select all chec
 
 - ✅ **Opt-in** — "Select all" appears only when the field has `select_all => true`
 - ✅ **Two modes** — Works with `expanded=true` (checkboxes) and `expanded=false` (multi-select)
-- ✅ **Translatable label** — Default key `form.select_all`, overridable with `select_all_label`; EN & ES included
+- ✅ **Translatable label** — Default key `form.select_all`, overridable with `select_all_label`; 60 languages included
 - ✅ **Configurable** — Position (before/after), CSS classes for toggle and container
 - ✅ **Sync state** — Toggle reflects "all selected" / "none" / indeterminate; manual selection updates the toggle
 - ✅ **Events** — Dispatches `change` with `bubbles: true` so other libs (TomSelect, validators) can react
@@ -57,7 +57,7 @@ return [
 
 **3. Integrate assets with Vite** — add an alias to the bundle’s `assets` directory in your `vite.config.ts` and import the bundle entry in your main JS/TS (see [docs/INSTALLATION.md](docs/INSTALLATION.md)).
 
-**4. (Optional) Translations** — Default domain `nowo_select_all_choice` with EN/ES; override via config or per-field options.
+**4. (Optional) Translations** — Default domain `nowo_select_all_choice` with 60 languages; override via config or per-field options.
 
 Full steps (path repository, Vite alias, Option B copy assets): [docs/INSTALLATION.md](docs/INSTALLATION.md).
 
