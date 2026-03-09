@@ -2,6 +2,17 @@
 
 Enable the "Select all" toggle on a multiple choice field by setting `select_all => true`. You can override the label, position and CSS per field.
 
+
+## Table of contents
+
+- [Basic example (expanded checkboxes)](#basic-example-expanded-checkboxes)
+- [Multi-select (collapsed)](#multi-select-collapsed)
+- [Per-field options](#per-field-options)
+  - [Per-field CSS classes (Bootstrap, Tailwind, custom)](#per-field-css-classes-bootstrap-tailwind-custom)
+- [Full FormType example](#full-formtype-example)
+- [Overriding the template](#overriding-the-template)
+- [Behaviour](#behaviour)
+
 ## Basic example (expanded checkboxes)
 
 ```php

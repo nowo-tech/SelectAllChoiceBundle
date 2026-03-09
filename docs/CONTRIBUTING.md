@@ -2,6 +2,15 @@
 
 Thank you for considering contributing to SelectAllChoiceBundle.
 
+
+## Table of contents
+
+- [Development setup](#development-setup)
+- [Running tests and QA](#running-tests-and-qa)
+- [Code style](#code-style)
+- [Pull requests](#pull-requests)
+- [Documentation](#documentation)
+
 ## Development setup
 
 - **PHP** >= 8.2 and **Composer** (or use the provided Docker setup).

@@ -2,6 +2,15 @@
 
 This document describes upgrade steps between major or notable versions of SelectAllChoiceBundle.
 
+
+## Table of contents
+
+- [1.0.0 (first release)](#100-first-release)
+- [1.0.0 → 1.0.1](#100-101)
+- [1.0.1 → 1.1.0](#101-110)
+- [1.x → 2.x (future)](#1x-2x-future)
+- [General](#general)
+
 ## 1.0.0 (first release)
 
 No upgrade steps required. This is the first stable release.

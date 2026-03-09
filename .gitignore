@@ -1,5 +1,10 @@
 /vendor/
 /node_modules/
+
+# Environment (do not commit secrets)
+.env
+.env.local
+.env.*.local
 /dist/
 /coverage/
 /.phpunit.cache/
