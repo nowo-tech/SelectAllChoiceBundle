@@ -15,7 +15,7 @@ help:
 	@echo "Usage: make <target>"
 	@echo ""
 	@echo "Targets:"
-	@echo "  up             Start Docker container (bundle root)"
+	@echo "  up             Start Docker container and install deps (PHP + TS)"
 	@echo "  down           Stop container"
 	@echo "  build          Rebuild Docker image (no cache)"
 	@echo "  shell          Open shell in container"
@@ -36,7 +36,7 @@ help:
 	@echo "  validate       Validate composer.json (composer validate --strict)"
 	@echo ""
 	@echo "Bundle-specific (assets):"
-	@echo "  assets-test     Alias of test-ts"
+	@echo "  assets-test     Run Vitest with coverage (goal 100%%, output in console)"
 	@echo "  assets-dev      Build assets in development mode"
 	@echo "  assets-watch    Watch assets for changes"
 	@echo "  assets-clean    Clean built assets"
@@ -54,6 +54,10 @@ ensure-up:
 
 up:
 	$(COMPOSE) up -d
+	@sleep 3
+	@$(MAKE) install
+	@$(MAKE) assets
+	@echo "Ready. Run make shell to enter the container."
 
 down:
 	$(COMPOSE) down
@@ -122,17 +126,14 @@ composer-sync: ensure-up
 clean: ensure-up
 	$(RUN) sh -c 'rm -rf vendor .phpunit.cache coverage coverage.xml .php-cs-fixer.cache'
 
-assets:
-	@command -v pnpm >/dev/null 2>&1 || { echo "Error: pnpm is required to build assets. Install it with: npm install -g pnpm"; exit 1; }
-	pnpm install && pnpm build
+assets: ensure-up
+	$(RUN) sh -lc 'CI=true pnpm install && CI=true pnpm build'
 
-assets-test:
-	@command -v pnpm >/dev/null 2>&1 || { echo "Error: pnpm is required. Install it with: npm install -g pnpm"; exit 1; }
-	pnpm install && pnpm run typecheck
+assets-test: ensure-up
+	$(RUN) sh -lc 'CI=true pnpm install && CI=true pnpm run test:coverage'
 
-assets-dev:
-	@command -v pnpm >/dev/null 2>&1 || { echo "Error: pnpm is required. Install it with: npm install -g pnpm"; exit 1; }
-	pnpm install && pnpm exec vite
+assets-dev: ensure-up
+	$(RUN) sh -lc 'CI=true pnpm install && CI=true pnpm exec vite'
 
 assets-watch: assets-dev
 

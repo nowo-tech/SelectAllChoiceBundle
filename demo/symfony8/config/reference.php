@@ -80,10 +80,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     tags?: TagsType,
  *     resource_tags?: TagsType,
  *     decorates?: string,
+ *     decorates_tag?: string,
  *     decoration_inner_name?: string,
  *     decoration_priority?: int,
  *     decoration_on_invalid?: 'exception'|'ignore'|null,
- *     decorates_tag?: string,
  *     autowire?: bool,
  *     autoconfigure?: bool,
  *     bind?: array<string, mixed>,
@@ -121,6 +121,11 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     stack: list<DefinitionType|AliasType|PrototypeType|array<class-string, ArgumentsType|null>>,
  *     public?: bool,
  *     deprecated?: DeprecationType,
+ *     decorates?: string,
+ *     decorates_tag?: string,
+ *     decoration_inner_name?: string,
+ *     decoration_priority?: int,
+ *     decoration_on_invalid?: 'exception'|'ignore'|null,
  * }
  * @psalm-type ServicesConfig = array{
  *     _defaults?: DefaultsType,
@@ -171,7 +176,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         allow_revalidate?: bool|Param,
  *         stale_while_revalidate?: int|Param,
  *         stale_if_error?: int|Param,
- *         terminate_on_cache_hit?: bool|Param,
+ *         terminate_on_cache_hit?: bool|Param, // Deprecated: Setting the "framework.http_cache.terminate_on_cache_hit.terminate_on_cache_hit" configuration option is deprecated. It will be removed in version 9.0.
  *     },
  *     esi?: bool|array{ // ESI configuration
  *         enabled?: bool|Param, // Default: false
@@ -424,9 +429,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     messenger?: bool|array{ // Messenger configuration
  *         enabled?: bool|Param, // Default: false
- *         routing?: array<string, string|array{ // Default: []
- *             senders?: list<scalar|Param|null>,
- *         }>,
+ *         routing?: array<string, string|list<scalar|Param|null>>,
  *         serializer?: array{
  *             default_serializer?: scalar|Param|null, // Service id to use as the default serializer for the transports. // Default: "messenger.transport.native_php_serializer"
  *             symfony_serializer?: array{
@@ -502,7 +505,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *                 enabled?: bool|Param, // Default: false
  *                 cache_pool?: string|Param, // The taggable cache pool to use for storing the responses. // Default: "cache.http_client"
  *                 shared?: bool|Param, // Indicates whether the cache is shared (public) or private. // Default: true
- *                 max_ttl?: int|Param, // The maximum TTL (in seconds) allowed for cached responses. Null means no cap. // Default: null
+ *                 max_ttl?: int|Param, // The maximum TTL (in seconds) allowed for cached responses. // Default: 86400
  *             },
  *             retry_failed?: bool|array{
  *                 enabled?: bool|Param, // Default: false
@@ -556,7 +559,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *                 enabled?: bool|Param, // Default: false
  *                 cache_pool?: string|Param, // The taggable cache pool to use for storing the responses. // Default: "cache.http_client"
  *                 shared?: bool|Param, // Indicates whether the cache is shared (public) or private. // Default: true
- *                 max_ttl?: int|Param, // The maximum TTL (in seconds) allowed for cached responses. Null means no cap. // Default: null
+ *                 max_ttl?: int|Param, // The maximum TTL (in seconds) allowed for cached responses. // Default: 86400
  *             },
  *             retry_failed?: bool|array{
  *                 enabled?: bool|Param, // Default: false
@@ -677,6 +680,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     webhook?: bool|array{ // Webhook configuration
  *         enabled?: bool|Param, // Default: false
  *         message_bus?: scalar|Param|null, // The message bus to use. // Default: "messenger.default_bus"
+ *         event_header_name?: scalar|Param|null, // Default: "Webhook-Event"
+ *         id_header_name?: scalar|Param|null, // Default: "Webhook-Id"
+ *         signature_header_name?: scalar|Param|null, // Default: "Webhook-Signature"
+ *         signing_algorithm?: scalar|Param|null, // Default: "sha256"
  *         routing?: array<string, array{ // Default: []
  *             service?: scalar|Param|null,
  *             secret?: scalar|Param|null, // Default: ""
@@ -689,7 +696,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: false
  *         default_options?: array{
  *             include_null_properties?: bool|Param, // Encode the properties with null value // Default: false
- *             ...<mixed>
+ *             ...<string, mixed>
  *         },
  *     },
  * }
@@ -748,6 +755,24 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     default_label_css_class?: scalar|Param|null, // Default CSS class for the "Select all" label (e.g. form-check-label for Bootstrap). // Default: "form-check-label"
  *     default_container_css_class?: scalar|Param|null, // Default CSS class for the outer wrapper div (toggle + choices). // Default: "form-check mb-2"
  *     translation_domain?: scalar|Param|null, // Default translation domain for the "Select all" label (bundle uses nowo_select_all_choice). // Default: "nowo_select_all_choice"
+ *     form_theme?: scalar|Param|null, // Base form layout template used for choice widgets. Must match one of Symfony's form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md. // Default: "form_div_layout.html.twig"
+ *     debug?: bool|Param, // When true, the frontend logs all debug/info/warn messages to the console. When false, only the initial "script loaded" message is shown. // Default: false
+ * }
+ * @psalm-type NowoTwigInspectorConfig = array{
+ *     enabled_extensions?: list<scalar|Param|null>,
+ *     excluded_templates?: list<scalar|Param|null>,
+ *     excluded_blocks?: list<scalar|Param|null>,
+ *     enable_metrics?: bool|Param, // Enable collection of template usage metrics in DataCollector // Default: true
+ *     inject_on_sub_requests?: bool|Param, // When true, inject comments also during sub-requests (e.g. when main content is rendered as fragment). Enable if all templates show "sub-request" and none get inspected. // Default: false
+ *     cookie_name?: scalar|Param|null, // Name of the cookie used to enable/disable the inspector // Default: "twig_inspector_is_active"
+ *     max_injection_depth?: int|Param, // Maximum nesting depth for comment injection (0 = unlimited). Reduces overhead on very deep template trees. // Default: 0
+ *     excluded_templates_regex?: list<scalar|Param|null>,
+ *     excluded_templates_prefixes?: list<scalar|Param|null>,
+ *     excluded_blocks_regex?: list<scalar|Param|null>,
+ *     overlay_theme?: scalar|Param|null, // Overlay theme: "light", "dark", or "auto" (follow system preference). // Default: "light"
+ *     overlay_compact?: bool|Param, // Use compact tooltip style for the overlay. // Default: false
+ *     reduced_motion?: bool|Param, // Respect reduced motion (accessibility). When true or system prefers-reduced-motion, animations are minimized. // Default: false
+ *     keyboard_shortcut?: scalar|Param|null, // Keyboard shortcut to toggle inspector (e.g. "Ctrl+Shift+T"). Empty to disable. // Default: "Ctrl+Shift+T"
  * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
@@ -758,6 +783,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     debug?: DebugConfig,
  *     web_profiler?: WebProfilerConfig,
  *     nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *     nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -767,6 +793,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         debug?: DebugConfig,
  *         web_profiler?: WebProfilerConfig,
  *         nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -777,6 +804,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         debug?: DebugConfig,
  *         web_profiler?: WebProfilerConfig,
  *         nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

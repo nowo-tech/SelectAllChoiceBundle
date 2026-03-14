@@ -22,6 +22,7 @@ class DemoFormType extends AbstractType
                 ],
                 'multiple'            => true,
                 'expanded'            => true,
+                'attr'                => ['class' => 'form-check-input'],
                 'select_all'          => true,
                 'select_all_position' => 'before',
             ])
@@ -34,6 +35,7 @@ class DemoFormType extends AbstractType
                 ],
                 'multiple'            => true,
                 'expanded'            => false,
+                'attr'                => ['class' => 'form-check-input'],
                 'select_all'          => true,
                 'select_all_position' => 'before',
             ])
@@ -46,12 +48,13 @@ class DemoFormType extends AbstractType
                 ],
                 'multiple'                       => true,
                 'expanded'                       => true,
+                'attr'                           => ['class' => 'form-check-input'],
                 'select_all'                     => true,
                 'select_all_position'            => 'before',
-                'select_all_css_class'           => 'rounded border-gray-300 text-primary-600 focus:ring-primary-500',
-                'select_all_wrapper_css_class'   => 'flex items-center gap-2',
-                'select_all_label_css_class'     => 'text-sm font-medium text-gray-700 cursor-pointer',
-                'select_all_container_css_class' => 'mb-4 p-3 border rounded bg-light',
+                'select_all_css_class'           => 'form-check-input',
+                'select_all_wrapper_css_class'   => 'form-check',
+                'select_all_label_css_class'     => 'form-check-label',
+                'select_all_container_css_class' => 'mb-3 p-3 border rounded bg-light',
             ]);
     }
 }

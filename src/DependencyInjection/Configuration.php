@@ -66,6 +66,10 @@ final class Configuration implements ConfigurationInterface
                     ->info('Base form layout template used for choice widgets. Must match one of Symfony\'s form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md.')
                     ->defaultValue('form_div_layout.html.twig')
                 ->end()
+                ->booleanNode('debug')
+                    ->info('When true, the frontend logs all debug/info/warn messages to the console. When false, only the initial "script loaded" message is shown.')
+                    ->defaultValue(false)
+                ->end()
             ->end();
 
         return $treeBuilder;

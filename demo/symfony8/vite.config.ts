@@ -4,10 +4,14 @@ import { defineConfig } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const bundleAssets = process.env.BUNDLE_PATH || path.resolve(__dirname, '../../assets');
+const bundleEntry =
+  process.env.BUNDLE_PATH || path.resolve(__dirname, '../../src/Resources/assets/index.ts');
 
 export default defineConfig({
   base: '/build/',
+  define: {
+    __SELECT_ALL_CHOICE_BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   build: {
     outDir: 'public/build',
     emptyOutDir: true,
@@ -23,7 +27,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'select-all-choice-bundle': bundleAssets,
+      'select-all-choice-bundle': bundleEntry,
     },
     extensions: ['.ts', '.js'],
   },

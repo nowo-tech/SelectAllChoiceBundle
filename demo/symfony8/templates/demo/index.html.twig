@@ -20,19 +20,25 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
-
+        
         <div class="card shadow-sm">
             <div class="card-body">
                 {{ form_start(form, { attr: { class: 'needs-validation' } }) }}
                     <div class="mb-4">
-                        {{ form_row(form.roles) }}
+                        {{ form_label(form.roles) }}
+                        {{ form_widget(form.roles) }}
+                        {{ form_errors(form.roles) }}
                     </div>
                     <div class="mb-4">
-                        {{ form_row(form.tags) }}
+                        {{ form_label(form.tags) }}
+                        {{ form_widget(form.tags) }}
+                        {{ form_errors(form.tags) }}
                     </div>
                     <div class="mb-4">
                         <p class="small text-muted mb-1">{{ 'demo.styles_hint'|trans }}</p>
-                        {{ form_row(form.categories) }}
+                        {{ form_label(form.categories) }}
+                        {{ form_widget(form.categories) }}
+                        {{ form_errors(form.categories) }}
                     </div>
                     <button type="submit" class="btn btn-primary">{{ 'demo.submit'|trans }}</button>
                 {{ form_end(form) }}

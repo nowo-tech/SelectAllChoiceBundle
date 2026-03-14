@@ -1,25 +1,22 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 export default defineConfig({
+  define: {
+    __SELECT_ALL_CHOICE_BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   build: {
-    lib: {
-      entry: path.resolve(__dirname, 'assets/index.ts'),
-      name: 'SelectAllChoiceBundle',
-      fileName: 'index',
-      formats: ['es'],
-    },
-    outDir: 'dist',
-    emptyOutDir: true,
+    outDir: 'src/Resources/public',
+    emptyOutDir: false,
     rollupOptions: {
-      external: ['@hotwired/stimulus'],
+      input: 'src/Resources/assets/index.ts',
       output: {
-        globals: { '@hotwired/stimulus': 'Stimulus' },
+        format: 'iife',
+        entryFileNames: 'select-all-choice.js',
+        assetFileNames: 'select-all-choice.[ext]',
       },
     },
+    minify: true,
+    sourcemap: false,
   },
   resolve: {
     extensions: ['.ts'],

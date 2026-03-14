@@ -127,3 +127,17 @@ To fully customize the HTML (e.g. change structure or add wrappers), override th
 - The toggle selects or deselects all options when clicked.
 - If the user selects or deselects options manually, the toggle state is updated (checked / unchecked / indeterminate).
 - A `change` event is dispatched with `bubbles: true` so other scripts (e.g. TomSelect, validators) can react.
+- For multi-select fields, the backend normalizes submitted data by dropping `null` entries before Symfony’s core `ChoiceType` processes it, preventing low-level warnings about non-scalar values in `array_flip()`; this is transparent for consumers.
+
+## Debug (frontend)
+
+The bundle’s Stimulus controller uses a shared logger. By default only a single “script loaded” message is shown in the console. To enable all debug logs (connect, toggleAll, etc.), add the data attribute **`data-select-all-debug-value="1"`** to the element that has `data-controller="select-all"`. For example, in a custom form theme:
+
+```html
+<div data-controller="select-all"
+     data-select-all-debug-value="1"
+     data-select-all-position-value="before"
+     ...>
+```
+
+Use this only in development; leave it unset or remove it in production to avoid noisy console output.

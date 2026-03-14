@@ -7,6 +7,9 @@ namespace Nowo\SelectAllChoiceBundle\Tests\Unit\Form\Extension;
 use Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -159,5 +162,99 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
 
         self::assertSame('my.custom_label', $view->vars['select_all_label']);
         self::assertSame('messages', $view->vars['select_all_translation_domain']);
+    }
+
+    public function testBuildViewIncludesDebugWhenConstructorHasDebugTrue(): void
+    {
+        $extension = new ChoiceTypeSelectAllExtension(
+            'form.select_all',
+            'before',
+            'form-check-input',
+            'form-check',
+            'form-check-label',
+            'form-check mb-2',
+            'nowo_select_all_choice',
+            true,
+        );
+        $view = new FormView();
+        $form = $this->createMock(FormInterface::class);
+
+        $extension->buildView($view, $form, [
+            'multiple'                       => true,
+            'select_all'                     => true,
+            'select_all_label'               => null,
+            'select_all_position'            => 'before',
+            'select_all_css_class'           => 'form-check-input',
+            'select_all_wrapper_css_class'   => 'form-check',
+            'select_all_label_css_class'     => 'form-check-label',
+            'select_all_container_css_class' => 'form-check mb-2',
+            'select_all_translation_domain'  => null,
+        ]);
+
+        self::assertTrue($view->vars['select_all_debug']);
+    }
+
+    public function testBuildFormDoesNothingWhenMultipleFalse(): void
+    {
+        $builder = $this->createMock(FormBuilderInterface::class);
+        $builder->expects(self::never())->method('addEventListener');
+
+        $this->extension->buildForm($builder, ['multiple' => false]);
+    }
+
+    public function testBuildFormAddsPreSubmitListenerWhenMultipleTrue(): void
+    {
+        $listener = null;
+        $builder  = $this->createMock(FormBuilderInterface::class);
+        $builder->expects(self::once())
+            ->method('addEventListener')
+            ->with(self::identicalTo(FormEvents::PRE_SUBMIT), self::callback(static function (callable $cb) use (&$listener): bool {
+                $listener = $cb;
+
+                return true;
+            }));
+
+        $this->extension->buildForm($builder, ['multiple' => true]);
+        self::assertIsCallable($listener);
+    }
+
+    public function testBuildFormListenerFiltersNullFromSubmittedData(): void
+    {
+        $listener = null;
+        $builder  = $this->createMock(FormBuilderInterface::class);
+        $builder->method('addEventListener')->willReturnCallback(
+            static function (string $event, callable $cb) use (&$listener, $builder) {
+                $listener = $cb;
+
+                return $builder;
+            },
+        );
+        $this->extension->buildForm($builder, ['multiple' => true]);
+
+        self::assertNotNull($listener);
+        $event = new FormEvent($this->createMock(FormInterface::class), [1, null, 'a', null, 2]);
+        $listener($event);
+
+        self::assertSame([1, 'a', 2], $event->getData());
+    }
+
+    public function testBuildFormListenerLeavesNonArrayDataUnchanged(): void
+    {
+        $listener = null;
+        $builder  = $this->createMock(FormBuilderInterface::class);
+        $builder->method('addEventListener')->willReturnCallback(
+            static function (string $event, callable $cb) use (&$listener, $builder) {
+                $listener = $cb;
+
+                return $builder;
+            },
+        );
+        $this->extension->buildForm($builder, ['multiple' => true]);
+
+        self::assertNotNull($listener);
+        $event = new FormEvent($this->createMock(FormInterface::class), 'not-an-array');
+        $listener($event);
+
+        self::assertSame('not-an-array', $event->getData());
     }
 }

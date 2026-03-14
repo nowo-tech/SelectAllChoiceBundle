@@ -24,4 +24,9 @@ if [ ! -f vendor/autoload_runtime.php ]; then
     echo "Composer install done."
 fi
 
+# Clear Symfony cache on startup in dev so template/config changes are reflected
+if [ "${APP_ENV:-}" = "dev" ] && [ -f bin/console ]; then
+    php bin/console cache:clear --no-warmup 2>/dev/null || true
+fi
+
 exec frankenphp run --config /etc/frankenphp/Caddyfile --adapter caddyfile

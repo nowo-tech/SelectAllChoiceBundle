@@ -4,6 +4,7 @@
 #}
 <div class="{{ form.vars.select_all_container_css_class }}"
      data-controller="select-all"
+     data-select-all-debug-value="{{ form.vars.select_all_debug ? '1' : '0' }}"
      data-select-all-position-value="{{ form.vars.select_all_position }}"
      data-select-all-expanded-value="{{ expanded ? 'true' : 'false' }}"
      data-select-all-label-value="{{ form.vars.select_all_label|trans({}, form.vars.select_all_translation_domain)|e('html_attr') }}"

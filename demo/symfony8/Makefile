@@ -7,7 +7,7 @@ SERVICE_PHP := php
 
 help:
 	@echo "SelectAllChoiceBundle Demo - Symfony 8"
-	@echo "  make up            Start container (http://localhost:$${PORT:-8008})"
+	@echo "  make up            Start container, install deps (Composer + pnpm) and build assets (http://localhost:$${PORT:-8008})"
 	@echo "  make down          Stop container"
 	@echo "  make restart       Restart container"
 	@echo "  make build         Build image (no cache)"
@@ -47,7 +47,7 @@ ensure-up:
 		$(COMPOSE) up -d; \
 		sleep 5; \
 		$(COMPOSE) exec -T -e COMPOSER_MEMORY_LIMIT=-1 $(SERVICE_PHP) composer install --no-interaction; \
-		$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/assets $(SERVICE_PHP) sh -c "/usr/local/bin/pnpm install && /usr/local/bin/pnpm build"; \
+		$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/src/Resources/assets/index.ts $(SERVICE_PHP) sh -c "/usr/local/bin/pnpm install && /usr/local/bin/pnpm build"; \
 	fi
 
 ensure-install: ensure-up
@@ -57,7 +57,7 @@ ensure-install: ensure-up
 install: ensure-install
 
 assets: ensure-up
-	$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/assets $(SERVICE_PHP) sh -c "/usr/local/bin/pnpm install && /usr/local/bin/pnpm build"
+	$(COMPOSE) exec -T -e BUNDLE_PATH=/var/select-all-choice-bundle/src/Resources/assets/index.ts $(SERVICE_PHP) sh -c "/usr/local/bin/pnpm install && /usr/local/bin/pnpm build"
 
 shell: ensure-up
 	$(COMPOSE) exec $(SERVICE_PHP) sh

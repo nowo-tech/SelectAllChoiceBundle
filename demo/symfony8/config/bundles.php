@@ -8,4 +8,5 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class               => ['dev' => true, 'test' => true],
     Symfony\Bundle\WebProfilerBundle\WebProfilerBundle::class   => ['dev' => true, 'test' => true],
     Nowo\SelectAllChoiceBundle\NowoSelectAllChoiceBundle::class => ['all' => true],
+    Nowo\TwigInspectorBundle\NowoTwigInspectorBundle::class     => ['dev' => true, 'test' => true],
 ];

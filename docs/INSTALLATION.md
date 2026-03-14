@@ -37,7 +37,7 @@ return [
 ];
 ```
 
-2. **Form theme**: The bundle automatically prepends its form theme to `twig.form_themes` according to the `form_theme` option in `config/packages/nowo_select_all_choice.yaml` (default: `form_div_layout.html.twig`). You do not need to add it manually. To use Bootstrap 5, set `form_theme: 'bootstrap_5_layout.html.twig'` and add your base layout in `config/packages/twig.yaml` if needed:
+2. **Form theme**: The bundle automatically prepends its form theme to `twig.form_themes` according to the `form_theme` option in `config/packages/nowo_select_all_choice.yaml` (default: `form_div_layout.html.twig`). You do not need to add it manually. **Do not** add any `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` — define the bundle form theme only in `nowo_select_all_choice.form_theme` (see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts)). To use Bootstrap 5, set `form_theme: 'bootstrap_5_layout.html.twig'` and add your base layout in `config/packages/twig.yaml` if needed:
 
 ```yaml
 twig:

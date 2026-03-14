@@ -749,6 +749,8 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     default_label_css_class?: scalar|Param|null, // Default CSS class for the "Select all" label (e.g. form-check-label for Bootstrap). // Default: "form-check-label"
  *     default_container_css_class?: scalar|Param|null, // Default CSS class for the outer wrapper div (toggle + choices). // Default: "form-check mb-2"
  *     translation_domain?: scalar|Param|null, // Default translation domain for the "Select all" label (bundle uses nowo_select_all_choice). // Default: "nowo_select_all_choice"
+ *     form_theme?: scalar|Param|null, // Base form layout template used for choice widgets. Must match one of Symfony's form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md. // Default: "form_div_layout.html.twig"
+ *     debug?: bool|Param, // When true, the frontend logs all debug/info/warn messages to the console. When false, only the initial "script loaded" message is shown. // Default: false
  * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,

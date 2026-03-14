@@ -8,6 +8,8 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.0.0 (first release)](#100-first-release)
 - [1.0.0 → 1.0.1](#100-101)
 - [1.0.1 → 1.1.0](#101-110)
+- [1.1.0 → 1.2.0](#110-120)
+- [1.2.0 → 1.3.0](#120-130)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -22,8 +24,22 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 ## 1.0.1 → 1.1.0
 
 - **Optional:** If you use a Symfony form layout other than the default (`form_div_layout.html.twig`), add `form_theme` to your bundle config so the "Select all" theme matches. In `config/packages/nowo_select_all_choice.yaml` set `form_theme` to the same template name you use in `twig.form_themes` (e.g. `bootstrap_5_layout.html.twig`). See [CONFIGURATION.md](CONFIGURATION.md).
-- If you previously added the bundle’s form theme manually to `twig.form_themes`, you can remove it; the bundle now prepends it automatically based on `form_theme`.
+- If you previously added the bundle’s form theme manually to `twig.form_themes`, remove it; the bundle now prepends it automatically based on `form_theme`. Do not re-add any `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` (see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts)).
 - No other breaking changes. Translations for 60 languages are included; existing EN/ES keys are unchanged.
+
+## 1.1.0 → 1.2.0
+
+- **No breaking changes.** The upgrade is safe and requires no code changes in consumer projects.
+- The `ChoiceTypeSelectAllExtension` now normalizes submitted data for `ChoiceType` fields with `multiple=true` by removing `null` entries before Symfony’s core `ChoiceType` processes it. This prevents warnings such as `array_flip(): Can only flip string and integer values, entry skipped` when browsers submit sparse arrays.
+- If you previously added your own `FormEvents::PRE_SUBMIT` listeners just to clean up `null` entries for multi-select fields controlled by this bundle, you can remove those listeners and rely on the built-in normalization instead.
+- The bundle’s internal Docker image now includes Node.js + pnpm and the root `Makefile` runs asset tests/build **inside the PHP container**. If you contribute to the bundle or maintain a fork, re-build the Docker image (`make build`) before running `make assets-test`.
+
+## 1.2.0 → 1.3.0
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- The shared logger is now defined inside the Stimulus controller (no separate `selectAllLogger` module). If you forked or extended the bundle and imported from `selectAllLogger`, switch to importing `setBundleLogger` / `getLogger` / `ATTR_DEBUG` from the controller module (e.g. `controllers/select_all_controller.ts`).
+- Demos that bundle the repo’s TypeScript must point the Vite alias (or `BUNDLE_PATH`) to the bundle entry file `src/Resources/assets/index.ts` (not the old `assets/` directory).
+- Demos use Bootstrap 5 form theme and Bootstrap form classes; you can align your app the same way by setting `form_theme: 'bootstrap_5_layout.html.twig'` and using `form-check-input`, `form-check`, `form-check-label` for select-all options.
 
 ## 1.x → 2.x (future)
 

@@ -6,9 +6,14 @@ namespace Nowo\SelectAllChoiceBundle\Form\Extension;
 
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+
+use function is_array;
 
 /**
  * Form type extension that adds optional "Select all" support to ChoiceType when multiple=true.
@@ -26,6 +31,7 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
      * @param string $defaultLabelCssClass Default CSS class for the toggle label
      * @param string $defaultContainerCssClass Default CSS class for the outer wrapper
      * @param string $translationDomain Default translation domain for the label
+     * @param bool $debug When true, frontend shows all console logs; when false, only "script loaded"
      */
     public function __construct(
         private readonly string $defaultLabel,
@@ -35,6 +41,7 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
         private readonly string $defaultLabelCssClass,
         private readonly string $defaultContainerCssClass,
         private readonly string $translationDomain,
+        private readonly bool $debug = false,
     ) {
     }
 
@@ -46,6 +53,36 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
     public static function getExtendedTypes(): iterable
     {
         return [ChoiceType::class];
+    }
+
+    /**
+     * Normalizes submitted data for multi-select choices before ChoiceType processes it.
+     * Removes null entries so that internal array_flip calls only see scalar values.
+     *
+     * @param FormBuilderInterface<mixed> $builder The form builder for the field
+     * @param array<string, mixed> $options The resolved options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        if (!$options['multiple']) {
+            return;
+        }
+
+        // Clean up nulls from multi-select collections before ChoiceType processes the data
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, static function (FormEvent $event): void {
+            $data = $event->getData();
+            if (!is_array($data)) {
+                return;
+            }
+
+            // Remove null entries to avoid array_flip warnings in ChoiceType
+            $data = array_values(array_filter(
+                $data,
+                static fn ($value): bool => $value !== null,
+            ));
+
+            $event->setData($data);
+        });
     }
 
     /**
@@ -101,5 +138,6 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
         $view->vars['select_all_label_css_class']     = $options['select_all_label_css_class'];
         $view->vars['select_all_container_css_class'] = $options['select_all_container_css_class'];
         $view->vars['select_all_translation_domain']  = $options['select_all_translation_domain'] ?? $this->translationDomain;
+        $view->vars['select_all_debug']               = $this->debug;
     }
 }

@@ -24,6 +24,9 @@ make up
 - `make update-bundle` – Update bundle from path repo
 - `make shell` – Shell in container
 - `make test` – Run PHPUnit (if tests exist)
+- `make cache-clear` – Clear Symfony cache (useful if you changed config/templates and didn’t restart)
+
+**Refreshing template changes:** In dev, Twig cache is disabled and OPcache revalidates on every request, so changes to `.twig` files should appear on browser refresh. If they don’t, run `make cache-clear` or `make restart`.
 
 ## Local dev (without Docker)
 

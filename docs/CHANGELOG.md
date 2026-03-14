@@ -11,6 +11,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.3.0] - 2026-03-13
+
+### Added
+
+- **Stimulus target constants**: `ATTR_TARGET`, `TARGET_TOGGLE_WRAPPER`, `TARGET_TOGGLE`, `TARGET_TOGGLE_LABEL` exported from the controller for consistent use of `data-select-all-target` attribute and values.
+- **PHP test coverage 100%**: New tests for `ChoiceTypeSelectAllExtension::buildForm` (PRE_SUBMIT listener, null filtering, non-array data), `buildView` with `debug=true`, and full option resolution.
+- **TypeScript test coverage 100%** (lines, statements, functions): New `logger.test.ts` and `select_all_controller.test.ts`; test for `getLogger()` when no logger is injected; Vitest thresholds updated (branches ≥ 83%).
+
+### Changed
+
+- **Logger bridge** now lives inside the Stimulus controller (same pattern as IconSelectorBundle): removed `selectAllLogger.ts`; `setBundleLogger`, `getLogger` and `ATTR_DEBUG` are defined and exported from `select_all_controller.ts`. Entry point injects the logger via `setBundleLogger(log)`.
+- **Demos**: Vite alias and `BUNDLE_PATH` point to bundle entry `src/Resources/assets/index.ts`; both demos define `__SELECT_ALL_CHOICE_BUILD_TIME__` so the build time is shown in the console; `make up` help text states that deps and assets are built.
+- **Demos**: Bootstrap 5 form theme enabled (`bootstrap_5_layout.html.twig` in Twig and bundle config); `DemoFormType` categories field uses Bootstrap classes (`form-check-input`, `form-check`, `form-check-label`, `mb-3 p-3 border rounded bg-light`).
+- **Vitest**: Full test and coverage configuration moved to `vitest.config.ts`; `vite.config.ts` only handles the bundle build.
+
+### Fixed
+
+- **Reentrancy in select listener**: When the select’s `change` listener called `dispatchChange()`, the same listener ran again and could cause stack overflow. A new `isDispatchingChange` flag prevents re-entry (same pattern as `isDispatchingFromToggle`).
+- **PHPStan**: `FormBuilderInterface` generic specified as `FormBuilderInterface<mixed>` in `ChoiceTypeSelectAllExtension::buildForm` PHPDoc.
+- **index.test.ts**: Corrected `describe()` closing brace so the test file parses correctly.
+
+## [1.2.0] - 2026-03-13
+
+### Added
+
+- TypeScript test and build pipeline now run fully **inside the bundle Docker container**: `make assets`, `make assets-test` and `make assets-dev` ensure the PHP service is up and execute `pnpm` inside it.
+- Root `Dockerfile` now installs **Node.js + pnpm** so assets can be built and tested from within the PHP image (no pnpm required on the host for bundle QA).
+- Vitest suite extended to reach **100% TS coverage** for bundle assets (statements, lines, functions and branches), with defensive branches annotated for coverage tools.
+
+### Changed
+
+- `ChoiceTypeSelectAllExtension` now registers a `FormEvents::PRE_SUBMIT` listener for `ChoiceType` fields with `multiple=true` to **normalize submitted data** (removes `null` entries) before Symfony’s `ChoiceType` processes it.
+- Demo `DemoFormType` in the Symfony 8 demo relies on the bundle extension for this normalization and no longer contains demo-only listeners.
+
+### Fixed
+
+- Symfony warning in demos and consuming apps:  
+  `Warning: array_flip(): Can only flip string and integer values, entry skipped`  
+  caused by browsers submitting `null` entries in multi-select fields is now prevented by the new normalization in `ChoiceTypeSelectAllExtension` (the behaviour is transparent for users).
+
 ## [1.1.0] - 2026-03-05
 
 ### Added
@@ -56,7 +96,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.3.0
+[1.2.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.2.0
 [1.1.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.1.0
 [1.0.1]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.0.1
 [1.0.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.0.0

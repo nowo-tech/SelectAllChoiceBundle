@@ -33,6 +33,8 @@ nowo_select_all_choice:
 
 The bundle’s form theme wraps Symfony’s choice widgets; it must use the same base layout as the rest of your forms. Set `form_theme` in the bundle config. The bundle **automatically prepends** its theme to `twig.form_themes`, so you do not need to add it manually.
 
+> **Important — define the bundle form theme in one place only.** Set `form_theme` in `config/packages/nowo_select_all_choice.yaml` and **do not** add any `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` in `config/packages/twig.yaml`. If you add a bundle theme manually, it can override the one chosen by `form_theme` (Symfony uses the last theme that defines a block), which may cause incorrect rendering (e.g. missing labels on expanded choices with Bootstrap). Your `twig.form_themes` should only list your app’s base layout(s), e.g. `bootstrap_5_layout.html.twig`.
+
 ### Values with dedicated theme
 
 The bundle includes a dedicated theme for every standard Symfony form layout. Set `form_theme` to the same template name you use in `twig.form_themes`:

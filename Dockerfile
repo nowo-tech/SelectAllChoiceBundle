@@ -19,6 +19,10 @@ RUN apk add --no-cache $PHPIZE_DEPS \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Node + pnpm (para tests de TypeScript / assets)
+RUN apk add --no-cache nodejs npm \
+    && npm install -g pnpm
+
 RUN git config --global --add safe.directory /app
 
 WORKDIR /app

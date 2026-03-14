@@ -13,3 +13,4 @@ services:
       $defaultLabelCssClass: '%nowo_select_all_choice.default_label_css_class%'
       $defaultContainerCssClass: '%nowo_select_all_choice.default_container_css_class%'
       $translationDomain: '%nowo_select_all_choice.translation_domain%'
+      $debug: '%nowo_select_all_choice.debug%'

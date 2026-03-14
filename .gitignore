@@ -1,12 +1,27 @@
-/vendor/
-/node_modules/
+# Dependencies
+/vendor
+/node_modules
+/.pnpm-store
 
-# Environment (do not commit secrets)
+# Environment and secrets
 .env
 .env.local
 .env.*.local
-/dist/
-/coverage/
-/.phpunit.cache/
+
+# Test coverage
+/coverage
 /coverage.xml
+/coverage-ts
+
+# PHP tool caches
 /.php-cs-fixer.cache
+/.phpunit.cache
+/.phpunit.result.cache
+
+# Archives / compressed
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z

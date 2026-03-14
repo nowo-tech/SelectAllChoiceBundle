@@ -67,6 +67,7 @@ final class SelectAllChoiceExtension extends Extension implements PrependExtensi
         $container->setParameter('nowo_select_all_choice.default_container_css_class', $config['default_container_css_class']);
         $container->setParameter('nowo_select_all_choice.translation_domain', $config['translation_domain']);
         $container->setParameter('nowo_select_all_choice.form_theme', $config['form_theme']);
+        $container->setParameter('nowo_select_all_choice.debug', $config['debug'] ?? false);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yaml');
