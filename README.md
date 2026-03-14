@@ -100,20 +100,20 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 
 ## Documentation
 
-- [**Installation**](docs/INSTALLATION.md)
-- [**Configuration**](docs/CONFIGURATION.md)
-- [**Usage**](docs/USAGE.md)
-- [**Demo (FrankenPHP)**](docs/DEMO-FRANKENPHP.md) — development vs production setup, Web Profiler, Twig Inspector; reusable for other bundles
-- [**Contributing**](docs/CONTRIBUTING.md)
-- [**Changelog**](docs/CHANGELOG.md)
-- [**Upgrading**](docs/UPGRADING.md)
-- [**Release**](docs/RELEASE.md)
-- [**Security**](docs/SECURITY.md)
-- [**Engram**](docs/ENGRAM.md)
+- [Installation](docs/INSTALLATION.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [Usage](docs/USAGE.md)
+- [Contributing](docs/CONTRIBUTING.md)
+- [Changelog](docs/CHANGELOG.md)
+- [Upgrading](docs/UPGRADING.md)
+- [Release](docs/RELEASE.md)
+- [Security](docs/SECURITY.md)
+- [Engram](docs/ENGRAM.md)
 
 ### Additional documentation
 
-- [**Theming**](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML)
+- [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md) — development vs production setup, Web Profiler, Twig Inspector; reusable for other bundles
+- [Theming](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML)
 
 ## Requirements
 

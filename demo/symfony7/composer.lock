@@ -4,15 +4,15 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9f398ccf09217ec7dcd3e81517f0fde6",
+    "content-hash": "dcb0dbcac34d67529cbac76cb54135cf",
     "packages": [
         {
             "name": "nowo-tech/select-all-choice-bundle",
-            "version": "dev-main",
+            "version": "dev-master",
             "dist": {
                 "type": "path",
                 "url": "/var/select-all-choice-bundle",
-                "reference": "b1040ba1b3b02227c3209df23ddbae5fe4900f0b"
+                "reference": "32d38cfbafbccbf92e61b1dd3df40e82a01c6c04"
             },
             "require": {
                 "php": ">=8.2",
@@ -26,7 +26,11 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
+                "phpstan/extension-installer": "^1.4",
+                "phpstan/phpstan": "^2.0",
+                "phpstan/phpstan-symfony": "^2.0",
                 "phpunit/phpunit": "^10.0",
+                "rector/rector": "^2.0",
                 "symfony/yaml": "^7.0 || ^8.0"
             },
             "type": "symfony-bundle",
@@ -42,7 +46,8 @@
             },
             "archive": {
                 "exclude": [
-                    "/demo"
+                    "/demo",
+                    "/.cursor"
                 ]
             },
             "scripts": {
@@ -57,6 +62,21 @@
                 ],
                 "test-coverage": [
                     "phpunit --coverage-text --coverage-html=coverage --coverage-clover=coverage.xml"
+                ],
+                "rector": [
+                    "rector process"
+                ],
+                "rector-dry": [
+                    "rector process --dry-run --no-progress-bar"
+                ],
+                "phpstan": [
+                    "phpstan analyse --memory-limit=512M"
+                ],
+                "update": [
+                    "composer update --no-interaction"
+                ],
+                "validate": [
+                    "composer validate --strict"
                 ],
                 "qa": [
                     "@cs-check",
@@ -73,7 +93,7 @@
                 }
             ],
             "description": "Symfony bundle that adds a 'Select all' checkbox for ChoiceType fields with multiple=true (expanded or select).",
-            "homepage": "https://github.com/nowo-tech/select-all-choice-bundle",
+            "homepage": "https://github.com/nowo-tech/SelectAllChoiceBundle",
             "keywords": [
                 "choice",
                 "form",
@@ -85,8 +105,8 @@
                 "vite"
             ],
             "support": {
-                "issues": "https://github.com/nowo-tech/select-all-choice-bundle/issues",
-                "source": "https://github.com/nowo-tech/select-all-choice-bundle"
+                "issues": "https://github.com/nowo-tech/SelectAllChoiceBundle/issues",
+                "source": "https://github.com/nowo-tech/SelectAllChoiceBundle"
             },
             "transport-options": {
                 "symlink": true,
@@ -3799,6 +3819,83 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "nowo-tech/twig-inspector-bundle",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nowo-tech/TwigInspectorBundle.git",
+                "reference": "cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nowo-tech/TwigInspectorBundle/zipball/cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8",
+                "reference": "cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1 <8.6",
+                "symfony/config": "^6.0 || ^7.0 || ^8.0",
+                "symfony/console": "^6.0 || ^7.0 || ^8.0",
+                "symfony/dependency-injection": "^6.0 || ^7.0 || ^8.0",
+                "symfony/filesystem": "^6.0 || ^7.0 || ^8.0",
+                "symfony/http-foundation": "^6.0 || ^7.0 || ^8.0",
+                "symfony/http-kernel": "^6.0 || ^7.0 || ^8.0",
+                "symfony/routing": "^6.0 || ^7.0 || ^8.0",
+                "symfony/web-profiler-bundle": "^6.0 || ^7.0 || ^8.0",
+                "twig/twig": "^3.8 || ^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpunit/phpunit": "^10.0",
+                "symfony/yaml": "^6.0 || ^7.0 || ^8.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Nowo\\TwigInspectorBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Héctor Franco Aceituno",
+                    "email": "hectorfranco@nowo.com",
+                    "homepage": "https://github.com/HecFranco",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Nowo.tech",
+                    "homepage": "https://nowo.tech"
+                }
+            ],
+            "description": "Symfony bundle that adds the possibility to find Twig templates and blocks used for rendering HTML pages faster during development",
+            "homepage": "https://github.com/nowo-tech/twig-inspector-bundle",
+            "keywords": [
+                "bundle",
+                "debug",
+                "inspect",
+                "symfony",
+                "template",
+                "toolbar-extension",
+                "twig",
+                "web-profiler"
+            ],
+            "support": {
+                "issues": "https://github.com/nowo-tech/twig-inspector-bundle/issues",
+                "source": "https://github.com/nowo-tech/twig-inspector-bundle"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/HecFranco",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-15T11:49:16+00:00"
+        },
         {
             "name": "symfony/debug-bundle",
             "version": "7.4.x-dev",

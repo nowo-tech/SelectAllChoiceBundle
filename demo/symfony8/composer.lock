@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "245c8e0aee052ad257f71cd0fc1d3946",
+    "content-hash": "2cdee3ba2fc871284c83286f2fc0a956",
     "packages": [
         {
             "name": "nowo-tech/select-all-choice-bundle",
@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "/var/select-all-choice-bundle",
-                "reference": "ad71e93a27ee5079595cb29257bc7e63217ef74b"
+                "reference": "32d38cfbafbccbf92e61b1dd3df40e82a01c6c04"
             },
             "require": {
                 "php": ">=8.2",
@@ -112,108 +112,6 @@
                 "symlink": true,
                 "relative": false
             }
-        },
-        {
-            "name": "nowo-tech/twig-inspector-bundle",
-            "version": "v1.0.23",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/nowo-tech/TwigInspectorBundle.git",
-                "reference": "eaa448db4dcab6105d5075574c8693cde7568d6d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/nowo-tech/TwigInspectorBundle/zipball/eaa448db4dcab6105d5075574c8693cde7568d6d",
-                "reference": "eaa448db4dcab6105d5075574c8693cde7568d6d",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1 <8.6",
-                "symfony/config": "^6.0 || ^7.0 || ^8.0",
-                "symfony/console": "^6.0 || ^7.0 || ^8.0",
-                "symfony/dependency-injection": "^6.0 || ^7.0 || ^8.0",
-                "symfony/error-handler": "^6.0 || ^7.0 || ^8.0",
-                "symfony/filesystem": "^6.0 || ^7.0 || ^8.0",
-                "symfony/http-foundation": "^6.0 || ^7.0 || ^8.0",
-                "symfony/http-kernel": "^6.0 || ^7.0 || ^8.0",
-                "symfony/routing": "^6.0 || ^7.0 || ^8.0",
-                "symfony/web-profiler-bundle": "^6.0 || ^7.0 || ^8.0",
-                "twig/twig": "^3.8 || ^4.0"
-            },
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^3.0",
-                "phpstan/extension-installer": "^1.4",
-                "phpstan/phpstan": "^2.0",
-                "phpstan/phpstan-symfony": "^2.0",
-                "phpunit/phpunit": "^10.0",
-                "rector/rector": "^2.0",
-                "symfony/framework-bundle": "^6.0 || ^7.0 || ^8.0",
-                "symfony/twig-bundle": "^6.0 || ^7.0 || ^8.0",
-                "symfony/yaml": "^6.0 || ^7.0 || ^8.0"
-            },
-            "suggest": {
-                "symfony/flex": "For automatic recipe installation (config and routes)"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Nowo\\TwigInspectorBundle\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Héctor Franco Aceituno",
-                    "email": "hectorfranco@nowo.tech",
-                    "homepage": "https://github.com/HecFranco",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Nowo.tech",
-                    "homepage": "https://nowo.tech"
-                }
-            ],
-            "description": "Debug Twig templates in the browser: visual overlay, click-to-open in IDE, Web Profiler. Symfony 6|7|8.",
-            "homepage": "https://github.com/nowo-tech/twig-inspector-bundle",
-            "keywords": [
-                "block-inspector",
-                "bundle",
-                "debug",
-                "debugging",
-                "dev-tool",
-                "development",
-                "ide-integration",
-                "inspect",
-                "inspector",
-                "symfony",
-                "symfony-flex",
-                "symfony-profiler",
-                "template",
-                "template-finder",
-                "template-inspector",
-                "templates",
-                "toolbar-extension",
-                "twig",
-                "twig-debug",
-                "twig-inspector",
-                "web-profiler"
-            ],
-            "support": {
-                "changelog": "https://github.com/nowo-tech/twig-inspector-bundle/blob/main/docs/CHANGELOG.md",
-                "docs": "https://github.com/nowo-tech/twig-inspector-bundle/tree/main/docs",
-                "issues": "https://github.com/nowo-tech/twig-inspector-bundle/issues",
-                "source": "https://github.com/nowo-tech/twig-inspector-bundle"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/HecFranco",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-03-13T12:42:43+00:00"
         },
         {
             "name": "psr/cache",
@@ -3632,92 +3530,6 @@
             "time": "2026-03-10T21:24:10+00:00"
         },
         {
-            "name": "symfony/web-profiler-bundle",
-            "version": "8.1.x-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/web-profiler-bundle.git",
-                "reference": "ce738c32d3ad440e05dd071125ffd741ec118b05"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/ce738c32d3ad440e05dd071125ffd741ec118b05",
-                "reference": "ce738c32d3ad440e05dd071125ffd741ec118b05",
-                "shasum": ""
-            },
-            "require": {
-                "composer-runtime-api": ">=2.1",
-                "php": ">=8.4",
-                "symfony/config": "^7.4|^8.0",
-                "symfony/framework-bundle": "^7.4|^8.0",
-                "symfony/http-kernel": "^7.4|^8.0",
-                "symfony/routing": "^7.4|^8.0",
-                "symfony/twig-bundle": "^7.4|^8.0"
-            },
-            "conflict": {
-                "symfony/serializer": "<7.4",
-                "symfony/workflow": "<7.4"
-            },
-            "require-dev": {
-                "symfony/browser-kit": "^7.4|^8.0",
-                "symfony/console": "^7.4|^8.0",
-                "symfony/css-selector": "^7.4|^8.0",
-                "symfony/runtime": "^7.4|^8.0",
-                "symfony/stopwatch": "^7.4|^8.0"
-            },
-            "default-branch": true,
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Bundle\\WebProfilerBundle\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Provides a development tool that gives detailed information about the execution of any request",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "dev"
-            ],
-            "support": {
-                "source": "https://github.com/symfony/web-profiler-bundle/tree/8.1"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/nicolas-grekas",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2026-03-04T08:21:19+00:00"
-        },
-        {
             "name": "symfony/yaml",
             "version": "8.1.x-dev",
             "source": {
@@ -3878,6 +3690,83 @@
     ],
     "packages-dev": [
         {
+            "name": "nowo-tech/twig-inspector-bundle",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nowo-tech/TwigInspectorBundle.git",
+                "reference": "cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nowo-tech/TwigInspectorBundle/zipball/cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8",
+                "reference": "cbd9e95d19418c50590daa41d74ea7e6d2c8e0b8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1 <8.6",
+                "symfony/config": "^6.0 || ^7.0 || ^8.0",
+                "symfony/console": "^6.0 || ^7.0 || ^8.0",
+                "symfony/dependency-injection": "^6.0 || ^7.0 || ^8.0",
+                "symfony/filesystem": "^6.0 || ^7.0 || ^8.0",
+                "symfony/http-foundation": "^6.0 || ^7.0 || ^8.0",
+                "symfony/http-kernel": "^6.0 || ^7.0 || ^8.0",
+                "symfony/routing": "^6.0 || ^7.0 || ^8.0",
+                "symfony/web-profiler-bundle": "^6.0 || ^7.0 || ^8.0",
+                "twig/twig": "^3.8 || ^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpunit/phpunit": "^10.0",
+                "symfony/yaml": "^6.0 || ^7.0 || ^8.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Nowo\\TwigInspectorBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Héctor Franco Aceituno",
+                    "email": "hectorfranco@nowo.com",
+                    "homepage": "https://github.com/HecFranco",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Nowo.tech",
+                    "homepage": "https://nowo.tech"
+                }
+            ],
+            "description": "Symfony bundle that adds the possibility to find Twig templates and blocks used for rendering HTML pages faster during development",
+            "homepage": "https://github.com/nowo-tech/twig-inspector-bundle",
+            "keywords": [
+                "bundle",
+                "debug",
+                "inspect",
+                "symfony",
+                "template",
+                "toolbar-extension",
+                "twig",
+                "web-profiler"
+            ],
+            "support": {
+                "issues": "https://github.com/nowo-tech/twig-inspector-bundle/issues",
+                "source": "https://github.com/nowo-tech/twig-inspector-bundle"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/HecFranco",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-12-15T11:49:16+00:00"
+        },
+        {
             "name": "symfony/debug-bundle",
             "version": "8.1.x-dev",
             "source": {
@@ -3952,6 +3841,92 @@
                 }
             ],
             "time": "2026-03-03T07:52:15+00:00"
+        },
+        {
+            "name": "symfony/web-profiler-bundle",
+            "version": "8.1.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/web-profiler-bundle.git",
+                "reference": "ce738c32d3ad440e05dd071125ffd741ec118b05"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/web-profiler-bundle/zipball/ce738c32d3ad440e05dd071125ffd741ec118b05",
+                "reference": "ce738c32d3ad440e05dd071125ffd741ec118b05",
+                "shasum": ""
+            },
+            "require": {
+                "composer-runtime-api": ">=2.1",
+                "php": ">=8.4",
+                "symfony/config": "^7.4|^8.0",
+                "symfony/framework-bundle": "^7.4|^8.0",
+                "symfony/http-kernel": "^7.4|^8.0",
+                "symfony/routing": "^7.4|^8.0",
+                "symfony/twig-bundle": "^7.4|^8.0"
+            },
+            "conflict": {
+                "symfony/serializer": "<7.4",
+                "symfony/workflow": "<7.4"
+            },
+            "require-dev": {
+                "symfony/browser-kit": "^7.4|^8.0",
+                "symfony/console": "^7.4|^8.0",
+                "symfony/css-selector": "^7.4|^8.0",
+                "symfony/runtime": "^7.4|^8.0",
+                "symfony/stopwatch": "^7.4|^8.0"
+            },
+            "default-branch": true,
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\WebProfilerBundle\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides a development tool that gives detailed information about the execution of any request",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "dev"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/web-profiler-bundle/tree/8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-03-04T08:21:19+00:00"
         }
     ],
     "aliases": [],
