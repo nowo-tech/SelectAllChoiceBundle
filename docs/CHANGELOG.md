@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.0] - 2026-03-14
+
+### Added
+
+- **[DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md)**: Documentation for running demos with FrankenPHP in development (no worker, template changes visible on refresh) and production (worker mode, cache enabled). Includes Web Profiler, Debug bundle and Nowo Twig Inspector; states that the `demo/` folder is not shipped when the bundle is installed (excluded via Composer archive). Reusable for other bundles.
+- **Demo development setup**: FrankenPHP without worker mode so each request uses a fresh PHP process; Twig cache disabled in `config/packages/dev/twig.yaml`; `docker/php-dev.ini` with `opcache.revalidate_freq=0` mounted in Compose; Caddyfile and php-dev.ini mounted as volumes; no-cache HTTP headers; Symfony cache cleared on container startup in dev. Template and config changes are visible on browser refresh.
+- **Documentation**: CONFIGURATION.md and INSTALLATION.md now warn that the bundle form theme must be defined only in `nowo_select_all_choice.form_theme` and must not be added to `twig.form_themes` to avoid incorrect rendering (e.g. missing labels with Bootstrap).
+
+### Changed
+
+- **Demos**: Rely only on `form_theme` in bundle config; removed manual `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` from `twig.form_themes` so the prepended theme (from `form_theme`) is not overridden. README and demo READMEs reference `make cache-clear` and template refresh behaviour.
+- **RELEASE.md**: Pre-release checklist and tag examples updated for current release.
+
+### Fixed
+
+- **Demos**: Expanded choice fields (e.g. Roles, Categories) now show option labels (Admin, User, Guest, etc.) by using the bundle’s Bootstrap 5 theme via `form_theme` instead of the generic form_div theme that was overriding it.
+- **PHPStan**: `callable.nonCallable` in `ChoiceTypeSelectAllExtensionTest`: added `self::assertNotNull($listener)` before invoking the captured PRE_SUBMIT listener in `testBuildFormListenerFiltersNullFromSubmittedData` and `testBuildFormListenerLeavesNonArrayDataUnchanged`.
+
 ## [1.3.0] - 2026-03-13
 
 ### Added
@@ -96,7 +114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.0
 [1.3.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.3.0
 [1.2.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.2.0
 [1.1.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.1.0
