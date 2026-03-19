@@ -11,6 +11,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.1.0 → 1.2.0](#110-120)
 - [1.2.0 → 1.3.0](#120-130)
 - [1.3.0 → 1.4.0](#130-140)
+- [1.4.0 → 1.4.1](#140-141)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -47,6 +48,12 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - **Form theme:** If you had added `@NowoSelectAllChoiceBundle/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` manually, remove it. Define the bundle form theme only in `nowo_select_all_choice.form_theme`; see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts). Keeping it in both places can override the correct theme and cause missing labels on expanded choices with Bootstrap.
 - **Demos:** New [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md) explains development vs production FrankenPHP setup (worker mode, Twig cache, OPcache). The `demo/` folder is not included when the bundle is installed via Composer.
+
+## 1.4.0 → 1.4.1
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- The Twig extension now registers the `nowo_select_all_choice_asset_path` function via `getFunctions()` instead of the `#[AsTwigFunction]` attribute, fixing compatibility on environments where extending `AbstractExtension` and using the attribute together is not allowed.
+- From this version onward, the Composer dist package (e.g. from Packagist) no longer includes the `demo/` folder, thanks to `.gitattributes` `export-ignore`. If you had relied on the demo being present under `vendor/nowo-tech/select-all-choice-bundle/`, clone or download the repository from GitHub instead.
 
 ## 1.x → 2.x (future)
 

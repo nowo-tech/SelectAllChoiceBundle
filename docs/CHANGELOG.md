@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.1] - 2026-03-19
+
+### Added
+
+- **USAGE.md**: Section “Overriding templates and translations” with subsections for overriding translations (domain, locale, example) and overriding templates (bundle template files and form theme blocks).
+
+### Fixed
+
+- **Twig extension**: `NowoSelectAllChoiceTwigExtension` no longer uses the `#[AsTwigFunction]` attribute; the Twig function is registered via `getFunctions()` to avoid the conflict “cannot extend AbstractExtension and use AsTwigFunction, choose one or the other” on some Twig/Symfony versions.
+- **Dist package**: The `demo/` folder is no longer included when the bundle is installed via Composer. Added `.gitattributes` with `export-ignore` for `/demo` and `/.cursor` so `git archive` (used by GitHub/Packagist for dist) excludes them. The `composer.json` `archive.exclude` is not applied to git-archive–based dists.
+
 ## [1.4.0] - 2026-03-14
 
 ### Added
@@ -115,7 +126,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.1
 [1.4.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.0
 [1.3.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.3.0
 [1.2.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.2.0

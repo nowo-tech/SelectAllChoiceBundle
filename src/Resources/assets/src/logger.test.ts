@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { createBundleLogger } from './src/logger';
+import { createBundleLogger } from './logger';
 
 describe('logger', () => {
   beforeEach(() => {
