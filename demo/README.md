@@ -33,7 +33,7 @@ Each demo uses **locale in the URL**: the main route is `/{_locale}` with `_loca
 - **By URL**: open `http://localhost:8007/en` or `http://localhost:8007/es` (or 8008 for the Symfony 8 demo). The root `/` redirects to `/en`.
 - **In the UI**: use the **Language** dropdown in the top-right of the navbar to switch between English and Español; it links to the same route with the chosen `_locale`.
 
-Translations live in `translations/messages.en.yaml` and `translations/messages.es.yaml`; the bundle’s “Select all” label uses the domain `nowo_select_all_choice` (see [Configuration](../docs/CONFIGURATION.md)).
+Translations live in `translations/messages.en.yaml` and `translations/messages.es.yaml`; the bundle’s “Select all” label uses the domain `NowoSelectAllChoiceBundle` (see [Configuration](../docs/CONFIGURATION.md)).
 
 ## Requirements
 

@@ -7,8 +7,8 @@ import {
   TARGET_TOGGLE,
   TARGET_TOGGLE_LABEL,
   TARGET_TOGGLE_WRAPPER,
-} from './select_all_controller';
-import { createBundleLogger } from '../logger';
+} from '../src/select-all-choice-lib';
+import { createBundleLogger } from '../src/logger';
 import SelectAllController from './select_all_controller';
 
 describe('select_all_controller', () => {
@@ -30,7 +30,7 @@ describe('select_all_controller', () => {
   describe('exports', () => {
     it('getLogger returns default logger when setBundleLogger was not called', async () => {
       vi.resetModules();
-      const { getLogger } = await import('./select_all_controller');
+      const { getLogger } = await import('../src/select-all-choice-lib');
       const logger = getLogger();
       expect(logger).toBeDefined();
       expect(typeof logger.scriptLoaded).toBe('function');
@@ -126,6 +126,24 @@ describe('select_all_controller', () => {
       expect(console.debug).toHaveBeenCalled();
 
       document.body.removeChild(el);
+    });
+
+    it('does not init when element has no choices target (init skipped)', async () => {
+      const el = document.createElement('div');
+      el.setAttribute('data-controller', 'select-all');
+      el.setAttribute('data-select-all-position-value', 'before');
+      // no child with data-select-all-target="choices"
+      await loadElement(el);
+      expect(el.querySelector(`[${ATTR_TARGET}="${TARGET_TOGGLE_WRAPPER}"]`)).toBeNull();
+      document.body.removeChild(el);
+    });
+
+    it('does not init when element is not an HTMLElement (e.g. SVG)', async () => {
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('data-controller', 'select-all');
+      await loadElement(svg as unknown as HTMLElement);
+      expect(svg.querySelector(`[${ATTR_TARGET}="${TARGET_TOGGLE_WRAPPER}"]`)).toBeNull();
+      document.body.removeChild(svg);
     });
   });
 

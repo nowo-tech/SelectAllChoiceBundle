@@ -27,7 +27,7 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
             'form-check',
             'form-check-label',
             'form-check mb-2',
-            'nowo_select_all_choice',
+            'NowoSelectAllChoiceBundle',
         );
     }
 
@@ -114,7 +114,7 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
         self::assertSame('form-check', $view->vars['select_all_wrapper_css_class']);
         self::assertSame('form-check-label', $view->vars['select_all_label_css_class']);
         self::assertSame('form-check mb-2', $view->vars['select_all_container_css_class']);
-        self::assertSame('nowo_select_all_choice', $view->vars['select_all_translation_domain']);
+        self::assertSame('NowoSelectAllChoiceBundle', $view->vars['select_all_translation_domain']);
     }
 
     public function testBuildViewDoesNotAddSelectAllWhenMultipleFalse(): void

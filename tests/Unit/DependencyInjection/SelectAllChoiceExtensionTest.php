@@ -24,7 +24,7 @@ final class SelectAllChoiceExtensionTest extends TestCase
         self::assertSame('form-check', $container->getParameter('nowo_select_all_choice.default_wrapper_css_class'));
         self::assertSame('form-check-label', $container->getParameter('nowo_select_all_choice.default_label_css_class'));
         self::assertSame('form-check mb-2', $container->getParameter('nowo_select_all_choice.default_container_css_class'));
-        self::assertSame('nowo_select_all_choice', $container->getParameter('nowo_select_all_choice.translation_domain'));
+        self::assertSame('NowoSelectAllChoiceBundle', $container->getParameter('nowo_select_all_choice.translation_domain'));
         self::assertSame('form_div_layout.html.twig', $container->getParameter('nowo_select_all_choice.form_theme'));
         self::assertTrue($container->hasDefinition(\Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension::class));
     }
@@ -51,7 +51,7 @@ final class SelectAllChoiceExtensionTest extends TestCase
         self::assertNotEmpty($twigConfigs);
         self::assertArrayHasKey('form_themes', $twigConfigs[0]);
         self::assertSame(
-            ['@NowoSelectAllChoice/Form/select_all_choice_theme.html.twig'],
+            ['@NowoSelectAllChoiceBundle/Form/select_all_choice_theme.html.twig'],
             $twigConfigs[0]['form_themes'],
         );
     }
@@ -66,7 +66,7 @@ final class SelectAllChoiceExtensionTest extends TestCase
 
         $twigConfigs = $container->getExtensionConfig('twig');
         self::assertSame(
-            ['@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap5.html.twig'],
+            ['@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap5.html.twig'],
             $twigConfigs[0]['form_themes'],
         );
     }

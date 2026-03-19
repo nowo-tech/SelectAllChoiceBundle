@@ -4,9 +4,6 @@ import { defineConfig } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const bundleEntry =
-  process.env.BUNDLE_PATH || path.resolve(__dirname, '../../src/Resources/assets/index.ts');
-
 export default defineConfig({
   base: '/build/',
   define: {
@@ -26,9 +23,6 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      'select-all-choice-bundle': bundleEntry,
-    },
     extensions: ['.ts', '.js'],
   },
 });

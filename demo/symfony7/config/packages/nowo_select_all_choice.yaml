@@ -14,6 +14,6 @@ nowo_select_all_choice:
   # Default CSS class for the outer wrapper div (toggle + choices)
   default_container_css_class: 'form-check mb-2'
   # Default translation domain for the "Select all" label
-  translation_domain: 'nowo_select_all_choice'
+  translation_domain: 'NowoSelectAllChoiceBundle'
   # Debug mode: true/false; when true, the bundle will log debug messages to the console
   debug: true

@@ -8,7 +8,7 @@ export default defineConfig({
     outDir: 'src/Resources/public',
     emptyOutDir: false,
     rollupOptions: {
-      input: 'src/Resources/assets/index.ts',
+      input: 'src/Resources/assets/src/select-all-choice.ts',
       output: {
         format: 'iife',
         entryFileNames: 'select-all-choice.js',

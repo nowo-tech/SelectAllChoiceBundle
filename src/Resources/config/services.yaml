@@ -4,6 +4,9 @@ services:
     autoconfigure: true
     public: false
 
+  Nowo\SelectAllChoiceBundle\Twig\NowoSelectAllChoiceTwigExtension:
+    tags: [twig.extension]
+
   Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension:
     arguments:
       $defaultLabel: '%nowo_select_all_choice.default_label%'

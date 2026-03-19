@@ -9,4 +9,4 @@ nowo_select_all_choice:
     default_position: 'before'
     default_toggle_css_class: 'form-check-input'
     default_container_css_class: 'form-check mb-2'
-    translation_domain: 'nowo_select_all_choice'
+    translation_domain: 'NowoSelectAllChoiceBundle'

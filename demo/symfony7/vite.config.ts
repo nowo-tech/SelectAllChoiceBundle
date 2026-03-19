@@ -4,10 +4,6 @@ import { defineConfig } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// In Docker BUNDLE_PATH is set to the bundle entry file; locally use ../../src/Resources/assets/index.ts
-const bundleEntry =
-  process.env.BUNDLE_PATH || path.resolve(__dirname, '../../src/Resources/assets/index.ts');
-
 export default defineConfig({
   base: '/build/',
   define: {
@@ -27,9 +23,6 @@ export default defineConfig({
     },
   },
   resolve: {
-    alias: {
-      'select-all-choice-bundle': bundleEntry,
-    },
     extensions: ['.ts', '.js'],
   },
 });

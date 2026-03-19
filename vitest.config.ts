@@ -17,11 +17,15 @@ export default defineConfig({
       reporter: ['text', 'text-summary', 'html'],
       reportsDirectory: './coverage-ts',
       include: ['src/Resources/assets/**/*.ts'],
-      exclude: ['src/Resources/assets/**/*.test.ts', '**/node_modules/**'],
+      exclude: [
+        'src/Resources/assets/**/*.test.ts',
+        '**/node_modules/**',
+        'src/Resources/assets/src/select-all-choice.ts', // standalone entry (bootstrap), exercised via demos
+      ],
       thresholds: {
         lines: 100,
         functions: 100,
-        branches: 83,
+        branches: 100,
         statements: 100,
       },
     },

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 // This file is auto-generated and is for apps only. Bundles SHOULD NOT rely on its content.
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
@@ -80,10 +78,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     tags?: TagsType,
  *     resource_tags?: TagsType,
  *     decorates?: string,
+ *     decorates_tag?: string,
  *     decoration_inner_name?: string,
  *     decoration_priority?: int,
  *     decoration_on_invalid?: 'exception'|'ignore'|null,
- *     decorates_tag?: string,
  *     autowire?: bool,
  *     autoconfigure?: bool,
  *     bind?: array<string, mixed>,
@@ -121,6 +119,11 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     stack: list<DefinitionType|AliasType|PrototypeType|array<class-string, ArgumentsType|null>>,
  *     public?: bool,
  *     deprecated?: DeprecationType,
+ *     decorates?: string,
+ *     decorates_tag?: string,
+ *     decoration_inner_name?: string,
+ *     decoration_priority?: int,
+ *     decoration_on_invalid?: 'exception'|'ignore'|null,
  * }
  * @psalm-type ServicesConfig = array{
  *     _defaults?: DefaultsType,
@@ -741,6 +744,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     intercept_redirects?: bool|Param, // Default: false
  *     excluded_ajax_paths?: scalar|Param|null, // Default: "^/((index|app(_[\\w]+)?)\\.php/)?_wdt"
  * }
+ * @psalm-type StimulusConfig = array{
+ *     controller_paths?: list<scalar|Param|null>,
+ *     controllers_json?: scalar|Param|null, // Default: "%kernel.project_dir%/assets/controllers.json"
+ * }
  * @psalm-type NowoSelectAllChoiceConfig = array{
  *     default_label?: scalar|Param|null, // Default translation key for the "Select all" label when not overridden per field. // Default: "form.select_all"
  *     default_position?: scalar|Param|null, // Default position of the toggle: "before" or "after" the choices. // Default: "before"
@@ -748,9 +755,25 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     default_wrapper_css_class?: scalar|Param|null, // Default CSS class for the wrapper div that contains the toggle checkbox and its label (e.g. form-check for Bootstrap). // Default: "form-check"
  *     default_label_css_class?: scalar|Param|null, // Default CSS class for the "Select all" label (e.g. form-check-label for Bootstrap). // Default: "form-check-label"
  *     default_container_css_class?: scalar|Param|null, // Default CSS class for the outer wrapper div (toggle + choices). // Default: "form-check mb-2"
- *     translation_domain?: scalar|Param|null, // Default translation domain for the "Select all" label (bundle uses nowo_select_all_choice). // Default: "nowo_select_all_choice"
+ *     translation_domain?: scalar|Param|null, // Default translation domain for the "Select all" label (bundle uses NowoSelectAllChoiceBundle). // Default: "NowoSelectAllChoiceBundle"
  *     form_theme?: scalar|Param|null, // Base form layout template used for choice widgets. Must match one of Symfony's form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md. // Default: "form_div_layout.html.twig"
  *     debug?: bool|Param, // When true, the frontend logs all debug/info/warn messages to the console. When false, only the initial "script loaded" message is shown. // Default: false
+ * }
+ * @psalm-type NowoTwigInspectorConfig = array{
+ *     enabled_extensions?: list<scalar|Param|null>,
+ *     excluded_templates?: list<scalar|Param|null>,
+ *     excluded_blocks?: list<scalar|Param|null>,
+ *     enable_metrics?: bool|Param, // Enable collection of template usage metrics in DataCollector // Default: true
+ *     inject_on_sub_requests?: bool|Param, // When true, inject comments also during sub-requests (e.g. when main content is rendered as fragment). Enable if all templates show "sub-request" and none get inspected. // Default: false
+ *     cookie_name?: scalar|Param|null, // Name of the cookie used to enable/disable the inspector // Default: "twig_inspector_is_active"
+ *     max_injection_depth?: int|Param, // Maximum nesting depth for comment injection (0 = unlimited). Reduces overhead on very deep template trees. // Default: 0
+ *     excluded_templates_regex?: list<scalar|Param|null>,
+ *     excluded_templates_prefixes?: list<scalar|Param|null>,
+ *     excluded_blocks_regex?: list<scalar|Param|null>,
+ *     overlay_theme?: scalar|Param|null, // Overlay theme: "light", "dark", or "auto" (follow system preference). // Default: "light"
+ *     overlay_compact?: bool|Param, // Use compact tooltip style for the overlay. // Default: false
+ *     reduced_motion?: bool|Param, // Respect reduced motion (accessibility). When true or system prefers-reduced-motion, animations are minimized. // Default: false
+ *     keyboard_shortcut?: scalar|Param|null, // Keyboard shortcut to toggle inspector (e.g. "Ctrl+Shift+T"). Empty to disable. // Default: "Ctrl+Shift+T"
  * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
@@ -760,7 +783,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig?: TwigConfig,
  *     debug?: DebugConfig,
  *     web_profiler?: WebProfilerConfig,
+ *     stimulus?: StimulusConfig,
  *     nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *     nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -769,7 +794,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig?: TwigConfig,
  *         debug?: DebugConfig,
  *         web_profiler?: WebProfilerConfig,
+ *         stimulus?: StimulusConfig,
  *         nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -779,7 +806,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig?: TwigConfig,
  *         debug?: DebugConfig,
  *         web_profiler?: WebProfilerConfig,
+ *         stimulus?: StimulusConfig,
  *         nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

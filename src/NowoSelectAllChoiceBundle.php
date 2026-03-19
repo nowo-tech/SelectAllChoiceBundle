@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Nowo\SelectAllChoiceBundle;
 
+use Nowo\SelectAllChoiceBundle\DependencyInjection\Compiler\TwigPathsPass;
 use Nowo\SelectAllChoiceBundle\DependencyInjection\SelectAllChoiceExtension;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -16,6 +18,11 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 final class NowoSelectAllChoiceBundle extends Bundle
 {
+    public function build(ContainerBuilder $container): void
+    {
+        $container->addCompilerPass(new TwigPathsPass());
+    }
+
     /**
      * Returns the container extension that loads the bundle configuration and services.
      *

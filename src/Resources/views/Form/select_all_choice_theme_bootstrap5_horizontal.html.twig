@@ -7,7 +7,7 @@
 {% block choice_widget_expanded %}
     {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
         {% set inner_content %}{{ block('form_layout_choice_widget_expanded') }}{% endset %}
-        {% include '@NowoSelectAllChoice/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: true, inner_content: inner_content } %}
+        {% include '@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: true, inner_content: inner_content } %}
     {% else %}
         {{ block('form_layout_choice_widget_expanded') }}
     {% endif %}
@@ -16,7 +16,7 @@
 {% block choice_widget_collapsed %}
     {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
         {% set inner_content %}{{ block('form_layout_choice_widget_collapsed') }}{% endset %}
-        {% include '@NowoSelectAllChoice/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: false, inner_content: inner_content } %}
+        {% include '@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: false, inner_content: inner_content } %}
     {% else %}
         {{ block('form_layout_choice_widget_collapsed') }}
     {% endif %}

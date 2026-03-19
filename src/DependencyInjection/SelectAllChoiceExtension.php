@@ -20,17 +20,17 @@ final class SelectAllChoiceExtension extends Extension implements PrependExtensi
 {
     /** @var array<string, string> Map form_theme config value to bundle theme path. */
     private const FORM_THEME_MAP = [
-        'form_div_layout.html.twig'               => '@NowoSelectAllChoice/Form/select_all_choice_theme.html.twig',
-        'form_table_layout.html.twig'             => '@NowoSelectAllChoice/Form/select_all_choice_theme_table.html.twig',
-        'bootstrap_5_layout.html.twig'            => '@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap5.html.twig',
-        'bootstrap_5_horizontal_layout.html.twig' => '@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap5_horizontal.html.twig',
-        'bootstrap_4_layout.html.twig'            => '@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap4.html.twig',
-        'bootstrap_4_horizontal_layout.html.twig' => '@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap4_horizontal.html.twig',
-        'bootstrap_3_layout.html.twig'            => '@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap3.html.twig',
-        'bootstrap_3_horizontal_layout.html.twig' => '@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap3_horizontal.html.twig',
-        'foundation_5_layout.html.twig'           => '@NowoSelectAllChoice/Form/select_all_choice_theme_foundation5.html.twig',
-        'foundation_6_layout.html.twig'           => '@NowoSelectAllChoice/Form/select_all_choice_theme_foundation6.html.twig',
-        'tailwind_2_layout.html.twig'             => '@NowoSelectAllChoice/Form/select_all_choice_theme_tailwind2.html.twig',
+        'form_div_layout.html.twig'               => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme.html.twig',
+        'form_table_layout.html.twig'             => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_table.html.twig',
+        'bootstrap_5_layout.html.twig'            => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap5.html.twig',
+        'bootstrap_5_horizontal_layout.html.twig' => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap5_horizontal.html.twig',
+        'bootstrap_4_layout.html.twig'            => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap4.html.twig',
+        'bootstrap_4_horizontal_layout.html.twig' => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap4_horizontal.html.twig',
+        'bootstrap_3_layout.html.twig'            => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap3.html.twig',
+        'bootstrap_3_horizontal_layout.html.twig' => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap3_horizontal.html.twig',
+        'foundation_5_layout.html.twig'           => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_foundation5.html.twig',
+        'foundation_6_layout.html.twig'           => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_foundation6.html.twig',
+        'tailwind_2_layout.html.twig'             => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_tailwind2.html.twig',
     ];
 
     /**

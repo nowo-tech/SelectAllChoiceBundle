@@ -99,7 +99,7 @@ update: ensure-up
 validate: ensure-up
 	$(RUN) composer validate --strict
 
-release-check: ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage release-check-demos
+release-check: ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage assets-test release-check-demos
 
 release-check-demos:
 	@$(MAKE) -C demo release-check
