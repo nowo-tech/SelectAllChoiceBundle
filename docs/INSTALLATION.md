@@ -37,7 +37,7 @@ return [
 ];
 ```
 
-2. **Form theme**: The bundle automatically prepends its form theme to `twig.form_themes` according to the `form_theme` option in `config/packages/nowo_select_all_choice.yaml` (default: `form_div_layout.html.twig`). You do not need to add it manually. **Do not** add any `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` — define the bundle form theme only in `nowo_select_all_choice.form_theme` (see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts)). To use Bootstrap 5, set `form_theme: 'bootstrap_5_layout.html.twig'` and add your base layout in `config/packages/twig.yaml` if needed:
+2. **Form theme**: The bundle automatically prepends its form theme to `twig.form_themes` according to the `form_theme` option in `config/packages/nowo_select_all_choice.yaml` (default: `form_div_layout.html.twig`). You do not need to add it manually. **Do not** add any `@NowoSelectAllChoiceBundle/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` — define the bundle form theme only in `nowo_select_all_choice.form_theme` (see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts)). To use Bootstrap 5, set `form_theme: 'bootstrap_5_layout.html.twig'` and add your base layout in `config/packages/twig.yaml` if needed:
 
 ```yaml
 twig:
@@ -45,7 +45,7 @@ twig:
     - 'bootstrap_5_layout.html.twig'
 ```
 
-3. **Integrate assets with Vite**: add an alias in your `vite.config.ts` (or `vite.config.js`) to the bundle’s `assets` directory and import the bundle entry in your main entry (see [README](../README.md#4-integrate-assets-with-vite) for the exact steps).
+3. **Include the frontend script**: either use the standalone script (see [USAGE.md](USAGE.md#including-the-frontend-script)) or, if you use Vite and Stimulus, add an alias to the bundle’s `assets` directory and import the controller in your main entry: `application.register('select-all', SelectAllController)` (see [README](../README.md) for the exact steps).
 
 4. **Optional configuration**: create `config/packages/nowo_select_all_choice.yaml` to override defaults (see [CONFIGURATION.md](CONFIGURATION.md)).
 

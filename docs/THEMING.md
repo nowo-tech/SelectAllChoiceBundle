@@ -2,6 +2,41 @@
 
 This document covers how to style the "Select all" toggle (Bootstrap, Tailwind, custom classes) and how to **override the form theme** to change the HTML structure.
 
+## Overriding bundle template files
+
+The bundle registers its Twig views so that `@NowoSelectAllChoiceBundle/...` works, and adds its path **after** the application paths. Your overrides in **`templates/bundles/NowoSelectAllChoiceBundle/`** are therefore checked first: you can override any bundle template by placing a file there with the **same relative path** as inside the bundle.
+
+**Example:** to override the default form theme template, create in your project:
+
+```
+templates/
+  bundles/
+    NowoSelectAllChoiceBundle/
+      Form/
+        select_all_choice_theme.html.twig
+```
+
+Copy the original from `vendor/nowo-tech/select-all-choice-bundle/src/Resources/views/Form/select_all_choice_theme.html.twig` and adjust as needed.
+
+**Templates you can override:**
+
+| Path (relative to bundle `Resources/views/`) | Purpose |
+|---------------------------------------------|---------|
+| `Form/_select_all_choice_wrapper.html.twig` | Wrapper fragment included by all theme variants (toggle + choices container). |
+| `Form/select_all_choice_theme.html.twig` | Default form theme (form_div_layout). |
+| `Form/select_all_choice_theme_table.html.twig` | Table layout theme. |
+| `Form/select_all_choice_theme_bootstrap5.html.twig` | Bootstrap 5 theme. |
+| `Form/select_all_choice_theme_bootstrap5_horizontal.html.twig` | Bootstrap 5 horizontal. |
+| `Form/select_all_choice_theme_bootstrap4.html.twig` | Bootstrap 4 theme. |
+| `Form/select_all_choice_theme_bootstrap4_horizontal.html.twig` | Bootstrap 4 horizontal. |
+| `Form/select_all_choice_theme_bootstrap3.html.twig` | Bootstrap 3 theme. |
+| `Form/select_all_choice_theme_bootstrap3_horizontal.html.twig` | Bootstrap 3 horizontal. |
+| `Form/select_all_choice_theme_foundation5.html.twig` | Foundation 5 theme. |
+| `Form/select_all_choice_theme_foundation6.html.twig` | Foundation 6 theme. |
+| `Form/select_all_choice_theme_tailwind2.html.twig` | Tailwind 2 theme. |
+
+After adding or changing overrides, clear the Twig cache if needed: `php bin/console cache:clear`.
+
 ## CSS classes (config and per field)
 
 The bundle outputs configurable CSS classes for:
@@ -26,7 +61,7 @@ In `config/packages/twig.yaml`, list your theme **after** the bundle theme so yo
 ```yaml
 twig:
   form_themes:
-    - '@NowoSelectAllChoice/Form/select_all_choice_theme.html.twig'
+    - '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme.html.twig'
     - 'form/select_all_choice_theme.html.twig'   # your override
 ```
 

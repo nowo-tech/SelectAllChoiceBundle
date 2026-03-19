@@ -5,13 +5,32 @@ Enable the "Select all" toggle on a multiple choice field by setting `select_all
 
 ## Table of contents
 
+- [Including the frontend script](#including-the-frontend-script)
 - [Basic example (expanded checkboxes)](#basic-example-expanded-checkboxes)
 - [Multi-select (collapsed)](#multi-select-collapsed)
 - [Per-field options](#per-field-options)
   - [Per-field CSS classes (Bootstrap, Tailwind, custom)](#per-field-css-classes-bootstrap-tailwind-custom)
 - [Full FormType example](#full-formtype-example)
-- [Overriding the template](#overriding-the-template)
+- [Overriding templates and translations](#overriding-templates-and-translations)
+  - [Overriding translations](#overriding-translations)
+  - [Overriding templates](#overriding-templates)
 - [Behaviour](#behaviour)
+
+## Including the frontend script
+
+You can use the bundle in two ways:
+
+**1. Standalone script (no Stimulus required)** — Include the built script so all `[data-controller*="select-all"]` elements are auto-initialized on load and when new content is added (e.g. Turbo frames). Use the Twig function to get the asset path:
+
+```twig
+<script src="{{ asset(nowo_select_all_choice_asset_path('select-all-choice.js')) }}" defer></script>
+```
+
+After `php bin/console assets:install`, the file is at `public/bundles/nowoselectallchoice/select-all-choice.js`. The script runs `runInitAndObserve()` on DOM ready and sets up a `MutationObserver` for dynamically added elements.
+
+**2. With Stimulus** — If your app already uses Stimulus, import the bundle’s controller and register it: `application.register('select-all', SelectAllController)`. You do not need to load the standalone script if your app bundle includes the controller; the controller calls the same init logic when elements connect.
+
+In both cases the backend renders the same markup (`data-controller="select-all"` and data attributes). The standalone script and the Stimulus controller share the same logic and avoid double-init via a `data-select-all-init` marker.
 
 ## Basic example (expanded checkboxes)
 
@@ -118,9 +137,37 @@ class ExampleFormType extends AbstractType
 }
 ```
 
-## Overriding the template
+## Overriding templates and translations
 
-To fully customize the HTML (e.g. change structure or add wrappers), override the bundle’s form theme blocks in your app. See [THEMING.md](THEMING.md#overriding-the-form-theme) for how to override `choice_widget_expanded` and `choice_widget_collapsed`.
+### Overriding translations
+
+The bundle uses the translation domain **`NowoSelectAllChoiceBundle`** and the default label key **`form.select_all`**. To override the "Select all" label (or any other message) in your application:
+
+1. Create a translation file in your project’s **`translations/`** directory with the **same domain** and locale, e.g. `translations/NowoSelectAllChoiceBundle.es.yaml`.
+2. Define only the keys you want to override. Symfony will use the bundle’s messages for any key you do not define.
+
+**Example** — override the label in Spanish:
+
+```yaml
+# translations/NowoSelectAllChoiceBundle.es.yaml
+form:
+  select_all: "Seleccionar todo"
+```
+
+To use a different domain (e.g. your app’s `messages`), set **`translation_domain`** in `config/packages/nowo_select_all_choice.yaml` or **`select_all_translation_domain`** per field (see [CONFIGURATION.md](CONFIGURATION.md#translations)).
+
+### Overriding templates
+
+You can customize the HTML (structure, wrappers, attributes) in two ways:
+
+**1. Override bundle template files** — Place a file in your project at **`templates/bundles/NowoSelectAllChoiceBundle/`** with the **same relative path** as inside the bundle. The app’s templates are checked first, so your file replaces the bundle’s. For example, to override the wrapper fragment:
+
+- Create: `templates/bundles/NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig`
+- Copy the original from `vendor/nowo-tech/select-all-choice-bundle/src/Resources/views/Form/_select_all_choice_wrapper.html.twig` and edit as needed.
+
+After changing overrides, run `php bin/console cache:clear` if needed. A full list of overridable templates is in [THEMING.md — Overriding bundle template files](THEMING.md#overriding-bundle-template-files).
+
+**2. Override form theme blocks** — In your form theme, override the blocks `choice_widget_expanded` and/or `choice_widget_collapsed` so your markup wraps the choices. Keep a single element with `data-controller="select-all"` and the same `data-select-all-*-value` attributes, and a child with `data-select-all-target="choices"` that wraps the original widget. See [THEMING.md — Overriding the form theme](THEMING.md#overriding-the-form-theme) for a full example.
 
 ## Behaviour
 

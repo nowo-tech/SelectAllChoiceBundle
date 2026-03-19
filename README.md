@@ -32,8 +32,9 @@ Looking for **Symfony ChoiceType select all**, **multiple choice select all chec
 - ✅ **Sync state** — Toggle reflects "all selected" / "none" / indeterminate; manual selection updates the toggle
 - ✅ **Events** — Dispatches `change` with `bubbles: true` so other libs (TomSelect, validators) can react
 - ✅ **Multiple fields** — Safe with several select-all choice fields on the same page
-- ✅ **Frontend-driven** — Backend passes config via data attributes; Stimulus controller creates and manages the checkbox in the DOM
-- ✅ **TypeScript + Vite** — Bundle assets are TypeScript; your app’s Vite build compiles them (no Encore/Importmap)
+- ✅ **Frontend-driven** — Backend passes config via data attributes; a small script or Stimulus controller creates and manages the checkbox in the DOM
+- ✅ **Works with or without Stimulus** — Include the built `select-all-choice.js` script for auto-init (and dynamic content via MutationObserver), or register the Stimulus controller if your app already uses it
+- ✅ **TypeScript + Vite** — Bundle assets are TypeScript; the bundle ships a built IIFE for standalone use; your app’s Vite can also import the controller (no Encore/Importmap)
 - ✅ Compatible with **Symfony 7 and 8** and **FrankenPHP** (including worker mode)
 
 ## Installation
@@ -55,9 +56,9 @@ return [
 
 **2. Form theme**: The bundle **automatically** adds its form theme from the `form_theme` option (see Configuration). Set `form_theme` in `config/packages/nowo_select_all_choice.yaml` to match your app (e.g. `bootstrap_5_layout.html.twig`). You do not need to add it to `twig.form_themes` unless you want to control the order.
 
-**3. Integrate assets with Vite** — add an alias to the bundle’s `assets` directory in your `vite.config.ts` and import the bundle entry in your main JS/TS (see [docs/INSTALLATION.md](docs/INSTALLATION.md)).
+**3. Include the frontend script** — Either include the built script (no Stimulus required) using the Twig function `nowo_select_all_choice_asset_path('select-all-choice.js')` in your layout (see [docs/USAGE.md](docs/USAGE.md#including-the-frontend-script)), or integrate the Stimulus controller via Vite (see [docs/INSTALLATION.md](docs/INSTALLATION.md)).
 
-**4. (Optional) Translations** — Default domain `nowo_select_all_choice` with 60 languages; override via config or per-field options.
+**4. (Optional) Translations** — Default domain `NowoSelectAllChoiceBundle` with 60 languages; override via config or per-field options (see [docs/CONFIGURATION.md](docs/CONFIGURATION.md#translations)).
 
 Full steps (path repository, Vite alias, Option B copy assets): [docs/INSTALLATION.md](docs/INSTALLATION.md).
 
@@ -72,7 +73,7 @@ nowo_select_all_choice:
   default_position: 'before'                 # 'before' | 'after'
   default_toggle_css_class: 'form-check-input'
   default_container_css_class: 'form-check mb-2'
-  translation_domain: 'nowo_select_all_choice'
+  translation_domain: 'NowoSelectAllChoiceBundle'
 ```
 
 Set `form_theme` to match your app’s form layout (e.g. `bootstrap_5_layout.html.twig`). See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for all options and available Symfony form themes.
@@ -112,15 +113,16 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 
 ### Additional documentation
 
+- [Theming](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML), and [overriding bundle template files](docs/THEMING.md#overriding-bundle-template-files)
+- [Overriding translations](docs/CONFIGURATION.md#translations) — use your app’s `translations/` with the same domain and locale to override bundle messages
 - [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md) — development vs production setup, Web Profiler, Twig Inspector; reusable for other bundles
-- [Theming](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML)
 
 ## Requirements
 
 - PHP >= 8.2
 - **Symfony 7 or 8** (^7.0 \|\| ^8.0)
-- Stimulus (e.g. via `symfony/stimulus-bundle` or `@hotwired/stimulus`)
-- **Vite** to build frontend assets (bundle ships TypeScript; your app’s Vite compiles it)
+- **Stimulus** optional — use the built `select-all-choice.js` script for standalone auto-init, or Stimulus (e.g. `symfony/stimulus-bundle`) if you register the controller in your app bundle
+- **Vite** to build the bundle’s assets (or use the pre-built script from the bundle’s public dir)
 
 See [docs/INSTALLATION.md](docs/INSTALLATION.md#requirements) for details.
 

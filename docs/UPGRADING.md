@@ -25,7 +25,7 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 ## 1.0.1 → 1.1.0
 
 - **Optional:** If you use a Symfony form layout other than the default (`form_div_layout.html.twig`), add `form_theme` to your bundle config so the "Select all" theme matches. In `config/packages/nowo_select_all_choice.yaml` set `form_theme` to the same template name you use in `twig.form_themes` (e.g. `bootstrap_5_layout.html.twig`). See [CONFIGURATION.md](CONFIGURATION.md).
-- If you previously added the bundle’s form theme manually to `twig.form_themes`, remove it; the bundle now prepends it automatically based on `form_theme`. Do not re-add any `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` (see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts)).
+- If you previously added the bundle’s form theme manually to `twig.form_themes`, remove it; the bundle now prepends it automatically based on `form_theme`. Do not re-add any `@NowoSelectAllChoiceBundle/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` (see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts)).
 - No other breaking changes. Translations for 60 languages are included; existing EN/ES keys are unchanged.
 
 ## 1.1.0 → 1.2.0
@@ -39,13 +39,13 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - The shared logger is now defined inside the Stimulus controller (no separate `selectAllLogger` module). If you forked or extended the bundle and imported from `selectAllLogger`, switch to importing `setBundleLogger` / `getLogger` / `ATTR_DEBUG` from the controller module (e.g. `controllers/select_all_controller.ts`).
-- Demos that bundle the repo’s TypeScript must point the Vite alias (or `BUNDLE_PATH`) to the bundle entry file `src/Resources/assets/index.ts` (not the old `assets/` directory).
+- Demos that bundle the repo’s TypeScript import the controller from `src/Resources/assets/controllers/select_all_controller.ts` and register it with `application.register('select-all', SelectAllController)`. Alternatively, use the standalone script `select-all-choice.js` (see [USAGE.md](USAGE.md#including-the-frontend-script)).
 - Demos use Bootstrap 5 form theme and Bootstrap form classes; you can align your app the same way by setting `form_theme: 'bootstrap_5_layout.html.twig'` and using `form-check-input`, `form-check`, `form-check-label` for select-all options.
 
 ## 1.3.0 → 1.4.0
 
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
-- **Form theme:** If you had added `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` manually, remove it. Define the bundle form theme only in `nowo_select_all_choice.form_theme`; see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts). Keeping it in both places can override the correct theme and cause missing labels on expanded choices with Bootstrap.
+- **Form theme:** If you had added `@NowoSelectAllChoiceBundle/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` manually, remove it. Define the bundle form theme only in `nowo_select_all_choice.form_theme`; see [CONFIGURATION.md](CONFIGURATION.md#form-theme-symfony-layouts). Keeping it in both places can override the correct theme and cause missing labels on expanded choices with Bootstrap.
 - **Demos:** New [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md) explains development vs production FrankenPHP setup (worker mode, Twig cache, OPcache). The `demo/` folder is not included when the bundle is installed via Composer.
 
 ## 1.x → 2.x (future)

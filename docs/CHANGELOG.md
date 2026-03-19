@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Demos**: Rely only on `form_theme` in bundle config; removed manual `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` from `twig.form_themes` so the prepended theme (from `form_theme`) is not overridden. README and demo READMEs reference `make cache-clear` and template refresh behaviour.
 - **RELEASE.md**: Pre-release checklist and tag examples updated for current release.
+- **Documentation**: README “Additional documentation” now links to [overriding translations](CONFIGURATION.md#translations) and [overriding bundle template files](THEMING.md#overriding-bundle-template-files).
 
 ### Fixed
 
@@ -76,7 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`form_theme`** config option to match your app's form layout (e.g. `bootstrap_5_layout.html.twig`). The bundle automatically prepends its form theme to Twig via `PrependExtensionInterface`; you no longer need to add it to `twig.form_themes` manually.
 - Dedicated form theme templates for all 11 standard Symfony form layouts: `form_div_layout`, `form_table_layout`, Bootstrap 5/4/3 (and horizontal), Foundation 5/6, Tailwind 2. Set `form_theme` in bundle config to the same value you use in `twig.form_themes`.
 - Shared partial `_select_all_choice_wrapper.html.twig` for theme markup; all theme templates include it to avoid duplication.
-- Translations for **60 languages** (domain `nowo_select_all_choice`, key `form.select_all`): en, es, ar, bg, bn, ca, cs, da, de, el, et, fa, fi, fr, he, hi, hr, hu, hy, id, is, it, ja, ka, km, ko, lt, lv, mk, ms, mt, ne, nl, no, pl, pt, pt_BR, ro, ru, sk, sl, sq, sr, sv, sw, ta, te, th, tr, uk, ur, vi, zh_CN, zh_TW, af, am, az, eu, gl, cy.
+- Translations for **60 languages** (domain `NowoSelectAllChoiceBundle`, key `form.select_all`): en, es, ar, bg, bn, ca, cs, da, de, el, et, fa, fi, fr, he, hi, hr, hu, hy, id, is, it, ja, ka, km, ko, lt, lv, mk, ms, mt, ne, nl, no, pl, pt, pt_BR, ro, ru, sk, sl, sq, sr, sv, sw, ta, te, th, tr, uk, ur, vi, zh_CN, zh_TW, af, am, az, eu, gl, cy.
 - Makefile: targets `rector`, `rector-dry`, `phpstan`, `update`, `validate`; `release-check` now includes rector-dry and phpstan; bundle-specific assets targets (`assets-test`, `assets-dev`, `assets-watch`, `assets-clean`); simplified Demos help (use `make -C demo` or `make -C demo/symfonyX`).
 
 ### Changed
@@ -107,7 +108,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial release: Form type extension, Twig form theme and Stimulus controller for "Select all" on `ChoiceType` with `multiple=true` (expanded and collapsed).
-- Opt-in via `select_all => true`; configurable label, position and CSS; translations (EN, ES) in domain `nowo_select_all_choice`.
+- Opt-in via `select_all => true`; configurable label, position and CSS; translations (EN, ES) in domain `NowoSelectAllChoiceBundle`.
 - Frontend-driven toggle: backend passes config via data attributes; Stimulus controller creates and manages the checkbox in the DOM.
 - TypeScript and Vite for bundle assets; consuming app’s Vite build compiles the bundle (no Encore/Importmap).
 - Configurable CSS for Bootstrap, Tailwind or custom: `default_wrapper_css_class`, `default_label_css_class` and per-field `select_all_wrapper_css_class`, `select_all_label_css_class` (see [CONFIGURATION](CONFIGURATION.md) and [THEMING](THEMING.md)).

@@ -13,7 +13,7 @@ nowo_select_all_choice:
   default_wrapper_css_class: 'form-check'
   default_label_css_class: 'form-check-label'
   default_container_css_class: 'form-check mb-2'
-  translation_domain: 'nowo_select_all_choice'
+  translation_domain: 'NowoSelectAllChoiceBundle'
 ```
 
 ## Options
@@ -27,13 +27,19 @@ nowo_select_all_choice:
 | `default_wrapper_css_class` | string | `form-check` | CSS class for the wrapper div that contains the toggle and its label. |
 | `default_label_css_class` | string | `form-check-label` | CSS class applied to the "Select all" label. |
 | `default_container_css_class` | string | `form-check mb-2` | CSS class applied to the outer wrapper div (toggle + choices). |
-| `translation_domain` | string | `nowo_select_all_choice` | Default translation domain for the toggle label. |
+| `translation_domain` | string | `NowoSelectAllChoiceBundle` | Default translation domain for the toggle label. |
+
+## Translations
+
+The bundle uses the translation domain **`NowoSelectAllChoiceBundle`** (CamelCase with `Bundle` suffix). The default label key is `form.select_all`. Translations are shipped for 60 locales in `src/Resources/translations/NowoSelectAllChoiceBundle.{locale}.yaml`.
+
+**Override translations in your application:** create YAML (or XLIFF) files in your project’s `translations/` directory with the same domain and locale, e.g. `translations/NowoSelectAllChoiceBundle.es.yaml`. Define only the keys you want to override (e.g. `form.select_all`); Symfony will fall back to the bundle’s messages for the rest. You can also set `translation_domain` in config or per field (`select_all_translation_domain`) to use another domain (e.g. `messages`).
 
 ## Form theme (Symfony layouts)
 
 The bundle’s form theme wraps Symfony’s choice widgets; it must use the same base layout as the rest of your forms. Set `form_theme` in the bundle config. The bundle **automatically prepends** its theme to `twig.form_themes`, so you do not need to add it manually.
 
-> **Important — define the bundle form theme in one place only.** Set `form_theme` in `config/packages/nowo_select_all_choice.yaml` and **do not** add any `@NowoSelectAllChoice/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` in `config/packages/twig.yaml`. If you add a bundle theme manually, it can override the one chosen by `form_theme` (Symfony uses the last theme that defines a block), which may cause incorrect rendering (e.g. missing labels on expanded choices with Bootstrap). Your `twig.form_themes` should only list your app’s base layout(s), e.g. `bootstrap_5_layout.html.twig`.
+> **Important — define the bundle form theme in one place only.** Set `form_theme` in `config/packages/nowo_select_all_choice.yaml` and **do not** add any `@NowoSelectAllChoiceBundle/Form/select_all_choice_theme*.html.twig` to `twig.form_themes` in `config/packages/twig.yaml`. If you add a bundle theme manually, it can override the one chosen by `form_theme` (Symfony uses the last theme that defines a block), which may cause incorrect rendering (e.g. missing labels on expanded choices with Bootstrap). Your `twig.form_themes` should only list your app’s base layout(s), e.g. `bootstrap_5_layout.html.twig`.
 
 ### Values with dedicated theme
 
