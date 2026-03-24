@@ -1,5 +1,6 @@
 /vendor/
 /.env
+/.env.dev
 .env.local
 /var/
 *.log

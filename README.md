@@ -35,7 +35,7 @@ Looking for **Symfony ChoiceType select all**, **multiple choice select all chec
 - ✅ **Frontend-driven** — Backend passes config via data attributes; a small script or Stimulus controller creates and manages the checkbox in the DOM
 - ✅ **Works with or without Stimulus** — Include the built `select-all-choice.js` script for auto-init (and dynamic content via MutationObserver), or register the Stimulus controller if your app already uses it
 - ✅ **TypeScript + Vite** — Bundle assets are TypeScript; the bundle ships a built IIFE for standalone use; your app’s Vite can also import the controller (no Encore/Importmap)
-- ✅ Compatible with **Symfony 7 and 8** and **FrankenPHP** (including worker mode)
+- ✅ Compatible with **Symfony 7 and 8** and **FrankenPHP** (with or without worker mode; the repo demos use a non-worker `php_server` setup for comfortable dev)
 
 ## Installation
 
@@ -72,8 +72,11 @@ nowo_select_all_choice:
   default_label: 'form.select_all'
   default_position: 'before'                 # 'before' | 'after'
   default_toggle_css_class: 'form-check-input'
+  default_wrapper_css_class: 'form-check'
+  default_label_css_class: 'form-check-label'
   default_container_css_class: 'form-check mb-2'
   translation_domain: 'NowoSelectAllChoiceBundle'
+  debug: false                               # set true to log Stimulus/controller messages to the browser console
 ```
 
 Set `form_theme` to match your app’s form layout (e.g. `bootstrap_5_layout.html.twig`). See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for all options and available Symfony form themes.
@@ -128,7 +131,9 @@ See [docs/INSTALLATION.md](docs/INSTALLATION.md#requirements) for details.
 
 ## Demo
 
-Demos for Symfony 7 and 8 are in `demo/symfony7`, `demo/symfony8`. Run from the bundle root: `make up-symfony7` (http://localhost:8007) or `make up-symfony8` (http://localhost:8008). See [demo/README.md](demo/README.md) for details. Demos run with FrankenPHP in worker mode; the bundle is compatible with FrankenPHP.
+Demos for Symfony 7 and 8 are in `demo/symfony7`, `demo/symfony8`. Run from the bundle root: `make up-symfony7` (http://localhost:8007) or `make up-symfony8` (http://localhost:8008). See [demo/README.md](demo/README.md) for details.
+
+The demos use **FrankenPHP** with a **single `docker/frankenphp/Caddyfile`** and **`php_server` without workers** so template and asset changes show up on refresh (see [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md)). You can deploy with **worker mode** in production if you follow the production section of that doc; the bundle itself works with or without FrankenPHP workers.
 
 ## Development
 

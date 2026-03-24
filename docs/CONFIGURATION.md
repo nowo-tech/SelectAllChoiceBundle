@@ -14,6 +14,7 @@ nowo_select_all_choice:
   default_label_css_class: 'form-check-label'
   default_container_css_class: 'form-check mb-2'
   translation_domain: 'NowoSelectAllChoiceBundle'
+  debug: false
 ```
 
 ## Options
@@ -28,6 +29,7 @@ nowo_select_all_choice:
 | `default_label_css_class` | string | `form-check-label` | CSS class applied to the "Select all" label. |
 | `default_container_css_class` | string | `form-check mb-2` | CSS class applied to the outer wrapper div (toggle + choices). |
 | `translation_domain` | string | `NowoSelectAllChoiceBundle` | Default translation domain for the toggle label. |
+| `debug` | bool | `false` | When `true`, logs Stimulus/controller debug output to the browser console; when `false`, only the initial load message is shown. |
 
 ## Translations
 
