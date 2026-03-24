@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "/var/select-all-choice-bundle",
-                "reference": "1300cdd2564b633c3508288966f52dede8636eb6"
+                "reference": "fa283e1677f1024e6ef13988036ac432d17b95e8"
             },
             "require": {
                 "php": ">=8.2",
@@ -3689,12 +3689,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "4d44d3cb92cc6141c198cd6bbe9ba394b9dfaa11"
+                "reference": "76688da07c9e293b9958c7b339a5da60c06d5600"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/4d44d3cb92cc6141c198cd6bbe9ba394b9dfaa11",
-                "reference": "4d44d3cb92cc6141c198cd6bbe9ba394b9dfaa11",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/76688da07c9e293b9958c7b339a5da60c06d5600",
+                "reference": "76688da07c9e293b9958c7b339a5da60c06d5600",
                 "shasum": ""
             },
             "require": {
@@ -3762,7 +3762,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-03-17T21:37:10+00:00"
+            "time": "2026-03-19T14:32:58+00:00"
         }
     ],
     "packages-dev": [
