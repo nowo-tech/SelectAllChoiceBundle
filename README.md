@@ -1,6 +1,6 @@
 # Select All Choice Bundle
 
-[![CI](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/select-all-choice-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/select-all-choice-bundle.svg)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7%20%7C%208-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/select-all-choice-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/SelectAllChoiceBundle)
+[![CI](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/select-all-choice-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/select-all-choice-bundle.svg)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-7%20%7C%208-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/select-all-choice-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/SelectAllChoiceBundle) [![Coverage](https://img.shields.io/badge/Coverage-97.83%25-brightgreen)](#tests-and-coverage)
 
 **Symfony bundle that adds an optional "Select all" checkbox for `ChoiceType` fields with `multiple=true`** — for both expanded (checkboxes) and collapsed (`<select multiple>`) rendering. **Frontend-driven**: the backend marks the field and passes config via data attributes; a **Stimulus** controller creates and manages the toggle in the browser. Built with **TypeScript** and **Vite** (no Webpack Encore, no Importmap). For **Symfony 7 and 8** · PHP 8.2+.
 
@@ -49,8 +49,8 @@ composer require nowo-tech/select-all-choice-bundle
 <?php
 
 return [
-    // ...
-    Nowo\SelectAllChoiceBundle\NowoSelectAllChoiceBundle::class => ['all' => true],
+  // ...
+  Nowo\SelectAllChoiceBundle\NowoSelectAllChoiceBundle::class => ['all' => true],
 ];
 ```
 
@@ -68,15 +68,15 @@ Create `config/packages/nowo_select_all_choice.yaml` to override defaults:
 
 ```yaml
 nowo_select_all_choice:
-  form_theme: 'form_div_layout.html.twig'   # or 'bootstrap_5_layout.html.twig', etc.
-  default_label: 'form.select_all'
-  default_position: 'before'                 # 'before' | 'after'
-  default_toggle_css_class: 'form-check-input'
-  default_wrapper_css_class: 'form-check'
-  default_label_css_class: 'form-check-label'
-  default_container_css_class: 'form-check mb-2'
-  translation_domain: 'NowoSelectAllChoiceBundle'
-  debug: false                               # set true to log Stimulus/controller messages to the browser console
+ form_theme: 'form_div_layout.html.twig'  # or 'bootstrap_5_layout.html.twig', etc.
+ default_label: 'form.select_all'
+ default_position: 'before'         # 'before' | 'after'
+ default_toggle_css_class: 'form-check-input'
+ default_wrapper_css_class: 'form-check'
+ default_label_css_class: 'form-check-label'
+ default_container_css_class: 'form-check mb-2'
+ translation_domain: 'NowoSelectAllChoiceBundle'
+ debug: false                # set true to log Stimulus/controller messages to the browser console
 ```
 
 Set `form_theme` to match your app’s form layout (e.g. `bootstrap_5_layout.html.twig`). See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for all options and available Symfony form themes.
@@ -89,14 +89,14 @@ Enable "Select all" on a multiple choice field with the `select_all` option:
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 $builder->add('roles', ChoiceType::class, [
-    'choices' => [
-        'Admin' => 'ROLE_ADMIN',
-        'User'  => 'ROLE_USER',
-        'Guest' => 'ROLE_GUEST',
-    ],
-    'multiple' => true,
-    'expanded' => true,
-    'select_all' => true,
+  'choices' => [
+    'Admin' => 'ROLE_ADMIN',
+    'User' => 'ROLE_USER',
+    'Guest' => 'ROLE_GUEST',
+  ],
+  'multiple' => true,
+  'expanded' => true,
+  'select_all' => true,
 ]);
 ```
 
@@ -138,6 +138,12 @@ The demos use **FrankenPHP** with a **single `docker/frankenphp/Caddyfile`** and
 ## Development
 
 Run tests and QA with Docker: `make up && make install && make test` (or `make test-coverage`, `make qa`). Without Docker: `composer install && composer test`. See [Makefile](Makefile) for all targets.
+
+## Tests and coverage
+
+- Tests: PHPUnit (PHP), Vitest (TS/JS)
+- PHP: 97.83%
+- TS/JS: 100%
 
 ## License
 

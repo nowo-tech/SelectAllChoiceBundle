@@ -4,8 +4,8 @@ COMPOSE      := docker compose -f $(COMPOSE_FILE)
 SERVICE_PHP  := php
 RUN          := $(COMPOSE) exec -T $(SERVICE_PHP)
 
-.PHONY: help up down shell install test test-coverage cs-check cs-fix qa clean ensure-up
-.PHONY: release-check release-check-demos composer-sync assets build rector rector-dry phpstan update validate
+.PHONY: help up down shell install test test-coverage coverage-php-percent cs-check cs-fix qa clean ensure-up
+.PHONY: release-check release-check-demos composer-sync assets build rector rector-dry phpstan update validate validate-translations
 .PHONY: assets-test assets-dev assets-watch assets-clean
 .PHONY: up-symfony7 up-symfony8 down-symfony7 down-symfony8
 
@@ -73,7 +73,8 @@ test: ensure-up
 	$(COMPOSE) exec $(SERVICE_PHP) composer test
 
 test-coverage: ensure-up
-	$(COMPOSE) exec $(SERVICE_PHP) composer test-coverage
+	$(COMPOSE) exec $(SERVICE_PHP) composer test-coverage | tee coverage-php.txt
+	./.scripts/php-coverage-percent.sh coverage-php.txt
 
 cs-check: install
 	$(RUN) composer cs-check
@@ -130,7 +131,8 @@ assets: ensure-up
 	$(RUN) sh -lc 'CI=true pnpm install && CI=true pnpm build'
 
 assets-test: ensure-up
-	$(RUN) sh -lc 'CI=true pnpm install && CI=true pnpm run test:coverage'
+	$(RUN) sh -lc 'CI=true pnpm install && CI=true pnpm run test:coverage' | tee coverage-ts.txt
+	./scripts/ts-coverage-percent.sh coverage-ts.txt
 
 assets-dev: ensure-up
 	$(RUN) sh -lc 'CI=true pnpm install && CI=true pnpm exec vite'
@@ -140,3 +142,6 @@ assets-watch: assets-dev
 assets-clean:
 	rm -rf dist .vite node_modules/.vite 2>/dev/null || true
 	@echo "Assets build artifacts cleaned."
+
+validate-translations: ensure-up
+	$(RUN) vendor/bin/yaml-lint src/Resources/translations

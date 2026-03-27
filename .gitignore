@@ -11,7 +11,9 @@
 # Test coverage
 /coverage
 /coverage.xml
+/coverage-php.txt
 /coverage-ts
+/coverage-ts.txt
 
 # PHP tool caches
 /.php-cs-fixer.cache

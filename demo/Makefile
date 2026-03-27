@@ -1,5 +1,5 @@
 # Makefile to manage SelectAllChoiceBundle demos (standard: up-X, down-X, etc.)
-.PHONY: help release-check release-verify clean test-all test-coverage-all verify-all
+.PHONY: help release-check release-verify clean test-all test-coverage-all verify-all update-bundle-all
 .PHONY: up-symfony7 up-symfony8 down-symfony7 down-symfony8
 .PHONY: restart-symfony7 restart-symfony8 build-symfony7 build-symfony8
 .PHONY: install-symfony7 install-symfony8 update-bundle-symfony7 update-bundle-symfony8
@@ -161,12 +161,16 @@ test-coverage-all:
 	@for d in $(DEMOS); do $(MAKE) test-coverage-$$d || exit 1; done
 	@echo "All demos coverage done."
 
+update-bundle-all:
+	@for d in $(DEMOS); do $(MAKE) update-bundle-$$d || exit 1; done
+	@echo "All demos updated bundle code."
+
 verify-all:
 	@for d in $(DEMOS); do $(MAKE) verify-$$d; $(MAKE) down-$$d || true; done
 	@echo "Verify-all done."
 
 # release-check: test-coverage-all, then release-verify (healthchecks)
-release-check: test-coverage-all release-verify
+release-check: update-bundle-all test-coverage-all release-verify
 	@echo "All demos passed release-check."
 
 release-verify:
