@@ -26,11 +26,14 @@ help:
 up:
 	@if [ ! -f .env ]; then cp .env.example .env 2>/dev/null || (echo "APP_ENV=dev" > .env; echo "APP_DEBUG=1" >> .env; echo "APP_SECRET=change-me" >> .env; echo "PORT=8007" >> .env); fi
 	$(COMPOSE) up -d
+	@echo "Waiting for container to be ready..."
 	@sleep 5
+	@echo "Installing dependencies..."
 	@$(COMPOSE) exec -T -e COMPOSER_MEMORY_LIMIT=-1 $(SERVICE_PHP) composer install --no-interaction
 	@$(MAKE) assets
-	@echo "App: http://localhost:$${PORT:-8007}"
-
+	@PORT=$$(grep "^PORT=" .env 2>/dev/null | cut -d= -f2 | tr -d '\r'); \
+	[ -z "$$PORT" ] && PORT=$$(grep "^PORT=" .env.example 2>/dev/null | cut -d= -f2 | tr -d '\r'); \
+	echo "Demo started at: http://localhost:$$PORT"
 down:
 	$(COMPOSE) down
 

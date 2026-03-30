@@ -1,54 +1,51 @@
 /**
  * =============================================================================
- * BUNDLE LOGGER - Reusable across bundles
+ * BUNDLE LOGGER - Select All Choice Bundle (always-on logging)
  * =============================================================================
  *
- * USAGE (English):
+ * Same API shape as other Nowo bundles.
  *
- * 1. Create a logger for your bundle (typically at the top of your entry file):
+ * For SelectAllChoiceBundle this logger supports a debug toggle:
+ * - scriptLoaded() always logs
+ * - debug/info/warn/error are enabled only after setDebug(true) unless alwaysLog is set.
  *
- *    import { createBundleLogger } from './logger';
- *    declare const __MY_BUNDLE_BUILD_TIME__: string;  // optional, injected by Vite define
+ * USAGE:
  *
- *    const log = createBundleLogger('my-bundle', {
- *      buildTime: typeof __MY_BUNDLE_BUILD_TIME__ !== 'undefined' ? __MY_BUNDLE_BUILD_TIME__ : undefined,
+ * 1. In the entry (index.ts), create and register the logger:
+ *
+ *    import { createBundleLogger, setBundleLogger } from './logger';
+ *    declare const __SELECT_ALL_CHOICE_BUILD_TIME__: string;
+ *
+ *    const log = createBundleLogger('select-all-choice', {
+ *      buildTime: typeof __SELECT_ALL_CHOICE_BUILD_TIME__ !== 'undefined' ? __SELECT_ALL_CHOICE_BUILD_TIME__ : undefined,
+ *      alwaysLog: false,
  *    });
- *
- * 2. Log that the script loaded (call once at startup; includes build time if provided):
- *
  *    log.scriptLoaded();
+ *    setBundleLogger(log);
  *
- * 3. Call setDebug(true) when your bundle's debug mode is on (e.g. from config or data attribute).
- *    When debug is false, only scriptLoaded() output is shown; info/debug/warn/error are no-ops.
+ * 2. In other modules, get the logger and use level methods:
  *
- * 4. Use level methods for the rest of the bundle:
- *
- *    log.debug('detailed info', { foo: 1 });
+ *    import { getLogger } from './logger';
+ *    const log = getLogger();
+ *    log.debug('detail', { foo: 1 });
  *    log.info('something happened');
- *    log.warn('unexpected but handled', error);
- *    log.error('failure', error);
+ *    log.warn('unexpected', err);
+ *    log.error('failure', err);
  *
- * 5. To inject build time with Vite, add to vite.config.ts:
- *
- *    define: {
- *      __MY_BUNDLE_BUILD_TIME__: JSON.stringify(new Date().toISOString()),
- *    },
- *
- * All methods support multiple arguments (like console.log). Objects are stringified
- * for readability in debug/info/warn/error. The prefix is [name] and each level
- * has a distinct style and emoji when the console supports it.
  * =============================================================================
  */
 
 export type BundleLoggerOptions = {
   /** If set, scriptLoaded() will include this (e.g. build/compilation time). */
   buildTime?: string;
+  /** When true, debug/info/warn/error always output (no setDebug needed). */
+  alwaysLog?: boolean;
 };
 
 export type BundleLogger = {
   /** Call once at startup. Logs "script loaded" and optional build time. Always shown. */
   scriptLoaded: () => void;
-  /** When false, debug/info/warn/error are no-ops (only scriptLoaded is shown). */
+  /** No-op when alwaysLog is true; kept for API compatibility. */
   setDebug: (enabled: boolean) => void;
   debug: (...args: unknown[]) => void;
   info: (...args: unknown[]) => void;
@@ -78,68 +75,104 @@ function formatArgs(args: unknown[]): unknown[] {
   );
 }
 
+type ConsoleLevel = 'debug' | 'info' | 'warn' | 'error';
+
+function logScriptLoaded(prefix: string, buildTime: string | undefined): void {
+  if (buildTime !== undefined && buildTime !== '') {
+    console.log(
+      `%c${EMOJI.script} ${prefix} script loaded, build time: %c${buildTime}`,
+      STYLES.script,
+      'color:#059669',
+    );
+    return;
+  }
+  console.log(`%c${EMOJI.script} ${prefix} script loaded`, STYLES.script);
+}
+
+function emitLevelLog(level: ConsoleLevel, prefix: string, args: unknown[]): void {
+  const emoji = EMOJI[level];
+  const style = STYLES[level];
+  const label = `%c${emoji} ${prefix}`;
+  const logFn = console[level] as (...fnArgs: unknown[]) => void;
+  if (args.length > 0) {
+    logFn(label, style, ...formatArgs(args));
+    return;
+  }
+  logFn(label, style);
+}
+
+function makeLevelMethod(
+  isEnabled: () => boolean,
+  prefix: string,
+  level: ConsoleLevel,
+): (...args: unknown[]) => void {
+  return (...args: unknown[]): void => {
+    if (!isEnabled()) return;
+    emitLevelLog(level, prefix, args);
+  };
+}
+
+function noop(): void {}
+
+let instance: BundleLogger | null = null;
+
 /**
- * Creates a logger for a bundle. Use the same logger instance across the bundle.
+ * Registers the bundle logger. Call once from the entry (index.ts) after createBundleLogger.
+ */
+export function setBundleLogger(log: BundleLogger): void {
+  instance = log;
+}
+
+/**
+ * Clears the registered logger (for tests only). After this, getLogger() returns the no-op logger until setBundleLogger is called again.
+ */
+export function clearBundleLoggerForTest(): void {
+  instance = null;
+}
+
+/**
+ * Returns the bundle logger. Use in Overlay, BlockStorage, etc.
+ * If never set, returns a no-op logger so tests do not need to call setBundleLogger.
+ */
+export function getLogger(): BundleLogger {
+  if (instance !== null) {
+    return instance;
+  }
+  return {
+    scriptLoaded: noop,
+    setDebug: noop,
+    debug: noop,
+    info: noop,
+    warn: noop,
+    error: noop,
+  };
+}
+
+/**
+ * Creates a bundle logger for SelectAllChoiceBundle.
  *
  * @param name - Short name for log prefix (e.g. 'select-all-choice').
- * @param options - Optional buildTime for scriptLoaded().
+ * @param options - buildTime for scriptLoaded(); set alwaysLog to force debug/info/warn/error to always output.
  */
 export function createBundleLogger(name: string, options: BundleLoggerOptions = {}): BundleLogger {
   const prefix = `[${name}]`;
-  const { buildTime } = options;
-  let debugEnabled = false;
+  const { buildTime, alwaysLog = false } = options;
+  const logAlways = alwaysLog === true;
+  let debugEnabled = logAlways;
 
   return {
     scriptLoaded(): void {
-      if (buildTime !== undefined && buildTime !== '') {
-        console.log(
-          `%c${EMOJI.script} ${prefix} script loaded, build time: %c${buildTime}`,
-          STYLES.script,
-          'color:#059669',
-        );
-      } else {
-        console.log(`%c${EMOJI.script} ${prefix} script loaded`, STYLES.script);
-      }
+      logScriptLoaded(prefix, buildTime);
     },
 
     setDebug(enabled: boolean): void {
-      debugEnabled = enabled;
+      // If alwaysLog is enabled, debug/info/warn/error are always visible.
+      debugEnabled = logAlways ? true : enabled;
     },
 
-    debug(...args: unknown[]): void {
-      if (!debugEnabled) return;
-      if (args.length > 0) {
-        console.debug(`%c${EMOJI.debug} ${prefix}`, STYLES.debug, ...formatArgs(args));
-      } else {
-        console.debug(`%c${EMOJI.debug} ${prefix}`, STYLES.debug);
-      }
-    },
-
-    info(...args: unknown[]): void {
-      if (!debugEnabled) return;
-      if (args.length > 0) {
-        console.info(`%c${EMOJI.info} ${prefix}`, STYLES.info, ...formatArgs(args));
-      } else {
-        console.info(`%c${EMOJI.info} ${prefix}`, STYLES.info);
-      }
-    },
-
-    warn(...args: unknown[]): void {
-      if (!debugEnabled) return;
-      if (args.length > 0) {
-        console.warn(`%c${EMOJI.warn} ${prefix}`, STYLES.warn, ...formatArgs(args));
-      } else {
-        console.warn(`%c${EMOJI.warn} ${prefix}`, STYLES.warn);
-      }
-    },
-
-    error(...args: unknown[]): void {
-      if (!debugEnabled) return;
-      if (args.length > 0) {
-        console.error(`%c${EMOJI.error} ${prefix}`, STYLES.error, ...formatArgs(args));
-      } else {
-        console.error(`%c${EMOJI.error} ${prefix}`, STYLES.error);
-      }
-    },
+    debug: makeLevelMethod(() => debugEnabled, prefix, 'debug'),
+    info: makeLevelMethod(() => debugEnabled, prefix, 'info'),
+    warn: makeLevelMethod(() => debugEnabled, prefix, 'warn'),
+    error: makeLevelMethod(() => debugEnabled, prefix, 'error'),
   };
 }
