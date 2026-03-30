@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Documentation
+### Added
 
-- **README**: Demo section — demos use FrankenPHP **without** worker (`php_server` only); clarified vs optional production worker setup. Features bullet clarifies FrankenPHP (with/without workers) vs repo demos. **Configuration** snippet aligned with `Configuration.php` (`default_wrapper_css_class`, `default_label_css_class`, `debug`).
-- **CONFIGURATION.md**: Documented `debug` in the full example and options table.
-- **DEMO-FRANKENPHP.md**: Note on this repo’s demos (single Caddyfile, no worker); `bundles.php` example includes **StimulusBundle** like the real demos.
+- (Nothing yet.)
+
+## [1.4.2] - 2026-03-30
+
+### Changed
+
+- **Frontend logger**: `SelectAllChoiceBundle` logger now supports a real debug toggle (`setDebug(true)` enables debug/info/warn/error) matching the controller/lib expectations.
+- **Assets & QA**: `make assets-test` now reports global TS coverage percentage and fails on thresholds; added translation YAML validation target and coverage extraction script.
+- **Docs**: release tooling and usage notes were clarified (see `USAGE.md`, `docs/RELEASE.md`, and `docs/UPGRADING.md`).
 
 ## [1.4.1] - 2026-03-19
 
@@ -128,7 +134,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.2...HEAD
+[1.4.2]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.2
 [1.4.1]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.1
 [1.4.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.0
 [1.3.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.3.0

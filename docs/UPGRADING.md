@@ -12,6 +12,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.2.0 → 1.3.0](#120-130)
 - [1.3.0 → 1.4.0](#130-140)
 - [1.4.0 → 1.4.1](#140-141)
+- [1.4.1 → 1.4.2](#141-142)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -54,6 +55,12 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - The Twig extension now registers the `nowo_select_all_choice_asset_path` function via `getFunctions()` instead of the `#[AsTwigFunction]` attribute, fixing compatibility on environments where extending `AbstractExtension` and using the attribute together is not allowed.
 - From this version onward, the Composer dist package (e.g. from Packagist) no longer includes the `demo/` folder, thanks to `.gitattributes` `export-ignore`. If you had relied on the demo being present under `vendor/nowo-tech/select-all-choice-bundle/`, clone or download the repository from GitHub instead.
+
+## 1.4.1 → 1.4.2
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- Frontend: the bundle logger now properly enables debug/info/warn/error output after `setDebug(true)`, aligning the behavior with the controller/lib and the `data-select-all-debug-value="1"` development workflow.
+- QA/dev tooling: improved `make assets-test` TS coverage reporting and added `validate-translations` linting target. These affect the repo workflow, not consuming apps.
 
 ## 1.x → 2.x (future)
 
