@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.4] - 2026-03-31
+
+### Fixed
+
+- **Twig extension compatibility**: `NowoSelectAllChoiceTwigExtension` is now a proper Twig extension (`AbstractExtension` + `getFunctions()`), preventing `Twig\Environment::addExtension()` type errors in consumer apps.
+- **Rector stability for this bundle**: disabled automatic conversion from `getFunctions()` to `#[AsTwigFunction]` in bundle Rector config so release QA does not re-introduce the compatibility issue.
+
+### Added
+
+- **Twig extension unit test coverage**: verifies that `getFunctions()` exposes `nowo_select_all_choice_asset_path` and keeps `assetPath()` behavior validated.
+
 ## [1.4.3] - 2026-03-31
 
 ### Changed
@@ -142,7 +153,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.3...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.4...HEAD
+[1.4.4]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.4
 [1.4.3]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.3
 [1.4.2]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.2
 [1.4.1]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.1

@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "/var/select-all-choice-bundle",
-                "reference": "275c14dd0252e593d2fc49f7bae4719339823c20"
+                "reference": "a1d1b49c0691d2f35c8d480caa9e2c096357c4c0"
             },
             "require": {
                 "php": ">=8.1 <8.6",
@@ -58,10 +58,10 @@
                     "php-cs-fixer fix"
                 ],
                 "test": [
-                    "phpunit"
+                    "phpunit --color=always"
                 ],
                 "test-coverage": [
-                    "phpunit --coverage-text --coverage-html=coverage --coverage-clover=coverage.xml"
+                    "phpunit --color=always --coverage-text --coverage-html=coverage --coverage-clover=coverage.xml"
                 ],
                 "rector": [
                     "rector process"
