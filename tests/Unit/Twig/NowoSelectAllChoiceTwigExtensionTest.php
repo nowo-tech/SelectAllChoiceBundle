@@ -6,6 +6,7 @@ namespace Nowo\SelectAllChoiceBundle\Tests\Unit\Twig;
 
 use Nowo\SelectAllChoiceBundle\Twig\NowoSelectAllChoiceTwigExtension;
 use PHPUnit\Framework\TestCase;
+use Twig\TwigFunction;
 
 final class NowoSelectAllChoiceTwigExtensionTest extends TestCase
 {
@@ -26,6 +27,15 @@ final class NowoSelectAllChoiceTwigExtensionTest extends TestCase
             'bundles/nowoselectallchoice/css/theme.css',
             $this->extension->assetPath('css/theme.css'),
         );
+    }
+
+    public function testGetFunctionsContainsExpectedTwigFunction(): void
+    {
+        $functions = $this->extension->getFunctions();
+
+        self::assertCount(1, $functions);
+        self::assertInstanceOf(TwigFunction::class, $functions[0]);
+        self::assertSame('nowo_select_all_choice_asset_path', $functions[0]->getName());
     }
 
     public function testAssetPathReturnsDefaultForEmptyFilename(): void

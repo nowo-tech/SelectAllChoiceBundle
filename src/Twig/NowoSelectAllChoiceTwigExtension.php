@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Nowo\SelectAllChoiceBundle\Twig;
 
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
 /**
  * Exposes the bundle's public asset path for JS URLs in templates.
  *
@@ -12,8 +15,20 @@ namespace Nowo\SelectAllChoiceBundle\Twig;
  *
  * @author Héctor Franco Aceituno <hectorfranco@nowo.tech>
  */
-final class NowoSelectAllChoiceTwigExtension
+final class NowoSelectAllChoiceTwigExtension extends AbstractExtension
 {
+    /**
+     * Registers Twig functions exposed by this bundle extension.
+     *
+     * @return array<int, TwigFunction>
+     */
+    public function getFunctions(): array
+    {
+        return [
+            new TwigFunction('nowo_select_all_choice_asset_path', [$this, 'assetPath'], ['is_safe' => ['html']]),
+        ];
+    }
+
     /**
      * Directory name under public/bundles/ where the bundle's assets are installed.
      * Matches the output of `php bin/console assets:install` (derived from bundle class name).
@@ -36,7 +51,6 @@ final class NowoSelectAllChoiceTwigExtension
      *
      * @return string Path suitable for the asset() function (e.g. "bundles/nowoselectallchoice/select-all-choice.js")
      */
-    #[\Twig\Attribute\AsTwigFunction(name: 'nowo_select_all_choice_asset_path', isSafe: ['html'])]
     public function assetPath(string $filename): string
     {
         $filename = ltrim($filename, '/');

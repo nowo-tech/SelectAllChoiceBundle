@@ -65,8 +65,8 @@
     "scripts": {
         "cs-check": "php-cs-fixer fix --dry-run --diff",
         "cs-fix": "php-cs-fixer fix",
-        "test": "phpunit",
-        "test-coverage": "phpunit --coverage-text --coverage-html=coverage --coverage-clover=coverage.xml",
+        "test": "phpunit --color=always",
+        "test-coverage": "phpunit --color=always --coverage-text --coverage-html=coverage --coverage-clover=coverage.xml",
         "rector": "rector process",
         "rector-dry": "rector process --dry-run --no-progress-bar",
         "phpstan": "phpstan analyse --memory-limit=512M",
