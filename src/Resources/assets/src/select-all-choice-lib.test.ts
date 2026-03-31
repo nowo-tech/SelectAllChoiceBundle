@@ -4,6 +4,7 @@ import {
   runInit,
   runInitAndObserve,
   setBundleLogger,
+  resetSelectAllLibForTest,
   SELECTOR_CONTAINER,
   ATTR_INIT,
   ATTR_DEBUG,
@@ -13,10 +14,12 @@ import { createBundleLogger } from './logger';
 describe('select-all-choice-lib', () => {
   beforeEach(() => {
     vi.spyOn(console, 'debug').mockImplementation(() => {});
+    vi.spyOn(console, 'info').mockImplementation(() => {});
     vi.spyOn(console, 'warn').mockImplementation(() => {});
     const log = createBundleLogger('select-all-choice');
     setBundleLogger(log);
     log.setDebug(true);
+    resetSelectAllLibForTest();
   });
 
   afterEach(() => {
@@ -29,6 +32,12 @@ describe('select-all-choice-lib', () => {
       const el = document.createElement('div');
       el.setAttribute('data-controller', 'select-all');
       el.setAttribute('data-select-all-debug-value', '1');
+      el.setAttribute('data-select-all-position-value', 'before');
+      el.setAttribute('data-select-all-expanded-value', 'true');
+      el.setAttribute('data-select-all-label-value', 'Select all');
+      el.setAttribute('data-select-all-toggle-class-value', 'form-check-input');
+      el.setAttribute('data-select-all-wrapper-class-value', 'form-check');
+      el.setAttribute('data-select-all-label-class-value', 'form-check-label');
       const choices = document.createElement('div');
       choices.setAttribute('data-select-all-target', 'choices');
       el.appendChild(choices);
@@ -37,11 +46,30 @@ describe('select-all-choice-lib', () => {
       runInit();
 
       expect(el.querySelector('[data-select-all-target="toggleWrapper"]')).not.toBeNull();
+      const infoArgs = vi.mocked(console.info).mock.calls.flat();
+      expect(infoArgs.some((a: unknown) => String(a).includes('found 1 data-select-all container'))).toBe(true);
     });
 
     it('runs with zero containers', () => {
       runInit();
       expect(document.querySelectorAll(SELECTOR_CONTAINER).length).toBe(0);
+      const infoArgs = vi.mocked(console.info).mock.calls.flat();
+      expect(infoArgs.some((a: unknown) => String(a).includes('found 0 data-select-all container'))).toBe(true);
+    });
+
+    it('warns when containers are missing required wrapper attributes', () => {
+      const el = document.createElement('div');
+      el.setAttribute('data-controller', 'select-all');
+      el.setAttribute('data-select-all-debug-value', '1');
+      const choices = document.createElement('div');
+      choices.setAttribute('data-select-all-target', 'choices');
+      el.appendChild(choices);
+      document.body.appendChild(el);
+
+      runInit();
+
+      const warnArgs = vi.mocked(console.warn).mock.calls.flat();
+      expect(warnArgs.some((a: unknown) => String(a).includes('missing required select-all wrapper attributes'))).toBe(true);
     });
   });
 

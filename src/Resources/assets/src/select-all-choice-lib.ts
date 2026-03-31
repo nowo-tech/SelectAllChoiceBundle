@@ -7,6 +7,7 @@
 import { createBundleLogger, type BundleLogger } from './logger';
 
 let bundleLogger: BundleLogger | null = null;
+let hasLoggedConfiguredContainerCount = false;
 
 /** Injects the bundle logger (called from entry point so scriptLoaded/buildTime can be used). */
 export function setBundleLogger(log: BundleLogger): void {
@@ -17,8 +18,14 @@ export function setBundleLogger(log: BundleLogger): void {
 export function getLogger(): BundleLogger {
   if (bundleLogger === null) {
     bundleLogger = createBundleLogger('select-all-choice');
+    bundleLogger.scriptLoaded();
   }
   return bundleLogger;
+}
+
+/** Resets one-time logger guards (tests only). */
+export function resetSelectAllLibForTest(): void {
+  hasLoggedConfiguredContainerCount = false;
 }
 
 /** Data attribute for debug mode: when "1", all console logs are shown; otherwise only "script loaded". */
@@ -90,6 +97,51 @@ function getConfig(element: HTMLElement): ContainerConfig {
 
 function findChoices(container: HTMLElement): HTMLElement | null {
   return container.querySelector<HTMLElement>(`[${ATTR_TARGET}="choices"]`);
+}
+
+function hasRequiredWrapperAttributes(container: HTMLElement): boolean {
+  const requiredAttrs = [
+    ATTR_DEBUG,
+    'data-select-all-position-value',
+    'data-select-all-expanded-value',
+    'data-select-all-label-value',
+    'data-select-all-toggle-class-value',
+    'data-select-all-wrapper-class-value',
+    'data-select-all-label-class-value',
+  ];
+
+  return requiredAttrs.every((attr) => container.hasAttribute(attr));
+}
+
+function isConfiguredSelectAllContainer(container: HTMLElement): boolean {
+  return hasRequiredWrapperAttributes(container) && findChoices(container) !== null;
+}
+
+/**
+ * Logs how many select-all containers are fully configured in the current DOM.
+ * A container is considered configured when it has all required wrapper data attributes
+ * and a `data-select-all-target="choices"` child.
+ */
+export function logConfiguredContainerCount(): void {
+  if (hasLoggedConfiguredContainerCount) return;
+
+  const containers = document.querySelectorAll<HTMLElement>(SELECTOR_CONTAINER);
+  const configuredCount = Array.from(containers).filter((el) => isConfiguredSelectAllContainer(el)).length;
+  const missingStructureCount = containers.length - configuredCount;
+
+  getLogger().debug('logConfiguredContainerCount', {
+    containerCount: containers.length,
+    configuredCount,
+    missingStructureCount,
+  });
+  getLogger().info(
+    `runInit: found ${configuredCount} data-select-all container(s) with full wrapper attributes and choices target`,
+  );
+  if (missingStructureCount > 0) {
+    getLogger().warn(`runInit: ${missingStructureCount} container(s) are missing required select-all wrapper attributes or choices target`);
+  }
+
+  hasLoggedConfiguredContainerCount = true;
 }
 
 function createToggle(container: HTMLElement, config: ContainerConfig, choicesEl: HTMLElement): HTMLInputElement | null {
@@ -276,7 +328,8 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
  */
 export function runInit(): void {
   const containers = document.querySelectorAll<HTMLElement>(SELECTOR_CONTAINER);
-  getLogger().debug('runInit', { containerCount: containers.length });
+  logConfiguredContainerCount();
+
   const first = containers[0];
   if (first) {
     const debug = first.getAttribute(ATTR_DEBUG) === '1';

@@ -236,5 +236,6 @@ describe('logger', () => {
       expect(console.warn).toHaveBeenCalled();
       expect(console.error).toHaveBeenCalled();
     });
+
   });
 });

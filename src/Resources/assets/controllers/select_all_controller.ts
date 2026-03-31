@@ -12,7 +12,7 @@
  */
 
 import { Controller } from '@hotwired/stimulus';
-import { getLogger, initSelectAllContainer } from '../src/select-all-choice-lib';
+import { getLogger, initSelectAllContainer, logConfiguredContainerCount } from '../src/select-all-choice-lib';
 
 export default class SelectAllController extends Controller {
   connect(): void {
@@ -21,6 +21,7 @@ export default class SelectAllController extends Controller {
     });
     if (this.element instanceof HTMLElement) {
       const ok = initSelectAllContainer(this.element);
+      logConfiguredContainerCount();
       if (ok) {
         getLogger().debug('select-all (controller): container initialized');
       } else {
