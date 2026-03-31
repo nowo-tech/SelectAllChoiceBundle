@@ -13,6 +13,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.3.0 → 1.4.0](#130-140)
 - [1.4.0 → 1.4.1](#140-141)
 - [1.4.1 → 1.4.2](#141-142)
+- [1.4.2 → 1.4.3](#142-143)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -61,6 +62,12 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - Frontend: the bundle logger now properly enables debug/info/warn/error output after `setDebug(true)`, aligning the behavior with the controller/lib and the `data-select-all-debug-value="1"` development workflow.
 - QA/dev tooling: improved `make assets-test` TS coverage reporting and added `validate-translations` linting target. These affect the repo workflow, not consuming apps.
+
+## 1.4.2 → 1.4.3
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- Frontend logs in demo and Stimulus-driven contexts are more consistent: startup now reports configured `data-select-all` container counts and script-load messages in the expected flow.
+- If you use custom logging in your app, no migration is required; existing `setBundleLogger()` and debug toggle behavior remain unchanged.
 
 ## 1.x → 2.x (future)
 

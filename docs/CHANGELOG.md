@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.3] - 2026-03-31
+
+### Changed
+
+- **Select-all initialization logs**: the frontend now reports how many `data-select-all` containers are fully configured (wrapper attributes + choices target) during startup, with improved visibility in debug workflows.
+- **Stimulus integration in demos**: Symfony demo `app.ts` and controller wiring were adjusted so script-load and container-count logs are emitted consistently in demo environments.
+- **Tests and compatibility metadata**: updated TypeScript tests around logger/select-all behavior and refreshed demo lock/reference files for broader Symfony compatibility.
+
 ## [1.4.2] - 2026-03-30
 
 ### Changed
@@ -134,7 +142,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.2...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.3...HEAD
+[1.4.3]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.3
 [1.4.2]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.2
 [1.4.1]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.1
 [1.4.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.0
