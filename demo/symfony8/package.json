@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "typescript": "~5.7.3",
-    "vite": "^6.4.1"
+    "vite": "^6.4.2"
   },
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2"
