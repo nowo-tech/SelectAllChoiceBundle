@@ -12,7 +12,7 @@
             "dist": {
                 "type": "path",
                 "url": "/var/select-all-choice-bundle",
-                "reference": "7694d7e282a94fb30a6a7b73d39b112732dbad91"
+                "reference": "f15e63059bc8c048ca8493985be108129e5587ff"
             },
             "require": {
                 "php": ">=8.1 <8.6",
