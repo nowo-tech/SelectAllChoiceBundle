@@ -15,6 +15,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.1 → 1.4.2](#141-142)
 - [1.4.2 → 1.4.3](#142-143)
 - [1.4.3 → 1.4.4](#143-144)
+- [1.4.4 → 1.4.5](#144-145)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -75,6 +76,11 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - Twig integration is now strictly compatible with `twig.extension` service expectations: the bundle extension is explicitly a Twig `AbstractExtension` and declares functions via `getFunctions()`.
 - The `nowo_select_all_choice_asset_path` function name and `assetPath()` behavior are unchanged, so template usage remains fully backward compatible.
+
+## 1.4.4 → 1.4.5
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- This release refreshes lockfiles and repository tooling (CI, Dependabot, Cursor rules, demo Docker Compose DNS options) and rebuilds the published `select-all-choice.js`. Behaviour and public APIs are unchanged for consuming applications.
 
 ## 1.x → 2.x (future)
 

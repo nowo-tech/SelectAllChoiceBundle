@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.5] - 2026-04-15
+
+### Changed
+
+- **Repository tooling**: `.cursorignore`, Cursor rules for bundle development, GitHub workflows (`pr-lint`, stale issues), Dependabot tweaks, and Copilot instructions for contributors.
+- **Dependencies**: Refreshed `composer.lock` (bundle root and Symfony 7/8 demos) and npm/pnpm lockfiles; demo `docker-compose` adds DNS-related options to improve reliability on Docker/WSL.
+- **Public script**: Rebuilt `select-all-choice.js` after the dependency and build pipeline updates.
+
 ## [1.4.4] - 2026-03-31
 
 ### Fixed
@@ -153,7 +161,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.4...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.5...HEAD
+[1.4.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.5
 [1.4.4]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.4
 [1.4.3]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.3
 [1.4.2]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.2

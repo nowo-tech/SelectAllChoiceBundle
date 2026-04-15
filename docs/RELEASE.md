@@ -2,12 +2,12 @@
 
 This document describes how to cut a new release of SelectAllChoiceBundle.
 
-## Pre-release (v1.4.4)
+## Pre-release (v1.4.5)
 
-- [x] CHANGELOG: [1.4.4] with date and changes; [Unreleased] empty.
-- [x] UPGRADING: 1.4.3 → 1.4.4 section.
-- [ ] Run `make release-check` from the bundle root (composer-sync, cs-fix, cs-check, rector-dry, phpstan, test-coverage, assets-test, demo verify).
-- [ ] Commit all release-related file changes (docs, CHANGELOG, RELEASE, .gitattributes).
+- [x] CHANGELOG: [1.4.5] with date and changes; [Unreleased] empty.
+- [x] UPGRADING: 1.4.4 → 1.4.5 section.
+- [x] Run `make release-check` from the bundle root (composer-sync, cs-fix, cs-check, rector-dry, phpstan, test-coverage, assets-test, demo verify).
+- [x] Commit all release-related file changes (docs, CHANGELOG, RELEASE).
 
 ## Pre-release (every release)
 
@@ -18,17 +18,17 @@ This document describes how to cut a new release of SelectAllChoiceBundle.
 ## Tag and release
 
 1. Commit the changelog and version bumps.
-2. Create an annotated tag: `git tag -a v1.4.4 -m "Release 1.4.4"`.
-3. Push the tag: `git push origin v1.4.4` (or your default branch name, e.g. `main`).
+2. Create an annotated tag: `git tag -a v1.4.5 -m "Release 1.4.5"`.
+3. Push the tag: `git push origin v1.4.5` (or your default branch name, e.g. `main`).
 4. If the project uses GitHub Releases or CI, the tag push may trigger release notes and artifact uploads; complete any manual steps required by your workflow.
 
 **From the bundle repo root (if this is a standalone repo):**
 ```bash
 git add docs/CHANGELOG.md docs/UPGRADING.md docs/RELEASE.md README.md .gitattributes
-git commit -m "Release v1.4.4: changelog, upgrading, release doc"
-git tag -a v1.4.4 -m "Release 1.4.4"
+git commit -m "Release v1.4.5: changelog, upgrading, release doc"
+git tag -a v1.4.5 -m "Release 1.4.5"
 git push origin master
-git push origin v1.4.4
+git push origin v1.4.5
 ```
 
 ## Post-release
