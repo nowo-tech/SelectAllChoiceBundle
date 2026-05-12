@@ -17,9 +17,9 @@ build:
       ini:
         memory_limit: -1
         'xdebug.mode': coverage
-    node:
-      # Vite 6 / Vitest 2 expect a current Node LTS; Scrutinizer images do not ship pnpm on PATH.
-      version: 20
+    # No `node` block: Scrutinizer workers use glibc older than 2.28, so official Node 20+
+    # binaries (required by Vite 6 / Vitest 2 in this repo) fail at runtime after nvm download.
+    # TypeScript / Vitest runs in GitHub Actions and in Docker (`make assets-test`).
 
   cache:
     directories:
@@ -29,8 +29,6 @@ build:
     before:
       - composer validate --strict
       - composer install --no-interaction --prefer-dist --optimize-autoloader
-      # Scrutinizer provides npm/node but not pnpm; install before lockfile install + Vitest.
-      - npm install -g pnpm
     override:
       - command: composer test-coverage
         environment:
@@ -38,4 +36,3 @@ build:
         coverage:
           file: coverage.xml
           format: clover
-      - command: pnpm install --frozen-lockfile && pnpm run test
