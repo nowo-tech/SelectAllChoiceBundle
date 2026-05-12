@@ -22,7 +22,7 @@ Copy the original from `vendor/nowo-tech/select-all-choice-bundle/src/Resources/
 
 | Path (relative to bundle `Resources/views/`) | Purpose |
 |---------------------------------------------|---------|
-| `Form/_select_all_choice_wrapper.html.twig` | Wrapper fragment included by all theme variants (toggle + choices container). |
+| `Form/_select_all_choice_wrapper.html.twig` | Wrapper fragment included by all theme variants (toggle + choices container). Default host is `<nowo-select-all-choice>` with `data-controller="select-all"`. |
 | `Form/select_all_choice_theme.html.twig` | Default form theme (form_div_layout). |
 | `Form/select_all_choice_theme_table.html.twig` | Table layout theme. |
 | `Form/select_all_choice_theme_bootstrap5.html.twig` | Bootstrap 5 theme. |
@@ -46,7 +46,7 @@ The bundle outputs configurable CSS classes for:
 | **Toggle** (checkbox) | `default_toggle_css_class` → `form-check-input` | The "Select all" input |
 | **Wrapper** | `default_wrapper_css_class` → `form-check` | Div wrapping toggle + label |
 | **Label** | `default_label_css_class` → `form-check-label` | The "Select all" label |
-| **Container** | `default_container_css_class` → `form-check mb-2` | Outer div (toggle block + choices) |
+| **Container** | `default_container_css_class` → `form-check mb-2` | Outer host (default: `<nowo-select-all-choice>`; toggle block + choices) |
 
 You can set them globally in `config/packages/nowo_select_all_choice.yaml` or per field with `select_all_css_class`, `select_all_wrapper_css_class`, `select_all_label_css_class`, `select_all_container_css_class`. See [CONFIGURATION.md](CONFIGURATION.md#theme--css-framework-presets) and [USAGE.md](USAGE.md#per-field-css-classes-bootstrap-tailwind-custom).
 
@@ -113,12 +113,12 @@ Create `templates/form/select_all_choice_theme.html.twig` (or the path you used 
 {% endblock %}
 ```
 
-**Important:** The Stimulus controller expects:
+**Important:** The frontend expects:
 
-- A single element with `data-controller="select-all"` and the same `data-select-all-*-value` attributes (position, expanded, label, toggle class, wrapper class, label class).
+- A single **host** element with `data-controller="select-all"` and the same `data-select-all-*-value` attributes (position, expanded, label, toggle class, wrapper class, label class). The bundle’s default wrapper uses the `<nowo-select-all-choice>` custom element as that host; a plain `<div>` (or other element) works if it exposes the same attributes.
 - A child with `data-select-all-target="choices"` that wraps the original widget (from `form_layout_choice_widget_expanded` or `form_layout_choice_widget_collapsed`).
 
-If you change the structure, keep these so the controller still finds the container and the choices target.
+If you change the structure, keep these so the controller and standalone script still find the container and the choices target.
 
 ### 3. Fully custom markup
 
@@ -132,4 +132,4 @@ The controller creates the toggle (checkbox + label) in JavaScript and inserts i
 ## Summary
 
 - **Only change classes:** use config or per-field options; no theme override needed.
-- **Change HTML structure or attributes:** override `choice_widget_expanded` and/or `choice_widget_collapsed` in your form theme and keep `data-controller="select-all"` and `data-select-all-target="choices"` so the Stimulus controller keeps working.
+- **Change HTML structure or attributes:** override `choice_widget_expanded` and/or `choice_widget_collapsed` in your form theme and keep `data-controller="select-all"` and `data-select-all-target="choices"` so the Stimulus controller and standalone script keep working (host may be `<nowo-select-all-choice>` or any element with those attributes).

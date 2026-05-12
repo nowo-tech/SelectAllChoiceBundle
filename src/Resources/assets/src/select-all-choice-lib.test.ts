@@ -8,7 +8,9 @@ import {
   SELECTOR_CONTAINER,
   ATTR_INIT,
   ATTR_DEBUG,
+  TAG_NOWO_SELECT_ALL_CHOICE,
 } from './select-all-choice-lib';
+import { ensureNowoSelectAllChoiceDefined } from './nowo-select-all-choice-element';
 import { createBundleLogger } from './logger';
 
 describe('select-all-choice-lib', () => {
@@ -20,6 +22,7 @@ describe('select-all-choice-lib', () => {
     setBundleLogger(log);
     log.setDebug(true);
     resetSelectAllLibForTest();
+    ensureNowoSelectAllChoiceDefined();
   });
 
   afterEach(() => {
@@ -47,14 +50,14 @@ describe('select-all-choice-lib', () => {
 
       expect(el.querySelector('[data-select-all-target="toggleWrapper"]')).not.toBeNull();
       const infoArgs = vi.mocked(console.info).mock.calls.flat();
-      expect(infoArgs.some((a: unknown) => String(a).includes('found 1 data-select-all container'))).toBe(true);
+      expect(infoArgs.some((a: unknown) => String(a).includes('found 1 select-all container'))).toBe(true);
     });
 
     it('runs with zero containers', () => {
       runInit();
       expect(document.querySelectorAll(SELECTOR_CONTAINER).length).toBe(0);
       const infoArgs = vi.mocked(console.info).mock.calls.flat();
-      expect(infoArgs.some((a: unknown) => String(a).includes('found 0 data-select-all container'))).toBe(true);
+      expect(infoArgs.some((a: unknown) => String(a).includes('found 0 select-all container'))).toBe(true);
     });
 
     it('warns when containers are missing required wrapper attributes', () => {
@@ -300,14 +303,40 @@ describe('select-all-choice-lib', () => {
   });
 
   describe('exports', () => {
-    it('SELECTOR_CONTAINER matches data-controller containing select-all', () => {
-      expect(SELECTOR_CONTAINER).toBe('[data-controller*="select-all"]');
+    it('SELECTOR_CONTAINER matches custom element tag and legacy data-controller', () => {
+      expect(SELECTOR_CONTAINER).toBe('nowo-select-all-choice,[data-controller*="select-all"]');
     });
     it('ATTR_INIT is data-select-all-init', () => {
       expect(ATTR_INIT).toBe('data-select-all-init');
     });
     it('ATTR_DEBUG is data-select-all-debug-value', () => {
       expect(ATTR_DEBUG).toBe('data-select-all-debug-value');
+    });
+    it('TAG_NOWO_SELECT_ALL_CHOICE is the custom element local name', () => {
+      expect(TAG_NOWO_SELECT_ALL_CHOICE).toBe('nowo-select-all-choice');
+    });
+  });
+
+  describe('runInit with nowo-select-all-choice', () => {
+    it('initializes custom element root the same as legacy div', () => {
+      document.body.innerHTML = `
+        <${TAG_NOWO_SELECT_ALL_CHOICE}
+          data-controller="select-all"
+          data-select-all-debug-value="1"
+          data-select-all-position-value="before"
+          data-select-all-expanded-value="true"
+          data-select-all-label-value="Select all"
+          data-select-all-toggle-class-value="form-check-input"
+          data-select-all-wrapper-class-value="form-check"
+          data-select-all-label-class-value="form-check-label">
+          <div data-select-all-target="choices"></div>
+        </${TAG_NOWO_SELECT_ALL_CHOICE}>
+      `;
+      const el = document.body.querySelector(TAG_NOWO_SELECT_ALL_CHOICE) as HTMLElement;
+
+      runInit();
+
+      expect(el.querySelector('[data-select-all-target="toggleWrapper"]')).not.toBeNull();
     });
   });
 });

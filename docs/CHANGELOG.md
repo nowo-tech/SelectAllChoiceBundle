@@ -11,6 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.7] - 2026-05-12
+
+### Added
+
+- **`nowo-select-all-choice` custom element**: autonomous Web Component root used by the default Twig wrapper; registers once and runs the same `initSelectAllContainer` logic as Stimulus/standalone (with `display: block` to match former `<div>` layout).
+
+### Changed
+
+- **Default markup**: `_select_all_choice_wrapper.html.twig` now wraps the widget in `<nowo-select-all-choice …>` instead of an outer `<div>`, while keeping `data-controller="select-all"` and `data-select-all-target="choices"` unchanged.
+- **Discovery selector**: `runInit` / `MutationObserver` now treat both `nowo-select-all-choice` and `[data-controller*="select-all"]` as containers (see `SELECTOR_CONTAINER` in the library).
+- **Standalone and Stimulus entry**: both call `ensureNowoSelectAllChoiceDefined()` so the custom element upgrades as soon as the script loads.
+- **Public script**: rebuilt `select-all-choice.js` after the above asset changes.
+
+### Added (tests)
+
+- **`nowo-select-all-choice-element.test.ts`**: covers custom element registration, `connectedCallback` init, and idempotent `ensureNowoSelectAllChoiceDefined()`.
+
 ## [1.4.6] - 2026-05-12
 
 ### Changed
@@ -169,7 +186,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.6...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.7...HEAD
+[1.4.7]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.7
 [1.4.6]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.6
 [1.4.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.5
 [1.4.4]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.4

@@ -1,18 +1,17 @@
 /**
- * Stimulus controller for the "select-all" choice widget (UX component pattern).
- * Register this controller in your Stimulus application so that elements with
- * data-controller="select-all" are initialized when connected to the DOM
- * (e.g. in Turbo frames or when HTML is injected).
- *
- * The controller delegates to the lib; you do not need to load select-all-choice.js
- * if your app bundle includes this controller. Otherwise include the standalone
- * script so [data-controller*="select-all"] are auto-initialized and observed.
+ * Stimulus controller for the "select-all" choice widget (legacy hook alongside
+ * the `nowo-select-all-choice` custom element). Importing this module registers
+ * that custom element so markup can use either the autonomous element or
+ * data-controller="select-all" on a plain host.
  *
  * Register: application.register('select-all', SelectAllController);
  */
 
 import { Controller } from '@hotwired/stimulus';
+import { ensureNowoSelectAllChoiceDefined } from '../src/nowo-select-all-choice-element';
 import { getLogger, initSelectAllContainer, logConfiguredContainerCount } from '../src/select-all-choice-lib';
+
+ensureNowoSelectAllChoiceDefined();
 
 export default class SelectAllController extends Controller {
   connect(): void {

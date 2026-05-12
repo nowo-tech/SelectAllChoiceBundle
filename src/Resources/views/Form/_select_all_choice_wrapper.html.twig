@@ -2,7 +2,7 @@
   Shared wrapper for "Select all" choice widgets.
   Included by each form theme; receives form, expanded (true|false), and inner_content (captured block output).
 #}
-<div class="{{ form.vars.select_all_container_css_class }}"
+<nowo-select-all-choice class="{{ form.vars.select_all_container_css_class }}"
      data-controller="select-all"
      data-select-all-debug-value="{{ form.vars.select_all_debug ? '1' : '0' }}"
      data-select-all-position-value="{{ form.vars.select_all_position }}"
@@ -14,4 +14,4 @@
     <div data-select-all-target="choices">
         {{ inner_content|raw }}
     </div>
-</div>
+</nowo-select-all-choice>

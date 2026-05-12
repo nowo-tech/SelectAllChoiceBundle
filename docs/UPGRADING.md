@@ -17,6 +17,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.3 → 1.4.4](#143-144)
 - [1.4.4 → 1.4.5](#144-145)
 - [1.4.5 → 1.4.6](#145-146)
+- [1.4.6 → 1.4.7](#146-147)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -87,6 +88,12 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - If you load the bundle’s **standalone** `select-all-choice.js` from `Resources/public/`, you get improved console logging and initialization messaging only; Stimulus-driven apps that compile from the bundle TypeScript are unchanged unless you rebuild assets from this version.
+
+## 1.4.6 → 1.4.7
+
+- **No breaking changes** for normal Symfony form usage: the bundle still outputs `data-controller="select-all"` and `data-select-all-target="choices"`; only the **outer host tag** of the default wrapper is now `<nowo-select-all-choice>` (a registered autonomous custom element) instead of `<div>`.
+- If you **overrode** `_select_all_choice_wrapper.html.twig` or your own form theme copied the old outer `<div>`, you can keep that markup; the library still finds `[data-controller*="select-all"]`. Optionally align with the bundle default by using `<nowo-select-all-choice …>` as the outer host for consistency.
+- **Custom themes / CSS**: if selectors assumed a literal `div` wrapper (e.g. `form > div > …`), review them; class names and inner structure are unchanged.
 
 ## 1.x → 2.x (future)
 

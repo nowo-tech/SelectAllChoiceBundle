@@ -46,8 +46,11 @@ export const TARGET_TOGGLE = 'toggle';
 /** Target value for the toggle label. */
 export const TARGET_TOGGLE_LABEL = 'toggleLabel';
 
-/** Selector for container elements (standalone script and controller). */
-export const SELECTOR_CONTAINER = '[data-controller*="select-all"]';
+/** Tag name for the autonomous custom element root (see nowo-select-all-choice-element.ts). */
+export const TAG_NOWO_SELECT_ALL_CHOICE = 'nowo-select-all-choice';
+
+/** Selector for container elements (standalone script, custom element, and Stimulus). */
+export const SELECTOR_CONTAINER = `${TAG_NOWO_SELECT_ALL_CHOICE},[data-controller*="select-all"]`;
 
 export type ContainerConfig = {
   position: 'before' | 'after';
@@ -135,7 +138,7 @@ export function logConfiguredContainerCount(): void {
     missingStructureCount,
   });
   getLogger().info(
-    `runInit: found ${configuredCount} data-select-all container(s) with full wrapper attributes and choices target`,
+    `runInit: found ${configuredCount} select-all container(s) with full wrapper attributes and choices target`,
   );
   if (missingStructureCount > 0) {
     getLogger().warn(`runInit: ${missingStructureCount} container(s) are missing required select-all wrapper attributes or choices target`);
@@ -246,7 +249,7 @@ function dispatchChange(choicesEl: HTMLElement, expanded: boolean, state: Contai
  * Initializes one "select-all" container: creates the toggle, syncs state, binds listeners.
  * Idempotent: if the container is already initialized (data-select-all-init="1"), returns false.
  *
- * @param element - Root element with data-controller*="select-all" and data-select-all-* attributes.
+ * @param element - Root element: `nowo-select-all-choice` or legacy `data-controller*="select-all"`, with data-select-all-* attributes.
  * @returns true if initialization ran, false if skipped (e.g. already initialized or no choices target).
  */
 export function initSelectAllContainer(element: HTMLElement): boolean {
@@ -323,7 +326,7 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
 }
 
 /**
- * Initializes all [data-controller*="select-all"] elements in the document.
+ * Initializes all matching select-all roots (`nowo-select-all-choice` or `[data-controller*="select-all"]`) in the document.
  * Sets debug from the first container's data-select-all-debug-value.
  */
 export function runInit(): void {
@@ -352,8 +355,8 @@ function hasNewContainers(nodes: NodeList): boolean {
 }
 
 /**
- * Runs runInit() and starts a MutationObserver to initialize new [data-controller*="select-all"]
- * elements when they are added to the DOM (e.g. Turbo frames, AJAX).
+ * Runs runInit() and starts a MutationObserver to initialize new select-all roots when they are
+ * added to the DOM (e.g. Turbo frames, AJAX).
  */
 export function runInitAndObserve(): void {
   runInit();

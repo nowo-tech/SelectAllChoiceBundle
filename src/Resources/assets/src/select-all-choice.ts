@@ -1,11 +1,13 @@
 /**
  * SelectAllChoiceBundle standalone entry.
- * Creates the logger, exposes init/runInit/runInitAndObserve on window, and runs runInitAndObserve
- * when the DOM is ready so "Select all" works without Stimulus. For Stimulus apps, register the
- * controller from controllers/select_all_controller.ts and call initSelectAllContainer(element) on connect.
+ * Defines the `nowo-select-all-choice` custom element, creates the logger, exposes
+ * init/runInit/runInitAndObserve on window, and runs runInitAndObserve when the DOM is ready
+ * so "Select all" works without Stimulus. For Stimulus apps, import the controller module
+ * (which also registers the custom element) or call ensureNowoSelectAllChoiceDefined().
  */
 
 import { createBundleLogger } from './logger';
+import { ensureNowoSelectAllChoiceDefined } from './nowo-select-all-choice-element';
 import {
   setBundleLogger,
   runInitAndObserve,
@@ -13,6 +15,8 @@ import {
   initSelectAllContainer,
   getLogger,
 } from './select-all-choice-lib';
+
+ensureNowoSelectAllChoiceDefined();
 
 declare const __SELECT_ALL_CHOICE_BUILD_TIME__: string;
 

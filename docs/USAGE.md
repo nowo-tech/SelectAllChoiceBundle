@@ -20,7 +20,7 @@ Enable the "Select all" toggle on a multiple choice field by setting `select_all
 
 You can use the bundle in two ways:
 
-**1. Standalone script (no Stimulus required)** — Include the built script so all `[data-controller*="select-all"]` elements are auto-initialized on load and when new content is added (e.g. Turbo frames). Use the Twig function to get the asset path:
+**1. Standalone script (no Stimulus required)** — Include the built script so all select-all containers are auto-initialized on load and when new content is added (e.g. Turbo frames). The library matches the default bundle markup (`<nowo-select-all-choice>` and/or `[data-controller*="select-all"]`). Use the Twig function to get the asset path:
 
 ```twig
 <script src="{{ asset(nowo_select_all_choice_asset_path('select-all-choice.js')) }}" defer></script>
@@ -30,7 +30,7 @@ After `php bin/console assets:install`, the file is at `public/bundles/nowoselec
 
 **2. With Stimulus** — If your app already uses Stimulus, import the bundle’s controller and register it: `application.register('select-all', SelectAllController)`. You do not need to load the standalone script if your app bundle includes the controller; the controller calls the same init logic when elements connect.
 
-In both cases the backend renders the same markup (`data-controller="select-all"` and data attributes). The standalone script and the Stimulus controller share the same logic and avoid double-init via a `data-select-all-init` marker.
+In both cases the backend renders the same contract: a **single host element** with `data-controller="select-all"` and the `data-select-all-*-value` attributes, plus a child with `data-select-all-target="choices"`. The default bundle wrapper uses the **`<nowo-select-all-choice>`** autonomous custom element as that host (registered by the script). You can still use a plain `<div data-controller="select-all">` in custom themes; the standalone script and the Stimulus controller share the same logic and avoid double-init via a `data-select-all-init` marker.
 
 ## Basic example (expanded checkboxes)
 
@@ -167,7 +167,7 @@ You can customize the HTML (structure, wrappers, attributes) in two ways:
 
 After changing overrides, run `php bin/console cache:clear` if needed. A full list of overridable templates is in [THEMING.md — Overriding bundle template files](THEMING.md#overriding-bundle-template-files).
 
-**2. Override form theme blocks** — In your form theme, override the blocks `choice_widget_expanded` and/or `choice_widget_collapsed` so your markup wraps the choices. Keep a single element with `data-controller="select-all"` and the same `data-select-all-*-value` attributes, and a child with `data-select-all-target="choices"` that wraps the original widget. See [THEMING.md — Overriding the form theme](THEMING.md#overriding-the-form-theme) for a full example.
+**2. Override form theme blocks** — In your form theme, override the blocks `choice_widget_expanded` and/or `choice_widget_collapsed` so your markup wraps the choices. Keep a single host element with `data-controller="select-all"` and the same `data-select-all-*-value` attributes, and a child with `data-select-all-target="choices"` that wraps the original widget. The bundle default uses `<nowo-select-all-choice>` as the host; a `<div>` (or other element) is equally valid if it carries the same attributes. See [THEMING.md — Overriding the form theme](THEMING.md#overriding-the-form-theme) for a full example.
 
 ## Behaviour
 
@@ -178,7 +178,7 @@ After changing overrides, run `php bin/console cache:clear` if needed. A full li
 
 ## Debug (frontend)
 
-The bundle’s Stimulus controller uses a shared logger. By default only a single “script loaded” message is shown in the console. To enable all debug logs (connect, toggleAll, etc.), add the data attribute **`data-select-all-debug-value="1"`** to the element that has `data-controller="select-all"`. For example, in a custom form theme:
+The bundle’s Stimulus controller uses a shared logger. By default only a single “script loaded” message is shown in the console. To enable all debug logs (connect, toggleAll, etc.), add the data attribute **`data-select-all-debug-value="1"`** on the host element that has `data-controller="select-all"` (including when that host is `<nowo-select-all-choice>`). For example, in a custom form theme:
 
 ```html
 <div data-controller="select-all"
