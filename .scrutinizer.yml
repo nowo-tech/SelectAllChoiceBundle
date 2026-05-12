@@ -18,7 +18,8 @@ build:
         memory_limit: -1
         'xdebug.mode': coverage
     node:
-      version: 16
+      # Vite 6 / Vitest 2 expect a current Node LTS; Scrutinizer images do not ship pnpm on PATH.
+      version: 20
 
   cache:
     directories:
@@ -28,6 +29,8 @@ build:
     before:
       - composer validate --strict
       - composer install --no-interaction --prefer-dist --optimize-autoloader
+      # Scrutinizer provides npm/node but not pnpm; install before lockfile install + Vitest.
+      - npm install -g pnpm
     override:
       - command: composer test-coverage
         environment:
