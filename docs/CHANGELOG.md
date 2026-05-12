@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.6] - 2026-05-12
+
+### Changed
+
+- **Standalone script** (`select-all-choice.js`): clearer debug/info logging and a slightly streamlined initialization path for `data-select-all` containers (no API or attribute changes for consuming apps).
+- **Bundle root**: refreshed `composer.lock` after Composer sync during release QA.
+- **Demos (Symfony 7 and 8)**: refreshed `composer.lock` and Flex `config/reference.php` after dependency updates and code style alignment.
+
 ## [1.4.5] - 2026-04-15
 
 ### Changed
@@ -161,7 +169,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.5...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.6...HEAD
+[1.4.6]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.6
 [1.4.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.5
 [1.4.4]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.4
 [1.4.3]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.3

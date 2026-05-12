@@ -16,6 +16,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.2 → 1.4.3](#142-143)
 - [1.4.3 → 1.4.4](#143-144)
 - [1.4.4 → 1.4.5](#144-145)
+- [1.4.5 → 1.4.6](#145-146)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -81,6 +82,11 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - This release refreshes lockfiles and repository tooling (CI, Dependabot, Cursor rules, demo Docker Compose DNS options) and rebuilds the published `select-all-choice.js`. Behaviour and public APIs are unchanged for consuming applications.
+
+## 1.4.5 → 1.4.6
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- If you load the bundle’s **standalone** `select-all-choice.js` from `Resources/public/`, you get improved console logging and initialization messaging only; Stimulus-driven apps that compile from the bundle TypeScript are unchanged unless you rebuild assets from this version.
 
 ## 1.x → 2.x (future)
 
