@@ -11,6 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.8] - 2026-06-30
+
+### Added
+
+- **CodeRabbit**: `.coderabbit.yaml` and GitHub workflow for automated PR reviews on bundle source, tests, docs, and demo paths.
+- **`docs/SPEC-DRIVEN-DEVELOPMENT.md`**: product scope, user stories, `REQ-*` traceability anchors, and validation workflow (complements [ENGRAM.md](ENGRAM.md)).
+- **Makefile `update-deps`**: shared `REQ-MAKE-008` target (root Makefile and demo aggregate) via `.scripts/Makefile.update-deps.mk`.
+
+### Changed
+
+- **CI matrix**: PHPUnit now runs against Symfony **7.4** and **8.1** in addition to 7.0 and 8.0 (PHP 8.2–8.5; Symfony 8.x excluded on PHP 8.2–8.3).
+- **GitHub Release workflow**: `softprops/action-gh-release` bumped from v2 to v3.
+- **Demos**: Symfony 7 demo Flex constraint **7.4.***; Symfony 8 demo **8.1.***; refreshed lockfiles and Flex `config/reference.php`; `public/bundles/` symlinks for bundle assets in FrankenPHP containers.
+- **README**: Symfony compatibility badge aligned with supported ranges; link to spec-driven development doc.
+- **Dependencies**: refreshed root and demo `composer.lock` files.
+- **Scrutinizer**: environment and filter tweaks for the current PHP toolchain.
+- **`docs/ENGRAM.md`**: cross-link to spec-driven development.
+
 ## [1.4.7] - 2026-05-12
 
 ### Added
@@ -186,7 +204,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.7...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.8...HEAD
+[1.4.8]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.8
 [1.4.7]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.7
 [1.4.6]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.6
 [1.4.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.5
