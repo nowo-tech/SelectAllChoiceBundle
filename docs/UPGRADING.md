@@ -18,6 +18,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.4 → 1.4.5](#144-145)
 - [1.4.5 → 1.4.6](#145-146)
 - [1.4.6 → 1.4.7](#146-147)
+- [1.4.7 → 1.4.8](#147-148)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -94,6 +95,11 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 - **No breaking changes** for normal Symfony form usage: the bundle still outputs `data-controller="select-all"` and `data-select-all-target="choices"`; only the **outer host tag** of the default wrapper is now `<nowo-select-all-choice>` (a registered autonomous custom element) instead of `<div>`.
 - If you **overrode** `_select_all_choice_wrapper.html.twig` or your own form theme copied the old outer `<div>`, you can keep that markup; the library still finds `[data-controller*="select-all"]`. Optionally align with the bundle default by using `<nowo-select-all-choice …>` as the outer host for consistency.
 - **Custom themes / CSS**: if selectors assumed a literal `div` wrapper (e.g. `form > div > …`), review them; class names and inner structure are unchanged.
+
+## 1.4.7 → 1.4.8
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- This release refreshes CI (Symfony 7.4 / 8.1 matrix), repository tooling (CodeRabbit, shared `update-deps` Make targets, Scrutinizer), demo lockfiles and Flex constraints (7.4.* / 8.1.*), and contributor docs ([SPEC-DRIVEN-DEVELOPMENT.md](SPEC-DRIVEN-DEVELOPMENT.md)). Behaviour and public APIs are unchanged for consuming applications.
 
 ## 1.x → 2.x (future)
 
