@@ -19,6 +19,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.5 → 1.4.6](#145-146)
 - [1.4.6 → 1.4.7](#146-147)
 - [1.4.7 → 1.4.8](#147-148)
+- [1.4.8 → 1.4.9](#148-149)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -100,6 +101,13 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - This release refreshes CI (Symfony 7.4 / 8.1 matrix), repository tooling (CodeRabbit, shared `update-deps` Make targets, Scrutinizer), demo lockfiles and Flex constraints (7.4.* / 8.1.*), and contributor docs ([SPEC-DRIVEN-DEVELOPMENT.md](SPEC-DRIVEN-DEVELOPMENT.md)). Behaviour and public APIs are unchanged for consuming applications.
+
+## 1.4.8 → 1.4.9
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- Adds **GitHub Spec Kit** scaffolding (`.specify/`, Cursor skills, `specs/001-baseline/`) and [`SPEC-KIT.md`](SPEC-KIT.md) for maintainers; expands [SPEC-DRIVEN-DEVELOPMENT.md](SPEC-DRIVEN-DEVELOPMENT.md). These are contributor/maintainer assets — not part of the Composer dist contract for consuming apps.
+- **`pnpm-workspace.yaml`** at the bundle root allows esbuild builds when using pnpm in this repo; consumer apps are unaffected unless they vendor and build from source.
+- Demo `public/bundles/` symlinks are no longer in git (ignored; recreated in FrankenPHP containers at runtime). Forks that run demos locally should follow [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md).
 
 ## 1.x → 2.x (future)
 

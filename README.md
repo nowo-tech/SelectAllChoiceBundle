@@ -114,6 +114,7 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 - [Security](docs/SECURITY.md)
 - [Engram](docs/ENGRAM.md)
 - [Spec-driven development](docs/SPEC-DRIVEN-DEVELOPMENT.md)
+- [GitHub Spec Kit](docs/SPEC-KIT.md)
 
 ### Additional documentation
 
