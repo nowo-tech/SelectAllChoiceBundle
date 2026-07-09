@@ -2,10 +2,10 @@
 
 This document describes how to cut a new release of SelectAllChoiceBundle.
 
-## Pre-release (v1.4.8)
+## Pre-release (v1.4.9)
 
-- [x] CHANGELOG: [1.4.8] with date and changes; [Unreleased] empty.
-- [x] UPGRADING: 1.4.7 → 1.4.8 section.
+- [x] CHANGELOG: [1.4.9] with date and changes; [Unreleased] empty.
+- [x] UPGRADING: 1.4.8 → 1.4.9 section.
 - [ ] Run `make release-check` from the bundle root (composer-sync, cs-fix, cs-check, rector-dry, phpstan, test-coverage, assets-test, demo verify).
 - [ ] Commit all release-related file changes (docs, CHANGELOG, RELEASE, demos if lockfiles changed).
 
@@ -18,17 +18,17 @@ This document describes how to cut a new release of SelectAllChoiceBundle.
 ## Tag and release
 
 1. Commit the changelog and version bumps.
-2. Create an annotated tag: `git tag -a v1.4.8 -m "Release 1.4.8"`.
-3. Push the tag: `git push origin v1.4.8` (or your default branch name, e.g. `main`).
+2. Create an annotated tag: `git tag -a v1.4.9 -m "Release 1.4.9"`.
+3. Push the tag: `git push origin v1.4.9` (or your default branch name, e.g. `main`).
 4. If the project uses GitHub Releases or CI, the tag push may trigger release notes and artifact uploads; complete any manual steps required by your workflow.
 
 **From the bundle repo root (if this is a standalone repo):**
 ```bash
-git add composer.lock docs/CHANGELOG.md docs/UPGRADING.md docs/RELEASE.md README.md demo/ .github/ .coderabbit.yaml Makefile
-git commit -m "Release v1.4.8: CI matrix, CodeRabbit, docs, and demo locks"
-git tag -a v1.4.8 -m "Release 1.4.8"
+git add docs/CHANGELOG.md docs/UPGRADING.md docs/RELEASE.md README.md composer.lock demo/ pnpm-workspace.yaml .specify/ .cursor/skills/ specs/ src/Resources/public/select-all-choice.js
+git commit -m "Release v1.4.9: Spec Kit baseline, docs, and pnpm workspace"
+git tag -a v1.4.9 -m "Release 1.4.9"
 git push origin master
-git push origin v1.4.8
+git push origin v1.4.9
 ```
 
 ## Post-release

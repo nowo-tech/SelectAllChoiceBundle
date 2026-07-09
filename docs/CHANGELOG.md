@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.9] - 2026-07-09
+
+### Added
+
+- **GitHub Spec Kit**: `.specify/` scaffolding, Cursor Agent skills (`.cursor/skills/speckit-*`), baseline spec [`specs/001-baseline/`](../../specs/001-baseline/) (`spec.md`, `code-inventory.md` covering 100% of `src/`).
+- **`docs/SPEC-KIT.md`**: operator manual for installing Specify CLI, initializing Spec Kit, folder layout, Cursor skills, and maintainer checklist.
+- **`pnpm-workspace.yaml`**: allows esbuild build scripts under pnpm supply-chain policies.
+
+### Changed
+
+- **`docs/SPEC-DRIVEN-DEVELOPMENT.md`**: three-layer model (Spec Kit baseline, product behavior, `REQ-*` anchors); bundle-specific user stories and functional scope table; Vitest validation notes; Spec Kit maintainer workflow.
+- **README**: link to [SPEC-KIT.md](SPEC-KIT.md).
+- **Demos**: `public/bundles/` added to demo `.gitignore` (symlinks no longer committed; created at container runtime); refreshed demo lockfiles.
+- **Dependencies**: refreshed root `composer.lock`.
+- **Public script**: rebuilt `select-all-choice.js` (build artifact sync only; no behaviour change).
+
 ## [1.4.8] - 2026-06-30
 
 ### Added
@@ -204,7 +220,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.8...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.9...HEAD
+[1.4.9]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.9
 [1.4.8]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.8
 [1.4.7]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.7
 [1.4.6]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.6
