@@ -6,8 +6,8 @@ This document describes how to cut a new release of SelectAllChoiceBundle.
 
 - [x] CHANGELOG: [1.4.9] with date and changes; [Unreleased] empty.
 - [x] UPGRADING: 1.4.8 → 1.4.9 section.
-- [ ] Run `make release-check` from the bundle root (composer-sync, cs-fix, cs-check, rector-dry, phpstan, test-coverage, assets-test, demo verify).
-- [ ] Commit all release-related file changes (docs, CHANGELOG, RELEASE, demos if lockfiles changed).
+- [x] Run `make release-check` from the bundle root (composer-sync, cs-fix, cs-check, rector-dry, phpstan, test-coverage, assets-test; demo verify skipped locally — `docker: Permission denied` in demo containers).
+- [x] Commit all release-related file changes (docs, CHANGELOG, RELEASE, demos if lockfiles changed).
 
 ## Pre-release (every release)
 
