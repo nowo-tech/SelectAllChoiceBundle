@@ -20,6 +20,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.6 → 1.4.7](#146-147)
 - [1.4.7 → 1.4.8](#147-148)
 - [1.4.8 → 1.4.9](#148-149)
+- [1.4.9 → 1.4.10](#149-1410)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -108,6 +109,11 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 - Adds **GitHub Spec Kit** scaffolding (`.specify/`, Cursor skills, `specs/001-baseline/`) and [`SPEC-KIT.md`](SPEC-KIT.md) for maintainers; expands [SPEC-DRIVEN-DEVELOPMENT.md](SPEC-DRIVEN-DEVELOPMENT.md). These are contributor/maintainer assets — not part of the Composer dist contract for consuming apps.
 - **`pnpm-workspace.yaml`** at the bundle root allows esbuild builds when using pnpm in this repo; consumer apps are unaffected unless they vendor and build from source.
 - Demo `public/bundles/` symlinks are no longer in git (ignored; recreated in FrankenPHP containers at runtime). Forks that run demos locally should follow [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md).
+
+## 1.4.9 → 1.4.10
+
+- **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
+- Repository hygiene only: CI job and scripts enforce **no Cursor co-author trailers** in git history ([GITHUB_CI.md](GITHUB_CI.md), REQ-GIT-001); Contributor Covenant in [`CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md). Contributors should run `make setup-hooks` once per clone.
 
 ## 1.x → 2.x (future)
 
