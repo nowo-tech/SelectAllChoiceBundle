@@ -4,7 +4,7 @@ COMPOSE      := docker compose -f $(COMPOSE_FILE)
 SERVICE_PHP  := php
 RUN          := $(COMPOSE) exec -T $(SERVICE_PHP)
 
-.PHONY: help up down shell install test test-coverage coverage-php-percent cs-check cs-fix qa clean ensure-up
+.PHONY: help up down shell install test test-coverage coverage-php-percent cs-check cs-fix qa clean ensure-up check-no-cursor-coauthor strip-cursor-coauthor-from-history
 .PHONY: release-check release-check-demos composer-sync assets build rector rector-dry phpstan update validate validate-translations
 .PHONY: assets-test assets-dev assets-watch assets-clean
 .PHONY: up-symfony7 up-symfony8 down-symfony7 down-symfony8
@@ -100,7 +100,7 @@ update: ensure-up
 validate: ensure-up
 	$(RUN) composer validate --strict
 
-release-check: ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage assets-test release-check-demos
+release-check: check-no-cursor-coauthor ensure-up composer-sync cs-fix cs-check rector-dry phpstan test-coverage assets-test release-check-demos
 
 release-check-demos:
 	@$(MAKE) -C demo release-check
@@ -147,6 +147,20 @@ validate-translations: ensure-up
 	$(RUN) vendor/bin/yaml-lint src/Resources/translations
 
 
+
+setup-hooks:
+	@chmod +x .githooks/pre-commit 2>/dev/null || true
+	@chmod +x .githooks/commit-msg 2>/dev/null || true
+	@git config core.hooksPath .githooks
+	@echo "✅ Git hooks installed (.githooks — includes commit-msg for REQ-GIT-001)."
+
 # REQ-MAKE-008: update-deps (REQ-MAKE-008)
 BUNDLE_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 include $(BUNDLE_ROOT)/../.scripts/Makefile.update-deps.mk
+check-no-cursor-coauthor:
+	@chmod +x .scripts/check-no-cursor-coauthor.sh
+	@./.scripts/check-no-cursor-coauthor.sh HEAD
+
+strip-cursor-coauthor-from-history:
+	@chmod +x .scripts/strip-cursor-coauthor-from-history.sh
+	@./.scripts/strip-cursor-coauthor-from-history.sh main

@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.10] - 2026-07-16
+
+### Added
+
+- **REQ-GIT-001**: `.scripts/check-no-cursor-coauthor.sh`, `.githooks/commit-msg`, Cursor rule `.cursor/rules/01-git-commits.mdc`, and CI job `git-hygiene` so commit history must not contain Cursor co-author trailers.
+- **`docs/GITHUB_CI.md`**: operator and CI reference for GitHub Actions hygiene (REQ-GIT-001).
+- **`CODE_OF_CONDUCT.md`**: Contributor Covenant; linked from README and CONTRIBUTING.
+- **Makefile**: `setup-hooks`, `check-no-cursor-coauthor`, `strip-cursor-coauthor-from-history`; `release-check` now runs the co-author check first.
+
+### Changed
+
+- **CONTRIBUTING**: Code of Conduct section and Git hooks guidance (`make setup-hooks`).
+- **RELEASE**: remind maintainers to re-run `make check-no-cursor-coauthor` after the release commit, before push.
+- **`.gitignore`**: ignore `.cursor/sandbox.json` (REQ-IDE-005).
+- **Dependencies**: refreshed root and demo `composer.lock` files during release QA.
+
 ## [1.4.9] - 2026-07-09
 
 ### Added
@@ -220,7 +236,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.9...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.10...HEAD
+[1.4.10]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.10
 [1.4.9]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.9
 [1.4.8]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.8
 [1.4.7]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.7
