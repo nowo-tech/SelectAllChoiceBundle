@@ -104,10 +104,12 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 
 ## Documentation
 
+- [GitHub Actions CI requirements](docs/GITHUB_CI.md)
 - [Installation](docs/INSTALLATION.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [Usage](docs/USAGE.md)
 - [Contributing](docs/CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Changelog](docs/CHANGELOG.md)
 - [Upgrading](docs/UPGRADING.md)
 - [Release](docs/RELEASE.md)
@@ -133,7 +135,7 @@ See [docs/INSTALLATION.md](docs/INSTALLATION.md#requirements) for details.
 
 ## Demo
 
-Demos for Symfony 7 and 8 are in `demo/symfony7`, `demo/symfony8`. Run from the bundle root: `make up-symfony7` (http://localhost:8007) or `make up-symfony8` (http://localhost:8008). See [demo/README.md](demo/README.md) for details.
+The Symfony 8 demo is in `demo/symfony8`. Run from the bundle root: `make up-symfony8` (http://localhost:8008). See [demo/README.md](demo/README.md) for details.
 
 The demos use **FrankenPHP** with a **single `docker/frankenphp/Caddyfile`** and **`php_server` without workers** so template and asset changes show up on refresh (see [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md)). You can deploy with **worker mode** in production if you follow the production section of that doc; the bundle itself works with or without FrankenPHP workers.
 
