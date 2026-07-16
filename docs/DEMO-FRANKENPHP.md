@@ -36,7 +36,7 @@ The main difference between development and production is:
 | Symfony cache on startup | Cleared | Not cleared (or warmup only) |
 | `APP_ENV` / `APP_DEBUG` | `dev` / `1` | `prod` / `0` |
 
-### This repository’s demos (`demo/symfony7`, `demo/symfony8`)
+### This repository’s demo (`demo/symfony8`)
 
 The bundled demos use a **single** `docker/frankenphp/Caddyfile` mounted read-only into the container. It configures **`php_server` without a `worker` directive** (development-friendly: fresh PHP per request, no long-lived workers). There is **no** separate `Caddyfile.dev` / entrypoint swap in these demos; **production with workers** is described in [Production configuration](#production-configuration) if you want to build a prod image or second compose override.
 
@@ -50,7 +50,7 @@ The demo applications are configured for **local development and debugging**:
 - **Symfony Debug bundle** (`Symfony\Bundle\DebugBundle\DebugBundle`) — enabled in `dev` and `test`. Required for the profiler and improved error pages.
 - **Nowo Twig Inspector** (`Nowo\TwigInspectorBundle\NowoTwigInspectorBundle`) — enabled in `dev` and `test`. Allows inspecting which Twig template and block produced each part of the HTML (e.g. via comments in the output or a browser overlay).
 
-Example `config/bundles.php` (aligned with `demo/symfony7` / `demo/symfony8`):
+Example `config/bundles.php` (aligned with `demo/symfony8`):
 
 ```php
 <?php

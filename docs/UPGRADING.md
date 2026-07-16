@@ -21,6 +21,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.7 → 1.4.8](#147-148)
 - [1.4.8 → 1.4.9](#148-149)
 - [1.4.9 → 1.4.10](#149-1410)
+- [1.4.10 → 1.4.11](#1410-1411)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -114,6 +115,11 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 
 - **No breaking changes.** Safe to upgrade; no required code changes in consumer projects.
 - Repository hygiene only: CI job and scripts enforce **no Cursor co-author trailers** in git history ([GITHUB_CI.md](GITHUB_CI.md), REQ-GIT-001); Contributor Covenant in [`CODE_OF_CONDUCT.md`](../CODE_OF_CONDUCT.md). Contributors should run `make setup-hooks` once per clone.
+
+## 1.4.10 → 1.4.11
+
+- **No breaking changes** for consuming applications. Public API, configuration, and Symfony 7/8 package constraints are unchanged.
+- **Repository demos only:** `demo/symfony7` was removed. Use `demo/symfony8` (`make up-symfony8`, http://localhost:8008). Forks that still referenced `make up-symfony7` or `demo/symfony7` should switch to the Symfony 8 demo; see [demo/README.md](../demo/README.md) and [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md).
 
 ## 1.x → 2.x (future)
 
