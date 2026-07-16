@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - (Nothing yet.)
 
+## [1.4.11] - 2026-07-16
+
+### Removed
+
+- **Demo Symfony 7** (`demo/symfony7/`): the repository now ships only the Symfony 8 demo (`demo/symfony8`, port 8008). Bundle support for Symfony 7 in consuming apps is unchanged (CI matrix and `composer.json` constraints remain).
+
+### Changed
+
+- **Demo tooling**: root and `demo/Makefile` targets are Symfony 8–only (`up-symfony8`, etc.).
+- **Docs**: [README](../README.md), [demo/README.md](../demo/README.md), and [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md) updated to describe the single Symfony 8 demo.
+
 ## [1.4.10] - 2026-07-16
 
 ### Added
@@ -236,7 +247,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.10...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.4.11...HEAD
+[1.4.11]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.11
 [1.4.10]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.10
 [1.4.9]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.9
 [1.4.8]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.8

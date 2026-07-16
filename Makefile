@@ -7,7 +7,7 @@ RUN          := $(COMPOSE) exec -T $(SERVICE_PHP)
 .PHONY: help up down shell install test test-coverage coverage-php-percent cs-check cs-fix qa clean ensure-up check-no-cursor-coauthor strip-cursor-coauthor-from-history
 .PHONY: release-check release-check-demos composer-sync assets build rector rector-dry phpstan update validate validate-translations
 .PHONY: assets-test assets-dev assets-watch assets-clean
-.PHONY: up-symfony7 up-symfony8 down-symfony7 down-symfony8
+.PHONY: up-symfony8 down-symfony8
 
 help:
 	@echo "SelectAllChoiceBundle - Development Commands (Docker)"
@@ -105,14 +105,8 @@ release-check: check-no-cursor-coauthor ensure-up composer-sync cs-fix cs-check 
 release-check-demos:
 	@$(MAKE) -C demo release-check
 
-up-symfony7:
-	$(MAKE) -C demo/symfony7 up
-
 up-symfony8:
 	$(MAKE) -C demo/symfony8 up
-
-down-symfony7:
-	$(MAKE) -C demo/symfony7 down
 
 down-symfony8:
 	$(MAKE) -C demo/symfony8 down
