@@ -2,26 +2,28 @@
 
 [![CI](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/select-all-choice-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/select-all-choice-bundle.svg)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6.0%2B%20%7C%207.4%2B%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com)
 
-![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
-
-This bundle is **FrankenPHP worker mode friendly**.
+> ⭐ **Found this useful?** Give it a **star** on [GitHub](https://github.com/nowo-tech/SelectAllChoiceBundle) so more developers can find it.
 
 **Symfony bundle that adds an optional "Select all" checkbox for ChoiceType fields with multiple=true** — for both expanded (checkboxes) and collapsed (select multiple) rendering. **Frontend-driven**: the backend marks the field and passes config via data attributes; a **Stimulus** controller creates and manages the toggle in the browser. Built with **TypeScript** and **Vite** (no Webpack Encore, no Importmap). For **Symfony 6, 7 and 8** · PHP 8.1+.
 
-> ⭐ **Found this useful?** Give it a **star** on [GitHub](https://github.com/nowo-tech/SelectAllChoiceBundle) so more developers can find it.
+![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
+
+This bundle is **FrankenPHP worker mode friendly**.
 
 ## Table of contents
 
 - [Quick search terms](#quick-search-terms)
 - [Features](#features)
 - [Installation](#installation)
+- [Requirements](#requirements)
 - [Configuration](#configuration)
 - [Usage](#usage)
-- [Documentation](#documentation)
-- [Requirements](#requirements)
 - [Demo](#demo)
 - [Development](#development)
-- [License & author](#license--author)
+- [Documentation](#documentation)
+- [Tests and coverage](#tests-and-coverage)
+- [License](#license)
+- [Author](#author)
 
 ## Quick search terms
 
@@ -72,6 +74,15 @@ return [
 
 Full steps (path repository, Vite alias, Option B copy assets): [docs/INSTALLATION.md](docs/INSTALLATION.md).
 
+## Requirements
+
+- PHP >= 8.2
+- **Symfony 7 or 8** (^7.0 \|\| ^8.0)
+- **Stimulus** optional — use the built `select-all-choice.js` script for standalone auto-init, or Stimulus (e.g. `symfony/stimulus-bundle`) if you register the controller in your app bundle
+- **Vite** to build the bundle’s assets (or use the pre-built script from the bundle’s public dir)
+
+See [docs/INSTALLATION.md](docs/INSTALLATION.md#requirements) for details.
+
 ## Configuration
 
 Create `config/packages/nowo_select_all_choice.yaml` to override defaults:
@@ -112,6 +123,16 @@ $builder->add('roles', ChoiceType::class, [
 
 Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) for all per-field options and examples.
 
+## Demo
+
+The Symfony 8 demo is in `demo/symfony8`. Run from the bundle root: `make up-symfony8` (http://localhost:8008). See [demo/README.md](demo/README.md) for details.
+
+The demos use **FrankenPHP** with a **single `docker/frankenphp/Caddyfile`** and **`php_server` without workers** so template and asset changes show up on refresh (see [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md)). You can deploy with **worker mode** in production if you follow the production section of that doc; the bundle itself works with or without FrankenPHP workers.
+
+## Development
+
+Run tests and QA with Docker: `make up && make install && make test` (or `make test-coverage`, `make qa`). Without Docker: `composer install && composer test`. See [Makefile](Makefile) for all targets.
+
 ## Documentation
 
 - [GitHub Actions CI requirements](docs/GITHUB_CI.md)
@@ -133,25 +154,6 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 - [Theming](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML), and [overriding bundle template files](docs/THEMING.md#overriding-bundle-template-files)
 - [Overriding translations](docs/CONFIGURATION.md#translations) — use your app’s `translations/` with the same domain and locale to override bundle messages
 - [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md) — development vs production setup, Web Profiler, Twig Inspector; reusable for other bundles
-
-## Requirements
-
-- PHP >= 8.2
-- **Symfony 7 or 8** (^7.0 \|\| ^8.0)
-- **Stimulus** optional — use the built `select-all-choice.js` script for standalone auto-init, or Stimulus (e.g. `symfony/stimulus-bundle`) if you register the controller in your app bundle
-- **Vite** to build the bundle’s assets (or use the pre-built script from the bundle’s public dir)
-
-See [docs/INSTALLATION.md](docs/INSTALLATION.md#requirements) for details.
-
-## Demo
-
-The Symfony 8 demo is in `demo/symfony8`. Run from the bundle root: `make up-symfony8` (http://localhost:8008). See [demo/README.md](demo/README.md) for details.
-
-The demos use **FrankenPHP** with a **single `docker/frankenphp/Caddyfile`** and **`php_server` without workers** so template and asset changes show up on refresh (see [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md)). You can deploy with **worker mode** in production if you follow the production section of that doc; the bundle itself works with or without FrankenPHP workers.
-
-## Development
-
-Run tests and QA with Docker: `make up && make install && make test` (or `make test-coverage`, `make qa`). Without Docker: `composer install && composer test`. See [Makefile](Makefile) for all targets.
 
 ## Tests and coverage
 
