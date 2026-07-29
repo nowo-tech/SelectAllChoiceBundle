@@ -20,13 +20,19 @@ Enable the "Select all" toggle on a multiple choice field by setting `select_all
 
 You can use the bundle in two ways:
 
-**1. Standalone script (no Stimulus required)** — Include the built script so all select-all containers are auto-initialized on load and when new content is added (e.g. Turbo frames). The library matches the default bundle markup (`<nowo-select-all-choice>` and/or `[data-controller*="select-all"]`). Use the Twig function to get the asset path:
+**1. Standalone script (no Stimulus required)** — Include the built script so all select-all containers are auto-initialized on load and when new content is added (e.g. Turbo frames). The library matches the default bundle markup (`<nowo-select-all-choice>` and/or `[data-controller*="select-all"]`). Use the named Symfony asset package (REQ-ASSETS-004):
 
 ```twig
-<script src="{{ asset(nowo_select_all_choice_asset_path('select-all-choice.js')) }}" defer></script>
+<script src="{{ asset(nowo_select_all_choice_asset_path('select-all-choice.js'), nowo_select_all_choice_asset_package()) }}" defer></script>
 ```
 
-After `php bin/console assets:install`, the file is at `public/bundles/nowoselectallchoice/select-all-choice.js`. The script runs `runInitAndObserve()` on DOM ready and sets up a `MutationObserver` for dynamically added elements.
+Equivalent without helpers:
+
+```twig
+<script src="{{ asset('select-all-choice.js', 'nowo_select_all_choice') }}" defer></script>
+```
+
+Run `php bin/console assets:install` after install/upgrade. The file is published under `public/bundles/nowoselectallchoice/select-all-choice.js`. The script runs `runInitAndObserve()` on DOM ready and sets up a `MutationObserver` for dynamically added elements.
 
 **2. With Stimulus** — If your app already uses Stimulus, import the bundle’s controller and register it: `application.register('select-all', SelectAllController)`. You do not need to load the standalone script if your app bundle includes the controller; the controller calls the same init logic when elements connect.
 

@@ -1,6 +1,13 @@
 # Makefile for SelectAllChoiceBundle Demo - Symfony 8
+# Prefer Compose V2; absolute docker path avoids shadowing by local docker/ when PATH has "." (REQ-MAKE-010).
+DOCKER_BIN := $(shell command -v docker 2>/dev/null)
 COMPOSE_FILE := docker-compose.yml
-COMPOSE     := docker compose -f $(COMPOSE_FILE)
+ifeq ($(DOCKER_BIN),)
+COMPOSE_BIN := docker-compose
+else
+COMPOSE_BIN := $(shell $(DOCKER_BIN) compose version >/dev/null 2>&1 && echo "$(DOCKER_BIN) compose" || echo "docker-compose")
+endif
+COMPOSE     := $(COMPOSE_BIN) -f $(COMPOSE_FILE)
 SERVICE_PHP := php
 
 .PHONY: help up down restart build install shell logs cache-clear update-bundle ensure-up ensure-install test test-coverage assets verify
@@ -89,4 +96,5 @@ verify: ensure-up
 
 # REQ-MAKE-008: update-deps (REQ-MAKE-008)
 BUNDLE_ROOT := $(abspath $(dir $(lastword $(MAKEFILE_LIST)))/../..)
-include $(BUNDLE_ROOT)/../.scripts/Makefile.demo-update-deps.mk
+# Optional: monorepo helper absent on standalone GitHub Actions checkout (REQ-MAKE-009).
+-include $(BUNDLE_ROOT)/../.scripts/Makefile.demo-update-deps.mk

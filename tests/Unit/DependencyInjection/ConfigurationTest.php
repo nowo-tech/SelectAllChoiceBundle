@@ -6,6 +6,7 @@ namespace Nowo\SelectAllChoiceBundle\Tests\Unit\DependencyInjection;
 
 use Nowo\SelectAllChoiceBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 
 final class ConfigurationTest extends TestCase
@@ -58,7 +59,7 @@ final class ConfigurationTest extends TestCase
         $processor     = new Processor();
         $configuration = new Configuration();
 
-        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('default_position must be "before" or "after"');
 
         $processor->processConfiguration($configuration, [['default_position' => 'invalid']]);

@@ -8,7 +8,7 @@ This document describes how the bundle’s demo applications run under **Franken
 - [What the demos include](#what-the-demos-include)
 - [Development configuration](#development-configuration)
 - [Production configuration](#production-configuration)
-- [Switching between development and production](#switching-between-development-and-production)
+- [Switching classic vs worker (`FRANKENPHP_MODE`)](#switching-classic-vs-worker-frankenphp_mode)
 - [Reproducing in another bundle](#reproducing-in-another-bundle)
 - [Troubleshooting](#troubleshooting)
 
@@ -342,7 +342,7 @@ Ensure the application is installed (e.g. `composer install --no-dev`) and the c
 
 ---
 
-## Switching between development and production
+## Switching classic vs worker (`FRANKENPHP_MODE`)
 
 - **Development:** Use the development Caddyfile (no `worker`), mount `php-dev.ini`, set `APP_ENV=dev` and `APP_DEBUG=1`. Use `config/packages/dev/twig.yaml` with `cache: false`.
 - **Production:** Use the production Caddyfile (with `worker`), do not mount `php-dev.ini`, set `APP_ENV=prod` and `APP_DEBUG=0`. Rely on default Twig cache.

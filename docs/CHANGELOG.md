@@ -7,9 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.12] - 2026-07-29
+
 ### Added
 
-- (Nothing yet.)
+- Named Symfony asset package `nowo_select_all_choice` + `nowo_select_all_choice_asset_package()` (REQ-ASSETS-004); direct `symfony/asset` dependency.
+- `make check-open-prs`, `coverage-check`, `down-dev`, `demo-smoke`; `release-check` gates open PRs and PHP coverage.
+- `SYMFONY_DEPRECATIONS_HELPER=max[direct]=0` (REQ-SF-005); PHPStan `ignoreErrors: []` (REQ-CS-006).
+- FrankenPHP Friendly banner (REQ-DOCS-017); demo image `frankenphp:1-php8.5`.
+- **REQ-CS-005:** `nowo-tech/phpstan-frankenphp` in `require-dev`.
+
+### Changed
+
+- `nowo_select_all_choice_asset_path()` returns a relative filename for use with the named package (see [UPGRADING.md](UPGRADING.md)).
+
+### Documentation
+
+- [UPGRADING.md](UPGRADING.md) **1.4.11 → 1.4.12**; README / USAGE / INSTALLATION asset examples updated.
 
 ## [1.4.11] - 2026-07-16
 

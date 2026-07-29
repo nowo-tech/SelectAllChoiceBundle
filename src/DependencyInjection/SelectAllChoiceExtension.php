@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Nowo\SelectAllChoiceBundle\DependencyInjection;
 
+use Symfony\Component\Asset\Package;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -14,7 +15,7 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * Dependency injection extension for SelectAllChoiceBundle.
  *
  * Loads bundle configuration, sets container parameters and registers the form type extension service.
- * Prepends the form theme to Twig according to form_theme config.
+ * Prepends the form theme to Twig according to form_theme config and registers the named asset package.
  */
 final class SelectAllChoiceExtension extends Extension implements PrependExtensionInterface
 {
@@ -34,7 +35,7 @@ final class SelectAllChoiceExtension extends Extension implements PrependExtensi
     ];
 
     /**
-     * Prepends the bundle form theme to Twig so it matches the configured base layout.
+     * Prepends the bundle form theme to Twig and registers the named asset package (REQ-ASSETS-004).
      */
     public function prepend(ContainerBuilder $container): void
     {
@@ -46,6 +47,18 @@ final class SelectAllChoiceExtension extends Extension implements PrependExtensi
         $container->prependExtensionConfig('twig', [
             'form_themes' => [$themePath],
         ]);
+
+        if ($container->hasExtension('framework') && class_exists(Package::class)) {
+            $container->prependExtensionConfig('framework', [
+                'assets' => [
+                    'packages' => [
+                        Configuration::ALIAS => [
+                            'base_path' => '/bundles/nowoselectallchoice',
+                        ],
+                    ],
+                ],
+            ]);
+        }
     }
 
     /**

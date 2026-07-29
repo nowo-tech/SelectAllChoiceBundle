@@ -1,5 +1,5 @@
 # FrankenPHP + Node for SelectAllChoiceBundle Demo (Symfony 8, Vite)
-FROM dunglas/frankenphp:1-php8.4-alpine
+FROM dunglas/frankenphp:1-php8.5-alpine
 
 RUN apk add --no-cache git unzip bash nodejs npm curl
 

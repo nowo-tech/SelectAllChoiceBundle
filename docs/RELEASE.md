@@ -2,11 +2,11 @@
 
 This document describes how to cut a new release of SelectAllChoiceBundle.
 
-## Pre-release (v1.4.11)
+## Pre-release (v1.4.12)
 
-- [x] CHANGELOG: [1.4.11] with date and changes; [Unreleased] empty.
-- [x] UPGRADING: 1.4.10 → 1.4.11 section.
-- [x] Run `make release-check` from the bundle root (check-no-cursor-coauthor, composer-sync, cs-fix, cs-check, rector-dry, phpstan, test-coverage, assets-test; demo verify skipped locally — `docker: Permission denied` in nested demo `update-bundle`).
+- [x] CHANGELOG: [1.4.12] with date and changes; [Unreleased] empty.
+- [x] UPGRADING: 1.4.11 → 1.4.12 section (named asset package).
+- [ ] Run `make release-check` from the bundle root when Docker is available.
 - [x] Commit all release-related file changes (docs, CHANGELOG, RELEASE, demos if lockfiles changed).
 
 ## Pre-release (every release)
@@ -18,17 +18,17 @@ This document describes how to cut a new release of SelectAllChoiceBundle.
 ## Tag and release
 
 1. Commit the changelog and version bumps.
-2. Create an annotated tag: `git tag -a v1.4.11 -m "Release 1.4.11"`.
-3. Push the tag: `git push origin v1.4.11` (or your default branch name, e.g. `main`).
+2. Create an annotated tag: `git tag -a v1.4.12 -m "Release 1.4.12"`.
+3. Push the tag: `git push origin v1.4.12`.
 4. If the project uses GitHub Releases or CI, the tag push may trigger release notes and artifact uploads; complete any manual steps required by your workflow.
 
-**From the bundle repo root (if this is a standalone repo):**
+**From the bundle repo root:**
 ```bash
-git add docs/CHANGELOG.md docs/UPGRADING.md docs/RELEASE.md docs/DEMO-FRANKENPHP.md README.md Makefile demo/
-git commit -m "Release v1.4.11: remove Symfony 7 demo"
-git tag -a v1.4.11 -m "Release 1.4.11"
+git add -A
+git commit -m "chore(release): prepare 1.4.12"
+git tag -a v1.4.12 -m "Release v1.4.12 - named asset package, FrankenPHP banner, demo PHP 8.5"
 git push origin master
-git push origin v1.4.11
+git push origin v1.4.12
 ```
 
 ## Post-release

@@ -2,7 +2,11 @@
 
 [![CI](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/select-all-choice-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/select-all-choice-bundle.svg)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6.0%2B%20%7C%207.4%2B%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com)
 
-**Symfony bundle that adds an optional "Select all" checkbox for `ChoiceType` fields with `multiple=true`** — for both expanded (checkboxes) and collapsed (`<select multiple>`) rendering. **Frontend-driven**: the backend marks the field and passes config via data attributes; a **Stimulus** controller creates and manages the toggle in the browser. Built with **TypeScript** and **Vite** (no Webpack Encore, no Importmap). For **Symfony 6, 7 and 8** · PHP 8.1+.
+![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
+
+This bundle is **FrankenPHP worker mode friendly**.
+
+**Symfony bundle that adds an optional "Select all" checkbox for ChoiceType fields with multiple=true** — for both expanded (checkboxes) and collapsed (select multiple) rendering. **Frontend-driven**: the backend marks the field and passes config via data attributes; a **Stimulus** controller creates and manages the toggle in the browser. Built with **TypeScript** and **Vite** (no Webpack Encore, no Importmap). For **Symfony 6, 7 and 8** · PHP 8.1+.
 
 > ⭐ **Found this useful?** Give it a **star** on [GitHub](https://github.com/nowo-tech/SelectAllChoiceBundle) so more developers can find it.
 
@@ -56,7 +60,13 @@ return [
 
 **2. Form theme**: The bundle **automatically** adds its form theme from the `form_theme` option (see Configuration). Set `form_theme` in `config/packages/nowo_select_all_choice.yaml` to match your app (e.g. `bootstrap_5_layout.html.twig`). You do not need to add it to `twig.form_themes` unless you want to control the order.
 
-**3. Include the frontend script** — Either include the built script (no Stimulus required) using the Twig function `nowo_select_all_choice_asset_path('select-all-choice.js')` in your layout (see [docs/USAGE.md](docs/USAGE.md#including-the-frontend-script)), or integrate the Stimulus controller via Vite (see [docs/INSTALLATION.md](docs/INSTALLATION.md)).
+**3. Include the frontend script** — Either include the built script (no Stimulus required) using the named asset package:
+
+```twig
+<script src="{{ asset(nowo_select_all_choice_asset_path('select-all-choice.js'), nowo_select_all_choice_asset_package()) }}" defer></script>
+```
+
+(or `asset('select-all-choice.js', 'nowo_select_all_choice')` — see [docs/USAGE.md](docs/USAGE.md#including-the-frontend-script)), or integrate the Stimulus controller via Vite (see [docs/INSTALLATION.md](docs/INSTALLATION.md)).
 
 **4. (Optional) Translations** — Default domain `NowoSelectAllChoiceBundle` with 60 languages; override via config or per-field options (see [docs/CONFIGURATION.md](docs/CONFIGURATION.md#translations)).
 
@@ -146,7 +156,7 @@ Run tests and QA with Docker: `make up && make install && make test` (or `make t
 ## Tests and coverage
 
 - Tests: PHPUnit (PHP), Vitest (TS/JS)
-- PHP: 97.83%
+- PHP: 100%
 - TS/JS: 100%
 
 ## License

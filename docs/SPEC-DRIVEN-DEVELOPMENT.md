@@ -41,7 +41,7 @@ The sections below state **behavior**; this subsection states **intent** in back
 | `<nowo-select-all-choice>` | Custom element + Stimulus `select-all` controller + standalone `select-all-choice.js`. |
 | `select-all-choice-lib.ts` | Toggle sync, indeterminate state, `MutationObserver` for dynamic DOM. |
 | Translations | 60 locales, key `form.select_all`, domain `NowoSelectAllChoiceBundle`. |
-| Twig helper | `nowo_select_all_choice_asset_path()` for safe public asset URLs. |
+| Twig helper | `nowo_select_all_choice_asset_path()` + `nowo_select_all_choice_asset_package()` for `asset(..., 'nowo_select_all_choice')`. |
 
 - Documented integration (see root `README.md` and `docs/`).
 - Configuration and runtime behavior described in [`CONFIGURATION.md`](CONFIGURATION.md) and [`USAGE.md`](USAGE.md).

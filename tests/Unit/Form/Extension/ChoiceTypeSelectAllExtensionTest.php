@@ -12,6 +12,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 final class ChoiceTypeSelectAllExtensionTest extends TestCase
@@ -85,7 +86,7 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
         $resolver = new OptionsResolver();
         $this->extension->configureOptions($resolver);
 
-        $this->expectException(\Symfony\Component\OptionsResolver\Exception\InvalidOptionsException::class);
+        $this->expectException(InvalidOptionsException::class);
 
         $resolver->resolve(['select_all_position' => 'invalid']);
     }

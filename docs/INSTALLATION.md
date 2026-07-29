@@ -45,7 +45,7 @@ twig:
     - 'bootstrap_5_layout.html.twig'
 ```
 
-3. **Include the frontend script**: either use the standalone script (see [USAGE.md](USAGE.md#including-the-frontend-script)) or, if you use Vite and Stimulus, add an alias to the bundle’s `assets` directory and import the controller in your main entry: `application.register('select-all', SelectAllController)` (see [README](../README.md) for the exact steps).
+3. **Include the frontend script**: run `php bin/console assets:install`, then either use the standalone script with the named package `nowo_select_all_choice` (see [USAGE.md](USAGE.md#including-the-frontend-script)) or, if you use Vite and Stimulus, add an alias to the bundle’s `assets` directory and import the controller in your main entry: `application.register('select-all', SelectAllController)` (see [README](../README.md) for the exact steps).
 
 4. **Optional configuration**: create `config/packages/nowo_select_all_choice.yaml` to override defaults (see [CONFIGURATION.md](CONFIGURATION.md)).
 

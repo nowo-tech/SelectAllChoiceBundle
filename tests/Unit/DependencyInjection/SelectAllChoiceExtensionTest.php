@@ -6,7 +6,9 @@ namespace Nowo\SelectAllChoiceBundle\Tests\Unit\DependencyInjection;
 
 use Nowo\SelectAllChoiceBundle\DependencyInjection\Configuration;
 use Nowo\SelectAllChoiceBundle\DependencyInjection\SelectAllChoiceExtension;
+use Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension;
 use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\DependencyInjection\FrameworkExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 final class SelectAllChoiceExtensionTest extends TestCase
@@ -26,7 +28,7 @@ final class SelectAllChoiceExtensionTest extends TestCase
         self::assertSame('form-check mb-2', $container->getParameter('nowo_select_all_choice.default_container_css_class'));
         self::assertSame('NowoSelectAllChoiceBundle', $container->getParameter('nowo_select_all_choice.translation_domain'));
         self::assertSame('form_div_layout.html.twig', $container->getParameter('nowo_select_all_choice.form_theme'));
-        self::assertTrue($container->hasDefinition(\Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension::class));
+        self::assertTrue($container->hasDefinition(ChoiceTypeSelectAllExtension::class));
     }
 
     public function testLoadSetsFormThemeFromConfig(): void
@@ -68,6 +70,23 @@ final class SelectAllChoiceExtensionTest extends TestCase
         self::assertSame(
             ['@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap5.html.twig'],
             $twigConfigs[0]['form_themes'],
+        );
+    }
+
+    public function testPrependRegistersNamedAssetPackageWhenFrameworkPresent(): void
+    {
+        $container = new ContainerBuilder();
+        $container->registerExtension(new FrameworkExtension());
+        $container->prependExtensionConfig(Configuration::ALIAS, []);
+        $extension = new SelectAllChoiceExtension();
+
+        $extension->prepend($container);
+
+        $frameworkConfigs = $container->getExtensionConfig('framework');
+        self::assertNotEmpty($frameworkConfigs);
+        self::assertSame(
+            '/bundles/nowoselectallchoice',
+            $frameworkConfigs[0]['assets']['packages']['nowo_select_all_choice']['base_path'] ?? null,
         );
     }
 

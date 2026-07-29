@@ -22,6 +22,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.8 → 1.4.9](#148-149)
 - [1.4.9 → 1.4.10](#149-1410)
 - [1.4.10 → 1.4.11](#1410-1411)
+- [1.4.11 → 1.4.12](#1411-1412)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
@@ -120,6 +121,25 @@ No upgrade steps required. Patch release (demo Docker/pnpm fixes, root `make bui
 
 - **No breaking changes** for consuming applications. Public API, configuration, and Symfony 7/8 package constraints are unchanged.
 - **Repository demos only:** `demo/symfony7` was removed. Use `demo/symfony8` (`make up-symfony8`, http://localhost:8008). Forks that still referenced `make up-symfony7` or `demo/symfony7` should switch to the Symfony 8 demo; see [demo/README.md](../demo/README.md) and [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md).
+
+## 1.4.11 → 1.4.12
+
+### Asset package (REQ-ASSETS-004)
+
+- The bundle registers Symfony asset package `nowo_select_all_choice` (`base_path` `/bundles/nowoselectallchoice`).
+- `nowo_select_all_choice_asset_path()` now returns a **relative** filename (e.g. `select-all-choice.js`), not `bundles/nowoselectallchoice/...`.
+- New helper: `nowo_select_all_choice_asset_package()`.
+- Update templates:
+
+```twig
+{# Before #}
+<script src="{{ asset(nowo_select_all_choice_asset_path('select-all-choice.js')) }}" defer></script>
+
+{# After #}
+<script src="{{ asset(nowo_select_all_choice_asset_path('select-all-choice.js'), nowo_select_all_choice_asset_package()) }}" defer></script>
+```
+
+Or: `asset('select-all-choice.js', 'nowo_select_all_choice')`.
 
 ## 1.x → 2.x (future)
 
