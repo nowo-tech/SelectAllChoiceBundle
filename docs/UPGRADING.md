@@ -5,6 +5,8 @@ This document describes upgrade steps between major or notable versions of Selec
 
 ## Table of contents
 
+- [Unreleased](#unreleased)
+- [To 1.5.0](#to-150)
 - [1.0.0 (first release)](#100-first-release)
 - [1.0.0 → 1.0.1](#100-101)
 - [1.0.1 → 1.1.0](#101-110)
@@ -25,6 +27,33 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.11 → 1.4.12](#1411-1412)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
+
+
+## Unreleased
+
+## To 1.5.0
+
+From **1.4.12** — Adds required Twig Extra (REQ-TWIG-004) and Twig-CS-Fixer. Register TwigExtraBundle if Flex did not.
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+php bin/console cache:clear
+```
+
+### Twig Extra Bundle (REQ-TWIG-004)
+
+Hosts that render this bundle's Twig templates must install:
+
+```bash
+composer require twig/extra-bundle twig/string-extra
+```
+
+and enable `Twig\Extra\TwigExtraBundle\TwigExtraBundle`. Flex recipes usually register it automatically.
+
+### Twig-CS-Fixer (maintainers)
+
+Package maintainers: `composer twig:lint` / `composer twig:fix` use `.twig-cs-fixer.php` over `src/` (and `templates/` when present).
+
 
 ## 1.0.0 (first release)
 

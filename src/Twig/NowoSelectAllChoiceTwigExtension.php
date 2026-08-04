@@ -34,8 +34,8 @@ final class NowoSelectAllChoiceTwigExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('nowo_select_all_choice_asset_path', [$this, 'assetPath']),
-            new TwigFunction('nowo_select_all_choice_asset_package', [$this, 'assetPackage']),
+            new TwigFunction('nowo_select_all_choice_asset_path', $this->assetPath(...)),
+            new TwigFunction('nowo_select_all_choice_asset_package', $this->assetPackage(...)),
         ];
     }
 

@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Bundle\WebProfilerBundle\WebProfilerBundle;
 use Symfony\UX\StimulusBundle\StimulusBundle;
+use Twig\Extra\TwigExtraBundle\TwigExtraBundle;
 
 return [
     FrameworkBundle::class           => ['all' => true],
@@ -17,4 +18,5 @@ return [
     StimulusBundle::class            => ['all' => true],
     NowoSelectAllChoiceBundle::class => ['all' => true],
     NowoTwigInspectorBundle::class   => ['dev' => true, 'test' => true],
+    TwigExtraBundle::class           => ['all' => true],
 ];

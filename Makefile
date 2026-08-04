@@ -6,7 +6,7 @@ COMPOSE      := $(COMPOSE_BIN) -f $(COMPOSE_FILE)
 SERVICE_PHP  := php
 RUN          := $(COMPOSE) exec -T $(SERVICE_PHP)
 
-.PHONY: help up down down-dev shell install test test-coverage coverage-check coverage-php-percent cs-check cs-fix qa clean ensure-up check-no-cursor-coauthor check-open-prs strip-cursor-coauthor-from-history
+.PHONY: help up down down-dev shell install test test-coverage coverage-check coverage-php-percent cs-check cs-fix qa clean ensure-up check-no-cursor-coauthor check-open-prs strip-cursor-coauthor-from-history check-twig-extra
 .PHONY: release-check release-check-demos demo-smoke composer-sync assets build rector rector-dry phpstan update validate validate-translations
 .PHONY: assets-test assets-dev assets-watch assets-clean
 .PHONY: up-symfony8 down-symfony8 setup-hooks
@@ -120,7 +120,11 @@ check-open-prs:
 demo-smoke:
 	@if [ -f demo/Makefile ]; then $(MAKE) -C demo release-verify; else echo "No demo/Makefile — skip demo-smoke"; fi
 
-release-check: check-no-cursor-coauthor check-open-prs ensure-up composer-sync cs-fix cs-check rector-dry phpstan coverage-check assets-test release-check-demos
+
+check-twig-extra:
+	@chmod +x .scripts/check-twig-extra.sh
+	@./.scripts/check-twig-extra.sh
+release-check: check-no-cursor-coauthor check-open-prs check-twig-extra ensure-up composer-sync cs-fix cs-check rector-dry phpstan coverage-check assets-test release-check-demos
 
 release-check-demos:
 	@$(MAKE) -C demo release-check
@@ -178,3 +182,6 @@ check-no-cursor-coauthor:
 strip-cursor-coauthor-from-history:
 	@chmod +x .scripts/strip-cursor-coauthor-from-history.sh
 	@./.scripts/strip-cursor-coauthor-from-history.sh master
+
+twig-lint: ensure-up
+	@$(COMPOSE) exec -T $(SERVICE_PHP) composer twig:lint || $(COMPOSE) exec -T $(SERVICE_PHP) ./vendor/bin/twig-cs-fixer lint --config=.twig-cs-fixer.php
