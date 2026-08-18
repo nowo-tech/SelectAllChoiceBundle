@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 use Nowo\SelectAllChoiceBundle\NowoSelectAllChoiceBundle;
+use Nowo\HotReloadBundle\NowoHotReloadBundle;
 use Nowo\TwigInspectorBundle\NowoTwigInspectorBundle;
 use Symfony\Bundle\DebugBundle\DebugBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -17,6 +18,7 @@ return [
     WebProfilerBundle::class         => ['dev' => true, 'test' => true],
     StimulusBundle::class            => ['all' => true],
     NowoSelectAllChoiceBundle::class => ['all' => true],
+    NowoHotReloadBundle::class   => ['dev' => true, 'test' => true],
     NowoTwigInspectorBundle::class   => ['dev' => true, 'test' => true],
     TwigExtraBundle::class           => ['all' => true],
 ];
