@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.3] - 2026-08-20
+
+### Security
+
+- **Dev/demo frontend:** `vite` **^6.4.3**, `vitest` **^3.2.6**; demo + root pnpm overrides for `postcss`/`nanoid` (Dependabot High on lockfiles).
+
 ## [1.5.2] - 2026-08-19
 
 ### Security

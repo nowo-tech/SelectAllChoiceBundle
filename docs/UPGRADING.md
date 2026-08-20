@@ -33,6 +33,14 @@ This document describes upgrade steps between major or notable versions of Selec
 
 ## Unreleased
 
+## To 1.5.3
+
+From **1.5.2** — No application upgrade steps (dev/demo frontend Dependabot bumps only).
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+```
+
 ## To 1.5.2
 
 From **1.5.1** — No application upgrade steps.
