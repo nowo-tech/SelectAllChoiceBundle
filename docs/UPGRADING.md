@@ -5,6 +5,8 @@ This document describes upgrade steps between major or notable versions of Selec
 
 ## Table of contents
 
+
+- [From 1.5.3 to 1.5.4](#from-153-to-154)
 - [Unreleased](#unreleased)
 - [To 1.5.2](#to-152)
 - [To 1.5.1](#to-151)
@@ -29,6 +31,22 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.4.11 → 1.4.12](#1411-1412)
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
+
+## From 1.5.3 to 1.5.4
+
+Review the [CHANGELOG](CHANGELOG.md) entry. PHP **8.2+** may now be required.
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+```
+
+## From 1.5.3 to 1.5.4
+
+Review the [CHANGELOG](CHANGELOG.md) entry. PHP **8.2+** may now be required.
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+```
 
 
 ## Unreleased
