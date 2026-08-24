@@ -4,7 +4,7 @@
 
 > ⭐ **Found this useful?** Give it a **star** on [GitHub](https://github.com/nowo-tech/SelectAllChoiceBundle) so more developers can find it.
 
-**Symfony bundle that adds an optional "Select all" checkbox for ChoiceType fields with multiple=true** — for both expanded (checkboxes) and collapsed (select multiple) rendering. **Frontend-driven**: the backend marks the field and passes config via data attributes; a **Stimulus** controller creates and manages the toggle in the browser. Built with **TypeScript** and **Vite** (no Webpack Encore, no Importmap). For **Symfony 6, 7 and 8** · PHP 8.1+.
+**Symfony bundle that adds an optional "Select all" checkbox for ChoiceType fields with multiple=true** — for both expanded (checkboxes) and collapsed (select multiple) rendering. **Frontend-driven**: the backend marks the field and passes config via data attributes; a **Stimulus** controller creates and manages the toggle in the browser. Built with **TypeScript** and **Vite** (no Webpack Encore, no Importmap). For **Symfony 6, 7 and 8** · PHP 8.2+.
 
 ![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
 
