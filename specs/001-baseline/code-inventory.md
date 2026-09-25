@@ -2,7 +2,7 @@
 
 **Baseline spec**: [`spec.md`](spec.md)  
 **Package**: `nowo-tech/select-all-choice-bundle`  
-**Last audited**: 2026-07-07
+**Last audited**: 2026-09-25 (FrankenPHP worker / `FRANKENPHP_RESET_KERNEL` unset — FR-RUNTIME-001)
 
 This file proves that **every production source artifact** under `src/` is referenced by the baseline specification. PHPUnit under `tests/` is out of scope unless promoted in the spec.
 
@@ -10,12 +10,12 @@ This file proves that **every production source artifact** under `src/` is refer
 
 | Source file | Spec section | Requirement IDs |
 | --- | --- | --- |
-| `NowoSelectAllChoiceBundle.php` | Bundle entry | FR-BUNDLE-001 |
+| `NowoSelectAllChoiceBundle.php` | Bundle entry | FR-BUNDLE-001, FR-RUNTIME-001 |
 | `DependencyInjection/Configuration.php` | Config tree | FR-CFG-001 |
 | `DependencyInjection/SelectAllChoiceExtension.php` | DI extension + theme prepend | FR-CFG-002 |
 | `DependencyInjection/Compiler/TwigPathsPass.php` | Twig namespace paths | FR-DI-002, FR-TWIG-001 |
-| `Form/Extension/ChoiceTypeSelectAllExtension.php` | ChoiceType extension | FR-FORM-001 |
-| `Twig/NowoSelectAllChoiceTwigExtension.php` | Asset path helper | FR-TWIG-EXT-001 |
+| `Form/Extension/ChoiceTypeSelectAllExtension.php` | ChoiceType extension | FR-FORM-001, FR-RUNTIME-001 |
+| `Twig/NowoSelectAllChoiceTwigExtension.php` | Asset path helper | FR-TWIG-EXT-001, FR-RUNTIME-001 |
 
 ## Symfony config (`src/Resources/config/`)
 

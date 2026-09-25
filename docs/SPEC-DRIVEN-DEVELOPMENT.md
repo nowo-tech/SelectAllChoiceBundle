@@ -68,7 +68,10 @@ The sections below state **behavior**; this subsection states **intent** in back
 
 | ID | Where | What it marks |
 | --- | --- | --- |
-| *(none yet)* | `Makefile`, `demo/**/Makefile` | Add `REQ-*` comments next to targets when scripted behavior must stay traceable; document each ID here. |
+| REQ-CS-005 | `phpstan.neon`, `composer.json` | `nowo-tech/phpstan-frankenphp` classic + worker-no-kernel-reset + hardening |
+| REQ-DEMO-010 | `demo/symfony8/docker/**`, `.env.example` | `FRANKENPHP_MODE=worker\|classic`; default worker; `FRANKENPHP_RESET_KERNEL` unset |
+| REQ-DOCS-017 | README banner | FrankenPHP Friendly Worker Mode badge / claim |
+| REQ-GIT-001 | `.scripts/check-no-cursor-coauthor.sh`, CI | No Cursor co-author trailers in git history |
 
 When you change scripted behavior, **update the existing `REQ-*` comment** if the ID still matches the rule, or **add a new `REQ-*`** and document it here and in the PR description.
 

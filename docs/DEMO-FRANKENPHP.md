@@ -38,7 +38,7 @@ The main difference between development and production is:
 
 ### This repository’s demo (`demo/symfony8`)
 
-The bundled demos use a **single** `docker/frankenphp/Caddyfile` mounted read-only into the container. It configures **`php_server` without a `worker` directive** (development-friendly: fresh PHP per request, no long-lived workers). There is **no** separate `Caddyfile.dev` / entrypoint swap in these demos; **production with workers** is described in [Production configuration](#production-configuration) if you want to build a prod image or second compose override.
+Default **`FRANKENPHP_MODE=worker`** (REQ-DEMO-010): the image `Caddyfile` enables `php_server { hot_reload; worker { file /app/public/index.php; watch } }`. Set `FRANKENPHP_MODE=classic` to swap in `Caddyfile.dev` (no worker, cache-busting headers). Leave **`FRANKENPHP_RESET_KERNEL` unset/false** so the Symfony kernel is reused between requests (see [FRANKENPHP-WORKER-AUDIT.md](FRANKENPHP-WORKER-AUDIT.md)). After changing mode, recreate the container (`docker compose up -d`).
 
 ---
 
@@ -345,18 +345,19 @@ Ensure the application is installed (e.g. `composer install --no-dev`) and the c
 
 ## Switching classic vs worker (`FRANKENPHP_MODE`)
 
-- **Development:** Use the development Caddyfile (no `worker`), mount `php-dev.ini`, set `APP_ENV=dev` and `APP_DEBUG=1`. Use `config/packages/dev/twig.yaml` with `cache: false`.
-- **Production:** Use the production Caddyfile (with `worker`), do not mount `php-dev.ini`, set `APP_ENV=prod` and `APP_DEBUG=0`. Rely on default Twig cache.
+| Value | Behaviour |
+|-------|-----------|
+| `worker` (default) | Image `Caddyfile`: `worker { file …; watch }` + `hot_reload` — app stays in memory |
+| `classic` | Entrypoint copies `Caddyfile.dev` over the active Caddyfile — no worker |
 
-You can:
+Leave **`FRANKENPHP_RESET_KERNEL` unset** (default). Setting `FRANKENPHP_RESET_KERNEL=1` clones the kernel each request (escape hatch; costly) and is not required for this bundle.
 
-1. Keep two Caddyfiles (e.g. `Caddyfile` for dev and `Caddyfile.prod` for prod) and mount the correct one via Compose.
-2. Or use two Compose files (e.g. `docker-compose.yml` for dev and `docker-compose.prod.yml` for prod) that differ by env vars and mounted files.
+Switch mode by editing `.env` / Compose and recreating containers (`docker compose up -d`); **no image rebuild** for mode alone (rebuild if `Caddyfile*` in the image changed).
 
-After changing the Caddyfile or env, restart the container so FrankenPHP and the app pick up the new config:
+After changing the Caddyfile or env, restart/recreate the container so FrankenPHP and the app pick up the new config:
 
 ```bash
-docker compose restart
+docker compose up -d
 ```
 
 ---

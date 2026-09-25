@@ -10,7 +10,8 @@ services:
     volumes:
       - .:/app
       - ../..:/var/select-all-choice-bundle
-      - ./docker/frankenphp/Caddyfile:/etc/frankenphp/Caddyfile:ro
+      # Do not mount over /etc/frankenphp/Caddyfile — entrypoint swaps classic/worker (REQ-DEMO-010).
+      - ./docker/frankenphp/Caddyfile.dev:/etc/frankenphp/Caddyfile.dev:ro
       - ./docker/php-dev.ini:/usr/local/etc/php/conf.d/99-dev.ini:ro
       - composer-cache:/root/.composer/cache
     environment:
@@ -19,6 +20,7 @@ services:
       - APP_DEBUG=1
       - APP_SECRET=change-me
       - FRANKENPHP_MODE=${FRANKENPHP_MODE:-worker}
+      # Leave FRANKENPHP_RESET_KERNEL unset/false (default): kernel reused between requests.
       - PORT=8008
     # Mitigate Docker/WSL DNS failures resolving repo.packagist.org (composer curl error 6).
     dns:

@@ -6,8 +6,10 @@ This document describes upgrade steps between major or notable versions of Selec
 ## Table of contents
 
 
+- [From 1.5.4 to 1.5.5](#from-154-to-155)
 - [From 1.5.3 to 1.5.4](#from-153-to-154)
 - [Unreleased](#unreleased)
+- [To 1.5.3](#to-153)
 - [To 1.5.2](#to-152)
 - [To 1.5.1](#to-151)
 - [To 1.5.0](#to-150)
@@ -32,13 +34,15 @@ This document describes upgrade steps between major or notable versions of Selec
 - [1.x → 2.x (future)](#1x-2x-future)
 - [General](#general)
 
-## From 1.5.3 to 1.5.4
+## From 1.5.4 to 1.5.5
 
-Review the [CHANGELOG](CHANGELOG.md) entry. PHP **8.2+** may now be required.
+From **1.5.4** — No application upgrade steps. Docs + CI/demo hardening for FrankenPHP worker with `FRANKENPHP_RESET_KERNEL` unset/false.
 
 ```bash
 composer update nowo-tech/select-all-choice-bundle
 ```
+
+Optional: read [FRANKENPHP-WORKER-AUDIT.md](FRANKENPHP-WORKER-AUDIT.md). Keep host `FRANKENPHP_RESET_KERNEL` unset/false. Demo maintainers: rebuild the Symfony 8 demo image after pulling.
 
 ## From 1.5.3 to 1.5.4
 

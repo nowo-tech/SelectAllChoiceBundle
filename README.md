@@ -8,7 +8,7 @@
 
 ![FrankenPHP Friendly Worker Mode](docs/images/frankenphp-friendly.png)
 
-This bundle is **FrankenPHP worker mode friendly**.
+This bundle is **FrankenPHP worker mode friendly** — including **`FRANKENPHP_RESET_KERNEL` unset/false** (kernel reused). See [docs/FRANKENPHP-WORKER-AUDIT.md](docs/FRANKENPHP-WORKER-AUDIT.md).
 
 ## Table of contents
 
@@ -41,7 +41,7 @@ Looking for **Symfony ChoiceType select all**, **multiple choice select all chec
 - ✅ **Frontend-driven** — Backend passes config via data attributes; a small script or Stimulus controller creates and manages the checkbox in the DOM
 - ✅ **Works with or without Stimulus** — Include the built `select-all-choice.js` script for auto-init (and dynamic content via MutationObserver), or register the Stimulus controller if your app already uses it
 - ✅ **TypeScript + Vite** — Bundle assets are TypeScript; the bundle ships a built IIFE for standalone use; your app’s Vite can also import the controller (no Encore/Importmap)
-- ✅ Compatible with **Symfony 7 and 8** and **FrankenPHP** (with or without worker mode; the repo demos use a non-worker `php_server` setup for comfortable dev)
+- ✅ Compatible with **Symfony 7 and 8** and **FrankenPHP** worker mode with **`FRANKENPHP_RESET_KERNEL` unset/false** (demo default `FRANKENPHP_MODE=worker`; set `classic` for per-request PHP)
 
 ## Installation
 
@@ -127,7 +127,7 @@ Override label, position and CSS per field; see [docs/USAGE.md](docs/USAGE.md) f
 
 The Symfony 8 demo is in `demo/symfony8`. Run from the bundle root: `make up-symfony8` (http://localhost:8008). See [demo/README.md](demo/README.md) for details.
 
-The demos use **FrankenPHP** with a **single `docker/frankenphp/Caddyfile`** and **`php_server` without workers** so template and asset changes show up on refresh (see [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md)). You can deploy with **worker mode** in production if you follow the production section of that doc; the bundle itself works with or without FrankenPHP workers.
+The demo runs **FrankenPHP** with default **`FRANKENPHP_MODE=worker`** (`worker { file …; watch }` + Hot Reload). Set `FRANKENPHP_MODE=classic` for per-request PHP. Leave `FRANKENPHP_RESET_KERNEL` unset. Details: [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md) and [docs/FRANKENPHP-WORKER-AUDIT.md](docs/FRANKENPHP-WORKER-AUDIT.md).
 
 ## Development
 
@@ -154,7 +154,8 @@ Run tests and QA with Docker: `make up && make install && make test` (or `make t
 
 - [Theming](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML), and [overriding bundle template files](docs/THEMING.md#overriding-bundle-template-files)
 - [Overriding translations](docs/CONFIGURATION.md#translations) — use your app’s `translations/` with the same domain and locale to override bundle messages
-- [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md) — development vs production setup, Web Profiler, Twig Inspector; reusable for other bundles
+- [FrankenPHP worker audit (`FRANKENPHP_RESET_KERNEL` unset/false)](docs/FRANKENPHP-WORKER-AUDIT.md)
+- [Demo with FrankenPHP (development and production)](docs/DEMO-FRANKENPHP.md) — `FRANKENPHP_MODE`, Web Profiler, Twig Inspector; reusable for other bundles
 
 ## Tests and coverage
 

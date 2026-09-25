@@ -61,6 +61,11 @@ See user stories US-01…US-05 in [`docs/SPEC-DRIVEN-DEVELOPMENT.md`](../../docs
 - **FR-TWIG-THEME-001**: Default + table themes MUST wrap choices in `<nowo-select-all-choice>` with Stimulus `select-all` controller.
 - **FR-TWIG-THEME-002 / FR-TWIG-THEME-003**: Bootstrap and Foundation/Tailwind themes MUST extend the correct Symfony parent layouts.
 
+### Runtime (FrankenPHP)
+
+- **FR-RUNTIME-001**: Shared services (`ChoiceTypeSelectAllExtension`, `NowoSelectAllChoiceTwigExtension`) MUST remain request-stateless so the bundle is safe under FrankenPHP **worker** with `FRANKENPHP_RESET_KERNEL` unset/false (kernel reused; see [`docs/FRANKENPHP-WORKER-AUDIT.md`](../../docs/FRANKENPHP-WORKER-AUDIT.md)).
+- **FR-RUNTIME-002**: Maintainer PHPStan MUST include `ruleset-classic`, `ruleset-worker-no-kernel-reset`, and `ruleset-hardening` from `nowo-tech/phpstan-frankenphp`.
+
 ### Frontend assets
 
 - **FR-ASSET-LIB-001**: Core library MUST create toggle, sync all/none, handle indeterminate, observe DOM mutations.
@@ -80,6 +85,7 @@ See user stories US-01…US-05 in [`docs/SPEC-DRIVEN-DEVELOPMENT.md`](../../docs
 - **SC-002**: Config keys match [`docs/CONFIGURATION.md`](../../docs/CONFIGURATION.md).
 - **SC-003**: PHPUnit + Vitest + PHPStan pass in CI.
 - **SC-004**: Partial/indeterminate selection behaviour covered by tests.
+- **SC-005**: PHPStan FrankenPHP classic + worker-no-kernel-reset + hardening pass with zero findings on `src/` / `tests/`.
 
 ---
 

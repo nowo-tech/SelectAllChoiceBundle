@@ -1,23 +1,17 @@
 #!/bin/sh
 set -e
 
-
-# FRANKENPHP_MODE: classic | worker (REQ-DEMO-010). Default: worker.
+# FRANKENPHP_MODE: classic | worker. Default: worker (REQ-DEMO-010).
 # Set via .env / Compose only — not baked into the image ENV.
+# Leave FRANKENPHP_RESET_KERNEL unset/false so the kernel is reused (default).
 MODE="${FRANKENPHP_MODE:-worker}"
 case "$MODE" in
 	classic)
-		if [ -f /app/Caddyfile.dev ]; then
-			cp /app/Caddyfile.dev /etc/caddy/Caddyfile
-		elif [ -f /etc/frankenphp/Caddyfile.dev ]; then
-			cp /etc/frankenphp/Caddyfile.dev /etc/frankenphp/Caddyfile
-		fi
+		cp /etc/frankenphp/Caddyfile.dev /etc/frankenphp/Caddyfile
 		;;
 	worker)
-		if [ -f /app/Caddyfile ]; then
-			cp /app/Caddyfile /etc/caddy/Caddyfile
-		fi
-		# else keep image default Caddyfile (worker enabled)
+		# Image default Caddyfile is worker (Dockerfile COPY). After changing
+		# FRANKENPHP_MODE, recreate the container (`docker compose up -d`).
 		;;
 	*)
 		echo "Unknown FRANKENPHP_MODE=$MODE (expected classic|worker)" >&2

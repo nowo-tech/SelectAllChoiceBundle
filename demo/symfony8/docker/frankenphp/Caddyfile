@@ -1,20 +1,21 @@
 {
 	order mercure after encode
-    skip_install_trust
+	skip_install_trust
 }
 
 :80 {
-    root * /app/public
-    encode zstd br gzip
-    # Disable cache in development so changes are reflected immediately
-    header Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
-    header Pragma "no-cache"
-    # No worker mode so each request runs in a fresh PHP process and Twig/template changes are visible on refresh
-    mercure {
-        anonymous
-    }
+	root * /app/public
+	encode zstd br gzip
 
-    php_server {
-        hot_reload
-    }
+	mercure {
+		anonymous
+	}
+
+	php_server {
+		hot_reload
+		worker {
+			file /app/public/index.php
+			watch
+		}
+	}
 }

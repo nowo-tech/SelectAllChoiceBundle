@@ -16,4 +16,6 @@ parameters:
 
 includes:
   - vendor/nowo-tech/phpstan-frankenphp/ruleset-classic.neon
-  - vendor/nowo-tech/phpstan-frankenphp/ruleset-worker.neon
+  # Worker + missing ResetInterface (FRANKENPHP_RESET_KERNEL unset/false).
+  - vendor/nowo-tech/phpstan-frankenphp/ruleset-worker-no-kernel-reset.neon
+  - vendor/nowo-tech/phpstan-frankenphp/ruleset-hardening.neon
