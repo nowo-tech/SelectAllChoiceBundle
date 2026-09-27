@@ -1,9 +1,19 @@
 # Usage
 
+## Screenshots
+
+| Overview | Interaction |
+|----------|-------------|
+| ![Select-all choice list unchecked](images/demo/overview.png) | ![Select-all choice list with all options selected](images/demo/interaction.png) |
+
+Regenerate with `make -C demo/symfony8 demo-screenshots` (REQ-DEMO-013).
+
 Enable the "Select all" toggle on a multiple choice field by setting `select_all => true`. You can override the label, position and CSS per field.
 
 
 ## Table of contents
+
+- [Screenshots](#screenshots)
 
 - [Including the frontend script](#including-the-frontend-script)
 - [Basic example (expanded checkboxes)](#basic-example-expanded-checkboxes)

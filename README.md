@@ -10,6 +10,20 @@
 
 This bundle is **FrankenPHP worker mode friendly** — including **`FRANKENPHP_RESET_KERNEL` unset/false** (kernel reused). See [docs/FRANKENPHP-WORKER-AUDIT.md](docs/FRANKENPHP-WORKER-AUDIT.md).
 
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/images/demo/overview.png" alt="Select-all choice list unchecked" />
+      <br /><sub>Choices with select-all toggle</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/images/demo/interaction.png" alt="Select-all choice list with all options selected" />
+      <br /><sub>All choices selected</sub>
+    </td>
+  </tr>
+</table>
+
+
 ## Table of contents
 
 - [Quick search terms](#quick-search-terms)
@@ -130,6 +144,12 @@ The Symfony 8 demo is in `demo/symfony8`. Run from the bundle root: `make up-sym
 The demo runs **FrankenPHP** with default **`FRANKENPHP_MODE=worker`** (`worker { file …; watch }` + Hot Reload). Set `FRANKENPHP_MODE=classic` for per-request PHP. Leave `FRANKENPHP_RESET_KERNEL` unset. Details: [docs/DEMO-FRANKENPHP.md](docs/DEMO-FRANKENPHP.md) and [docs/FRANKENPHP-WORKER-AUDIT.md](docs/FRANKENPHP-WORKER-AUDIT.md).
 
 ## Development
+
+```bash
+make -C demo/symfony8 test-e2e
+make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.png
+```
+
 
 Run tests and QA with Docker: `make up && make install && make test` (or `make test-coverage`, `make qa`). Without Docker: `composer install && composer test`. See [Makefile](Makefile) for all targets.
 

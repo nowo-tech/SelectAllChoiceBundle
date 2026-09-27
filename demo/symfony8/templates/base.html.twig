@@ -35,6 +35,8 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    {# Standalone IIFE always available; Vite app.js is optional (REQ-DEMO-013 e2e). #}
+    <script src="{{ asset('select-all-choice.js', 'nowo_select_all_choice') }}" defer></script>
     <script type="module" src="{{ asset('build/assets/app.js') }}"></script>
     {% block scripts %}{% endblock %}
 </body>
