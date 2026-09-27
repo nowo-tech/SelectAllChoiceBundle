@@ -13,12 +13,12 @@ This bundle is **FrankenPHP worker mode friendly** — including **`FRANKENPHP_R
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="docs/images/demo/overview.png" alt="Select-all choice list unchecked" />
-      <br /><sub>Choices with select-all toggle</sub>
+      <img src="docs/images/demo/overview.png" alt="Demo page with navbar and select-all choices unchecked" />
+      <br /><sub>Full demo — select-all unchecked</sub>
     </td>
     <td align="center" width="50%">
-      <img src="docs/images/demo/interaction.png" alt="Select-all choice list with all options selected" />
-      <br /><sub>All choices selected</sub>
+      <img src="docs/images/demo/interaction.png" alt="Demo page with navbar and all select-all toggles checked" />
+      <br /><sub>Full demo — select-all checked</sub>
     </td>
   </tr>
 </table>

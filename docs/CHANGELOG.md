@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **REQ-DEMO-013:** Playwright e2e under `demo/symfony8/e2e/` (`make test-e2e`), `demo-screenshots` target, and README gallery cropped to <nowo-select-all-choice> (`docs/images/demo/overview.png`, `interaction.png`).
+- **REQ-DEMO-013:** Playwright e2e under `demo/symfony8/e2e/` (`make test-e2e`), `demo-screenshots` target, and README gallery with full demo context (navbar + form + select-all widgets; `docs/images/demo/overview.png`, `interaction.png`).
+
 
 ## [1.5.6] - 2026-09-27
 

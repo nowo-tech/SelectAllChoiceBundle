@@ -4,7 +4,7 @@
 
 | Overview | Interaction |
 |----------|-------------|
-| ![Select-all choice list unchecked](images/demo/overview.png) | ![Select-all choice list with all options selected](images/demo/interaction.png) |
+| ![Demo with navbar — select-all unchecked](images/demo/overview.png) | ![Demo with navbar — select-all checked](images/demo/interaction.png) |
 
 Regenerate with `make -C demo/symfony8 demo-screenshots` (REQ-DEMO-013).
 
