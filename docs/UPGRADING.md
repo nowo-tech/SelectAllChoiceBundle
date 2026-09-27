@@ -9,6 +9,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [From 1.5.4 to 1.5.5](#from-154-to-155)
 - [From 1.5.3 to 1.5.4](#from-153-to-154)
 - [Unreleased](#unreleased)
+- [To 1.5.6](#to-156)
 - [To 1.5.3](#to-153)
 - [To 1.5.2](#to-152)
 - [To 1.5.1](#to-151)
@@ -54,6 +55,18 @@ composer update nowo-tech/select-all-choice-bundle
 
 
 ## Unreleased
+
+## To 1.5.6
+
+From **1.5.5** — REQ-CS-008 Igor FrankenPHP worker audit (igor-php require-dev, igor.json, make igor).
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+php bin/console cache:clear
+```
+
+- No application upgrade steps for require-dev Igor tooling (REQ-CS-008). Consumers do not pull `igor-php/igor-php` transitively.
+
 
 ## To 1.5.3
 

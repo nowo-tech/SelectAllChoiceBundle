@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.6] - 2026-09-27
+
+### Added
+
+- **REQ-CS-008:** `igor-php/igor-php` (require-dev only), root `igor.json`, Composer/`Makefile` `igor` target, and `release-check` wiring for FrankenPHP worker-state audit.
+
+[1.5.6]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.5.6
 
 ## [1.5.5] - 2026-09-25
 
