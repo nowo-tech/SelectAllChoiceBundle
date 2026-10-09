@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.8] - 2026-10-09
+
+### Security
+
+- **npm dev dependencies (root):** Vitest / `@vitest/coverage-v8` **4.1.11** (GHSA-82fw-gwwq-j7x9; also drops `tinypool` GHSA-5gmw-xhrv-c9v3 / GHSA-85c8-ppgw-ccpr), Vite **6.4.4**, `ws` **8.22.0** (GHSA-58qx-3vcg-4xpx, GHSA-96hv-2xvq-fx4p), `form-data` **4.0.6** (GHSA-hmw2-7cc7-3qxx), `source-map-js` **1.2.2** (GHSA-68fv-2mgg-jv7q), `nanoid` **3.3.20** (GHSA-xwg4-73v4-xw9w); vulnerable `brace-expansion` chain removed (GHSA-3jxr-9vmj-r5cp, GHSA-mh99-v99m-4gvg, GHSA-rgw5-rvv9-x895, GHSA-6j4f-fj2g-mc7p, GHSA-qhr7-859c-m2p7, GHSA-q2hr-2g5m-vwhr). `postcss` 8.5.26 and `picomatch` 4.0.4 remain on patched versions (GHSA-fxqj-rqcc-2cmp, GHSA-3v7f-55p6-f55p).
+- **Demo (Symfony 8) pnpm lock:** Vite 6.4.4, `postcss` 8.5.29, `source-map-js` 1.2.2, `nanoid` 3.3.20 (back on the 3.x line postcss requires, instead of a forced 6.x override).
+
+### Changed
+
+- Removed the `pnpm.overrides` blocks from root and demo `package.json` (ignored by pnpm 11 and no longer needed after re-resolution).
+- TS tests: two extra cases so branch coverage stays at 100% under Vitest 4's coverage remapping.
+
+[1.5.8]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.5.8
+
 ## [1.5.7] - 2026-10-09
 
 ### Added

@@ -9,6 +9,7 @@ This document describes upgrade steps between major or notable versions of Selec
 - [From 1.5.4 to 1.5.5](#from-154-to-155)
 - [From 1.5.3 to 1.5.4](#from-153-to-154)
 - [Unreleased](#unreleased)
+- [To 1.5.8](#to-158)
 - [To 1.5.7](#to-157)
 - [To 1.5.6](#to-156)
 - [To 1.5.3](#to-153)
@@ -56,6 +57,14 @@ composer update nowo-tech/select-all-choice-bundle
 
 
 ## Unreleased
+
+## To 1.5.8
+
+From **1.5.7** — security refresh of npm dev dependencies (root + demo pnpm lockfiles). No breaking changes. No application upgrade steps; the published `select-all-choice.js` is unchanged.
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+```
 
 ## To 1.5.7
 

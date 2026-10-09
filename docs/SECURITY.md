@@ -26,7 +26,7 @@ Before tagging a release, confirm:
 | **No secrets in repo** | No API keys, passwords, or tokens in tracked files. |
 | **Recipe / Flex** | Default recipe or installer templates do not ship production secrets. |
 | **Input / output** | Inputs validated; outputs escaped in Twig/templates where user-controlled. |
-| **Dependencies** | `composer audit` run; issues triaged. |
+| **Dependencies** | `composer audit` and `pnpm audit` (root + demo) run; issues triaged. |
 | **Logging** | Logs do not print secrets, tokens, or session identifiers unnecessarily. |
 | **Cryptography** | If used: keys from secure config; never hardcoded. |
 | **Permissions / exposure** | Routes and admin features documented; roles configured for production. |
