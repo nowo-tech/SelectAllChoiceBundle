@@ -7,10 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.7] - 2026-10-09
+
 ### Added
 
 - **REQ-DEMO-013:** Playwright e2e under `demo/symfony8/e2e/` (`make test-e2e`), `demo-screenshots` target, and README gallery with full demo context (navbar + form + select-all widgets; `docs/images/demo/overview.png`, `interaction.png`).
 
+### Fixed
+
+- Demo (Symfony 8): `prefer-stable: true` so the demo no longer resolves Symfony 8.2.x-dev / Twig 4.x-dev branches.
+
+### Changed
+
+- Dev dependencies (Dependabot + lock refresh): PHPStan 2.3.1 (+ symfony extension 2.1), PHPUnit 10.5.66, PHP-CS-Fixer 3.95.27, Rector 2.7.0, `igor-php/igor-php` 0.10.1, `nowo-tech/phpstan-frankenphp` 1.2.3; Twig 3.30.0.
+- Demo (Symfony 8): Symfony 8.1.8, Twig 3.30.0, HotReloadBundle 1.5.5, TwigInspectorBundle 1.1.7; regenerated `config/reference.php`.
+
+[1.5.7]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.5.7
 
 ## [1.5.6] - 2026-09-27
 
