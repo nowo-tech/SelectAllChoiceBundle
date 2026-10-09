@@ -138,7 +138,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     http_method_override?: bool|Param, // Set true to enable support for the '_method' request parameter to determine the intended HTTP method on POST requests. // Default: false
  *     allowed_http_method_override?: null|list<string|Param>,
  *     trust_x_sendfile_type_header?: scalar|Param|null, // Set true to enable support for xsendfile in binary file responses. // Default: "%env(bool:default::SYMFONY_TRUST_X_SENDFILE_TYPE_HEADER)%"
- *     ide?: scalar|Param|null, // Deprecated: Setting the "framework.ide.ide" configuration option is deprecated, use the "SYMFONY_IDE" env var instead. // Default: "%env(default::SYMFONY_IDE)%"
+ *     ide?: scalar|Param|null, // Default: "%env(default::SYMFONY_IDE)%"
  *     test?: bool|Param,
  *     default_locale?: scalar|Param|null, // Default: "en"
  *     set_locale_from_accept_language?: bool|Param, // Whether to use the Accept-Language HTTP header to set the Request locale (only when the "_locale" request attribute is not passed). // Default: false
@@ -188,9 +188,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         enabled?: bool|Param, // Default: false
  *         hinclude_default_template?: scalar|Param|null, // Default: null
  *         path?: scalar|Param|null, // Default: "/_fragment"
- *     },
- *     uri_signer?: array{ // URI signer configuration
- *         expiration?: int|Param, // Default expiration of signed URIs, in seconds. // Default: null
  *     },
  *     profiler?: bool|array{ // Profiler configuration
  *         enabled?: bool|Param, // Default: false
@@ -327,7 +324,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         },
  *         providers?: array<string, array{ // Default: []
  *             dsn?: scalar|Param|null,
- *             domains?: array<string, scalar|Param|null>,
+ *             domains?: list<scalar|Param|null>,
  *             locales?: list<scalar|Param|null>,
  *         }>,
  *         globals?: array<string, Param|string|array{ // Default: []
@@ -391,10 +388,9 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     cache?: array{ // Cache configuration
  *         prefix_seed?: scalar|Param|null, // Used to namespace cache keys when using several apps with the same shared backend. // Default: "_%kernel.project_dir%.%kernel.container_class%"
- *         app?: scalar|Param|null, // App related cache pools configuration. Cannot be combined with "default_provider". // Default: "cache.adapter.filesystem"
+ *         app?: scalar|Param|null, // App related cache pools configuration. // Default: "cache.adapter.filesystem"
  *         system?: scalar|Param|null, // System related cache pools configuration. // Default: "cache.adapter.system"
  *         directory?: scalar|Param|null, // Default: "%kernel.share_dir%/pools/app"
- *         default_provider?: scalar|Param|null, // DSN of the backend to use for "cache.app"; the adapter is deduced from it. Replaces "app", which cannot be set alongside it.
  *         default_psr6_provider?: scalar|Param|null,
  *         default_redis_provider?: scalar|Param|null, // Default: "redis://localhost"
  *         default_valkey_provider?: scalar|Param|null, // Default: "valkey://localhost"
@@ -489,7 +485,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             no_proxy?: scalar|Param|null, // A comma separated list of hosts that do not require a proxy to be reached.
  *             timeout?: float|Param, // The idle timeout, defaults to the "default_socket_timeout" ini parameter.
  *             max_duration?: float|Param, // The maximum execution time for the request+response as a whole.
- *             max_connect_duration?: float|Param, // The maximum duration allowed for DNS + TCP + TLS connection; a value lower than or equal to 0 means unlimited.
  *             bindto?: scalar|Param|null, // A network interface name, IP address, a host name or a UNIX socket to bind to.
  *             verify_peer?: bool|Param, // Indicates if the peer should be verified in a TLS context.
  *             verify_host?: bool|Param, // Indicates if the host should exist as a certificate common name.
@@ -543,7 +538,6 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             no_proxy?: scalar|Param|null, // A comma separated list of hosts that do not require a proxy to be reached.
  *             timeout?: float|Param, // The idle timeout, defaults to the "default_socket_timeout" ini parameter.
  *             max_duration?: float|Param, // The maximum execution time for the request+response as a whole.
- *             max_connect_duration?: float|Param, // The maximum duration allowed for DNS + TCP + TLS connection; a value lower than or equal to 0 means unlimited.
  *             bindto?: scalar|Param|null, // A network interface name, IP address, a host name or a UNIX socket to bind to.
  *             verify_peer?: bool|Param, // Indicates if the peer should be verified in a TLS context.
  *             verify_host?: bool|Param, // Indicates if the host should exist as a certificate common name.
@@ -695,10 +689,10 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         signing_algorithm?: scalar|Param|null, // Default: "sha256"
  *         routing?: array<string, array{ // Default: []
  *             service?: scalar|Param|null,
- *             secret?: scalar|Param|null, // Default: ""
+ *             secret?: scalar|Param|null, // The secret used to verify incoming request signatures. It must be set in production: with an empty value, depending on the parser, requests from any sender are accepted or every request is rejected. // Default: ""
  *         }>,
  *     },
- *     remote-event?: bool|array{ // RemoteEvent configuration
+ *     remote_event?: bool|array{ // RemoteEvent configuration
  *         enabled?: bool|Param, // Default: false
  *     },
  *     json_streamer?: bool|array{ // JSON streamer configuration
@@ -771,6 +765,23 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     translation_domain?: scalar|Param|null, // Default translation domain for the "Select all" label (bundle uses NowoSelectAllChoiceBundle). // Default: "NowoSelectAllChoiceBundle"
  *     form_theme?: scalar|Param|null, // Base form layout template used for choice widgets. Must match one of Symfony's form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md. // Default: "form_div_layout.html.twig"
  *     debug?: bool|Param, // When true, the frontend logs all debug/info/warn messages to the console. When false, only the initial "script loaded" message is shown. // Default: false
+ * }
+ * @psalm-type NowoHotReloadConfig = array{
+ *     enabled?: bool|Param, // Master switch. When false, nothing is injected even if FRANKENPHP_HOT_RELOAD is set. // Default: true
+ *     auto_inject?: bool|Param, // When true, HotReloadResponseSubscriber injects assets into HTML responses. // Default: true
+ *     ignore_path_prefixes?: list<scalar|Param|null>,
+ *     client_mode?: "cdn"|"visibility"|"shared_worker"|"always"|Param, // Browser Mercure client strategy: cdn (default ESM), visibility (SSE while tab visible), shared_worker (one SSE for all tabs), always (SSE per tab). // Default: "cdn"
+ *     require_frankenphp_env?: bool|Param, // When true (default), inject only if FRANKENPHP_HOT_RELOAD is set or mercure_url is configured. // Default: true
+ *     allow_production?: bool|Param, // When false (default), enabling this bundle in the prod environment raises InvalidConfigurationException. // Default: false
+ *     mercure_url?: scalar|Param|null, // Optional Mercure hub URL. When null, uses $_SERVER['FRANKENPHP_HOT_RELOAD'] when present. // Default: null
+ *     idiomorph?: bool|Param, // When true, include Idiomorph for DOM morphing instead of a full page reload. // Default: true
+ *     idiomorph_script_url?: scalar|Param|null, // URL of the Idiomorph script (classic script tag). Prefer a version-pinned CDN URL. // Default: "https://cdn.jsdelivr.net/npm/idiomorph@0.7.4"
+ *     hot_reload_script_url?: scalar|Param|null, // URL of the frankenphp-hot-reload ESM module. Prefer a version-pinned CDN URL. // Default: "https://cdn.jsdelivr.net/npm/frankenphp-hot-reload@1.0.1/+esm"
+ *     preserve_selectors?: list<scalar|Param|null>,
+ *     preserve_observe?: bool|Param, // When true, the preserve boot script also uses MutationObserver for late-injected toolbar nodes. // Default: true
+ *     csp_nonce_request_attribute?: scalar|Param|null, // Request attribute name that holds the CSP nonce (e.g. "_csp_nonce"). Applied to the inline preserve boot script. // Default: null
+ *     csp_augment_script_src?: bool|Param, // When true, append CDN hosts to an existing Content-Security-Policy script-src on the response after injection. // Default: true
+ *     csp_script_src_hosts?: list<scalar|Param|null>,
  * }
  * @psalm-type NowoTwigInspectorConfig = array{
  *     enabled_extensions?: list<scalar|Param|null>,
@@ -845,6 +856,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     web_profiler?: WebProfilerConfig,
  *     stimulus?: StimulusConfig,
  *     nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *     nowo_hot_reload?: NowoHotReloadConfig,
  *     nowo_twig_inspector?: NowoTwigInspectorConfig,
  *     twig_extra?: TwigExtraConfig,
  *     "when@dev"?: array{
@@ -857,6 +869,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         web_profiler?: WebProfilerConfig,
  *         stimulus?: StimulusConfig,
  *         nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *         nowo_hot_reload?: NowoHotReloadConfig,
  *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *         twig_extra?: TwigExtraConfig,
  *     },
@@ -870,6 +883,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         web_profiler?: WebProfilerConfig,
  *         stimulus?: StimulusConfig,
  *         nowo_select_all_choice?: NowoSelectAllChoiceConfig,
+ *         nowo_hot_reload?: NowoHotReloadConfig,
  *         nowo_twig_inspector?: NowoTwigInspectorConfig,
  *         twig_extra?: TwigExtraConfig,
  *     },
