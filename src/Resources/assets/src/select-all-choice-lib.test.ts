@@ -76,6 +76,29 @@ describe('select-all-choice-lib', () => {
     });
   });
 
+  describe('initSelectAllContainer re-init', () => {
+    it('reuses existing container state when the init marker is cleared', () => {
+      const el = document.createElement('div');
+      el.setAttribute('data-controller', 'select-all');
+      el.setAttribute('data-select-all-position-value', 'before');
+      el.setAttribute('data-select-all-expanded-value', 'true');
+      el.setAttribute('data-select-all-label-value', 'Select all');
+      el.setAttribute('data-select-all-toggle-class-value', 'form-check-input');
+      el.setAttribute('data-select-all-wrapper-class-value', 'form-check');
+      el.setAttribute('data-select-all-label-class-value', 'form-check-label');
+      const choices = document.createElement('div');
+      choices.setAttribute('data-select-all-target', 'choices');
+      el.appendChild(choices);
+      document.body.appendChild(el);
+
+      expect(initSelectAllContainer(el)).toBe(true);
+      el.removeAttribute(ATTR_INIT);
+      el.querySelector('[data-select-all-target="toggleWrapper"]')?.remove();
+      expect(initSelectAllContainer(el)).toBe(true);
+      expect(el.querySelectorAll('[data-select-all-target="toggleWrapper"]').length).toBe(1);
+    });
+  });
+
   describe('runInitAndObserve', () => {
     it('runs runInit and starts observer', () => {
       runInitAndObserve();

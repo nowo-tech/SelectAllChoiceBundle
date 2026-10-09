@@ -47,6 +47,14 @@ describe('nowo-select-all-choice-element', () => {
     expect(el.querySelector(`[${ATTR_TARGET}="${TARGET_TOGGLE_WRAPPER}"]`)).not.toBeNull();
   });
 
+  it('keeps an inline display value set before upgrade', async () => {
+    document.body.innerHTML = `<${TAG_NOWO_SELECT_ALL_CHOICE} style="display: flex"></${TAG_NOWO_SELECT_ALL_CHOICE}>`;
+    const el = document.body.querySelector(TAG_NOWO_SELECT_ALL_CHOICE) as NowoSelectAllChoiceElement;
+    await Promise.resolve();
+
+    expect(el.style.display).toBe('flex');
+  });
+
   it('ensureNowoSelectAllChoiceDefined is idempotent', () => {
     expect(() => ensureNowoSelectAllChoiceDefined()).not.toThrow();
     expect(customElements.get(TAG_NOWO_SELECT_ALL_CHOICE)).toBe(NowoSelectAllChoiceElement);
