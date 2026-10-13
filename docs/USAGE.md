@@ -4,7 +4,7 @@
 
 | Overview | Interaction |
 |----------|-------------|
-| ![Demo with navbar — select-all unchecked](images/demo/overview.png) | ![Demo with navbar — select-all checked](images/demo/interaction.png) |
+| ![Demo with navbar — select-all unchecked](images/demo/overview.webp) | ![Demo with navbar — select-all checked](images/demo/interaction.webp) |
 
 Regenerate with `make -C demo/symfony8 demo-screenshots` (REQ-DEMO-013).
 

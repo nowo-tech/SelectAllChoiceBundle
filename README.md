@@ -13,11 +13,11 @@ This bundle is **FrankenPHP worker mode friendly** — including **`FRANKENPHP_R
 <table>
   <tr>
     <td align="center" width="50%">
-      <img src="docs/images/demo/overview.png" alt="Demo page with navbar and select-all choices unchecked" />
+      <img src="docs/images/demo/overview.webp" alt="Demo page with navbar and select-all choices unchecked" />
       <br /><sub>Full demo — select-all unchecked</sub>
     </td>
     <td align="center" width="50%">
-      <img src="docs/images/demo/interaction.png" alt="Demo page with navbar and all select-all toggles checked" />
+      <img src="docs/images/demo/interaction.webp" alt="Demo page with navbar and all select-all toggles checked" />
       <br /><sub>Full demo — select-all checked</sub>
     </td>
   </tr>
@@ -147,7 +147,7 @@ The demo runs **FrankenPHP** with default **`FRANKENPHP_MODE=worker`** (`worker 
 
 ```bash
 make -C demo/symfony8 test-e2e
-make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.png
+make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.webp
 ```
 
 
