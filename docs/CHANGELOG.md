@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-10-13
+
 ### Fixed
 
 - Expanded mode: changing one checkbox fired **two** `change` events (the native one plus a re-dispatch on the choices container). Per-checkbox listeners now only sync the "Select all" toggle; the toggle itself still emits one `change` for the group.
@@ -16,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `form_theme` is now an enum of the supported Symfony layouts (`form_div_layout.html.twig`, `bootstrap_5_layout.html.twig`, …); unknown values fail at container compile time instead of silently falling back to `form_div_layout.html.twig`.
 - Symfony floor raised from `^6.0` to **`^6.4`** (`^6.4 || ^7.0 || ^8.0`); CI gains a Symfony 6.4 cell. README badge and INSTALLATION updated.
+
+[1.6.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.6.0
 
 ## [1.5.8] - 2026-10-09
 

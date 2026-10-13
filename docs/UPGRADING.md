@@ -2,13 +2,12 @@
 
 This document describes upgrade steps between major or notable versions of SelectAllChoiceBundle.
 
-
 ## Table of contents
-
 
 - [From 1.5.4 to 1.5.5](#from-154-to-155)
 - [From 1.5.3 to 1.5.4](#from-153-to-154)
 - [Unreleased](#unreleased)
+- [To 1.6.0](#to-160)
 - [To 1.5.8](#to-158)
 - [To 1.5.7](#to-157)
 - [To 1.5.6](#to-156)
@@ -55,8 +54,15 @@ Review the [CHANGELOG](CHANGELOG.md) entry. PHP **8.2+** may now be required.
 composer update nowo-tech/select-all-choice-bundle
 ```
 
-
 ## Unreleased
+
+## To 1.6.0
+
+From **1.5.8** — one change event per click, disabled choices respected, validated form_theme, Symfony >=6.4.
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+```
 
 - **Symfony 6.0–6.3 are no longer supported**: the floor is now `^6.4 || ^7.0 || ^8.0` (6.4 is tested in CI).
 - **`form_theme` is validated**: only the documented Symfony layouts are accepted. A typo or a custom template name now fails with "Invalid configuration" instead of silently using `form_div_layout.html.twig`; set it to the closest supported layout.
@@ -89,7 +95,6 @@ php bin/console cache:clear
 ```
 
 - No application upgrade steps for require-dev Igor tooling (REQ-CS-008). Consumers do not pull `igor-php/igor-php` transitively.
-
 
 ## To 1.5.3
 
@@ -137,7 +142,6 @@ and enable `Twig\Extra\TwigExtraBundle\TwigExtraBundle`. Flex recipes usually re
 ### Twig-CS-Fixer (maintainers)
 
 Package maintainers: `composer twig:lint` / `composer twig:fix` use `.twig-cs-fixer.php` over `src/` (and `templates/` when present).
-
 
 ## 1.0.0 (first release)
 
