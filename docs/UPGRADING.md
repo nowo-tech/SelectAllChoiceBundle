@@ -58,6 +58,11 @@ composer update nowo-tech/select-all-choice-bundle
 
 ## Unreleased
 
+- **Symfony 6.0–6.3 are no longer supported**: the floor is now `^6.4 || ^7.0 || ^8.0` (6.4 is tested in CI).
+- **`form_theme` is validated**: only the documented Symfony layouts are accepted. A typo or a custom template name now fails with "Invalid configuration" instead of silently using `form_div_layout.html.twig`; set it to the closest supported layout.
+- **Change events (expanded mode)**: a click on one checkbox now produces a single `change` event (it used to produce two). If you counted on the extra event dispatched on the choices container, listen for the bubbling `change` from the checkbox instead.
+- Disabled checkboxes/options are no longer toggled by "Select all".
+
 ## To 1.5.8
 
 From **1.5.7** — security refresh of npm dev dependencies (root + demo pnpm lockfiles). No breaking changes. No application upgrade steps; the published `select-all-choice.js` is unchanged.

@@ -7,6 +7,8 @@ namespace Nowo\SelectAllChoiceBundle\DependencyInjection;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
+use function array_keys;
+
 /**
  * Configuration for SelectAllChoiceBundle (nowo_select_all_choice).
  *
@@ -16,6 +18,25 @@ final class Configuration implements ConfigurationInterface
 {
     /** @var string Configuration key / extension alias. */
     public const ALIAS = 'nowo_select_all_choice';
+
+    /**
+     * Supported form_theme values (Symfony base layouts) mapped to the bundle theme that wraps them.
+     *
+     * @var array<string, string>
+     */
+    public const FORM_THEME_MAP = [
+        'form_div_layout.html.twig'               => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme.html.twig',
+        'form_table_layout.html.twig'             => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_table.html.twig',
+        'bootstrap_5_layout.html.twig'            => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap5.html.twig',
+        'bootstrap_5_horizontal_layout.html.twig' => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap5_horizontal.html.twig',
+        'bootstrap_4_layout.html.twig'            => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap4.html.twig',
+        'bootstrap_4_horizontal_layout.html.twig' => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap4_horizontal.html.twig',
+        'bootstrap_3_layout.html.twig'            => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap3.html.twig',
+        'bootstrap_3_horizontal_layout.html.twig' => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_bootstrap3_horizontal.html.twig',
+        'foundation_5_layout.html.twig'           => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_foundation5.html.twig',
+        'foundation_6_layout.html.twig'           => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_foundation6.html.twig',
+        'tailwind_2_layout.html.twig'             => '@NowoSelectAllChoiceBundle/Form/select_all_choice_theme_tailwind2.html.twig',
+    ];
 
     /**
      * Builds the configuration tree for the bundle.
@@ -62,8 +83,9 @@ final class Configuration implements ConfigurationInterface
                     ->info('Default translation domain for the "Select all" label (bundle uses NowoSelectAllChoiceBundle).')
                     ->defaultValue('NowoSelectAllChoiceBundle')
                 ->end()
-                ->scalarNode('form_theme')
-                    ->info('Base form layout template used for choice widgets. Must match one of Symfony\'s form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md.')
+                ->enumNode('form_theme')
+                    ->info('Base form layout template used for choice widgets. Must be one of Symfony\'s form themes (e.g. form_div_layout.html.twig, bootstrap_5_layout.html.twig). See docs/CONFIGURATION.md.')
+                    ->values(array_keys(self::FORM_THEME_MAP))
                     ->defaultValue('form_div_layout.html.twig')
                 ->end()
                 ->booleanNode('debug')

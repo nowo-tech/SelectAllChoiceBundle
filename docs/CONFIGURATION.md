@@ -21,7 +21,7 @@ nowo_select_all_choice:
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `form_theme` | string | `form_div_layout.html.twig` | Base form layout used for choice widgets. See [Form theme (Symfony layouts)](#form-theme-symfony-layouts) below. |
+| `form_theme` | enum | `form_div_layout.html.twig` | Base form layout used for choice widgets. See [Form theme (Symfony layouts)](#form-theme-symfony-layouts) below. |
 | `default_label` | string | `form.select_all` | Default translation key for the "Select all" toggle label. |
 | `default_position` | string | `before` | Position of the toggle relative to the choices: `before` or `after`. |
 | `default_toggle_css_class` | string | `form-check-input` | CSS class applied to the toggle checkbox input. |
@@ -61,7 +61,7 @@ The bundle includes a dedicated theme for every standard Symfony form layout. Se
 | `foundation_6_layout.html.twig` | Foundation 6. |
 | `tailwind_2_layout.html.twig` | Tailwind CSS 2. |
 
-If you use a custom or third-party form theme not listed above, set `form_theme` to the closest match (e.g. `form_div_layout.html.twig`); "Select all" still works although the wrapper markup may not match your framework exactly.
+`form_theme` only accepts the values listed above; anything else fails at container compile time with an "Invalid configuration" error (it used to fall back silently to `form_div_layout.html.twig`). If you use a custom or third-party form theme, set `form_theme` to the closest match (e.g. `form_div_layout.html.twig`); "Select all" still works although the wrapper markup may not match your framework exactly.
 
 ### Example with Bootstrap 5
 

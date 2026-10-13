@@ -1,11 +1,11 @@
 # Installation
 
-This guide covers installing SelectAllChoiceBundle in a Symfony 7 or 8 application.
+This guide covers installing SelectAllChoiceBundle in a Symfony 6.4, 7 or 8 application.
 
 ## Requirements
 
 - **PHP** >= 8.2
-- **Symfony** ^7.0 or ^8.0
+- **Symfony** ^6.4, ^7.0 or ^8.0 (CI: 6.4, 7.x, 7.4, 8.0, 8.1)
 - **symfony/form**, **symfony/twig-bundle**, **symfony/translation**
 - **Stimulus** (e.g. via `symfony/stimulus-bundle` or `@hotwired/stimulus`)
 - **Vite** for building frontend assets (the app compiles the bundle’s TypeScript)

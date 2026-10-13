@@ -178,21 +178,34 @@ function createToggle(container: HTMLElement, config: ContainerConfig, choicesEl
   return checkbox;
 }
 
+/** Enabled checkboxes only: disabled choices cannot be toggled by the user nor by "Select all". */
+const SELECTOR_ENABLED_CHECKBOX = 'input[type="checkbox"]:not(:disabled)';
+
+/** Enabled options only (disabled options are never submitted). */
+const SELECTOR_ENABLED_OPTION = 'option:not(:disabled)';
+
+function enabledCheckboxes(choicesEl: HTMLElement): HTMLInputElement[] {
+  return Array.from(choicesEl.querySelectorAll<HTMLInputElement>(SELECTOR_ENABLED_CHECKBOX));
+}
+
+function enabledOptions(select: HTMLSelectElement): HTMLOptionElement[] {
+  return Array.from(select.querySelectorAll<HTMLOptionElement>(SELECTOR_ENABLED_OPTION));
+}
+
 function areAllCheckboxesChecked(choicesEl: HTMLElement): boolean {
-  const inputs = choicesEl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+  const inputs = enabledCheckboxes(choicesEl);
   if (inputs.length === 0) return false;
-  return Array.from(inputs).every((input) => input.checked);
+  return inputs.every((input) => input.checked);
 }
 
 function areAllCheckboxesUnchecked(choicesEl: HTMLElement): boolean {
-  const inputs = choicesEl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-  return Array.from(inputs).every((input) => !input.checked);
+  return enabledCheckboxes(choicesEl).every((input) => !input.checked);
 }
 
 function areAllSelectOptionsSelected(choicesEl: HTMLElement): boolean {
   const select = choicesEl.querySelector<HTMLSelectElement>('select');
   if (!select) return false;
-  const options = Array.from(select.querySelectorAll<HTMLOptionElement>('option'));
+  const options = enabledOptions(select);
   if (options.length === 0) return false;
   return options.every((opt) => opt.selected);
 }
@@ -200,8 +213,7 @@ function areAllSelectOptionsSelected(choicesEl: HTMLElement): boolean {
 function areAllSelectOptionsUnselected(choicesEl: HTMLElement): boolean {
   const select = choicesEl.querySelector<HTMLSelectElement>('select');
   if (!select) return true;
-  const options = select.querySelectorAll<HTMLOptionElement>('option');
-  return Array.from(options).every((opt) => !opt.selected);
+  return enabledOptions(select).every((opt) => !opt.selected);
 }
 
 function syncToggleFromChoices(
@@ -216,8 +228,7 @@ function syncToggleFromChoices(
 }
 
 function toggleCheckboxes(choicesEl: HTMLElement, selected: boolean): void {
-  const inputs = choicesEl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-  inputs.forEach((input) => {
+  enabledCheckboxes(choicesEl).forEach((input) => {
     input.checked = selected;
   });
 }
@@ -225,8 +236,7 @@ function toggleCheckboxes(choicesEl: HTMLElement, selected: boolean): void {
 function toggleSelectOptions(choicesEl: HTMLElement, selected: boolean): void {
   const select = choicesEl.querySelector<HTMLSelectElement>('select');
   if (!select) return;
-  const options = select.querySelectorAll<HTMLOptionElement>('option');
-  options.forEach((option) => {
+  enabledOptions(select).forEach((option) => {
     option.selected = selected;
   });
 }
@@ -301,9 +311,10 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
     const checkboxes = choicesEl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
     getLogger().debug('initSelectAllContainer: bound change listeners to checkboxes', { count: checkboxes.length });
     checkboxes.forEach((input) => {
+      // The native change event already bubbles to the form / host listeners: only sync the toggle
+      // (re-dispatching here produced a second change event per user click).
       input.addEventListener('change', () => {
         syncToggleFromChoices(checkbox, choicesEl, config.expanded);
-        dispatchChange(choicesEl, config.expanded, state);
       });
     });
   } else {

@@ -340,6 +340,111 @@ describe('select-all-choice-lib', () => {
     });
   });
 
+  describe('change events and disabled choices', () => {
+    const mount = (expanded: boolean, choicesHtml: string): { root: HTMLElement; toggle: HTMLInputElement } => {
+      document.body.innerHTML = `
+        <form>
+          <div data-controller="select-all" data-select-all-expanded-value="${expanded}">
+            <div data-select-all-target="choices">${choicesHtml}</div>
+          </div>
+        </form>`;
+      const root = document.querySelector<HTMLElement>('[data-controller="select-all"]')!;
+      expect(initSelectAllContainer(root)).toBe(true);
+      return { root, toggle: root.querySelector<HTMLInputElement>('[data-select-all-target="toggle"]')! };
+    };
+
+    it('a user click on one checkbox emits exactly one change event', () => {
+      const { root, toggle } = mount(true, '<input type="checkbox" id="a"><input type="checkbox" id="b">');
+      const form = document.querySelector('form')!;
+      const seen: EventTarget[] = [];
+      form.addEventListener('change', (e) => seen.push(e.target!));
+
+      const a = root.querySelector<HTMLInputElement>('#a')!;
+      a.checked = true;
+      a.dispatchEvent(new Event('change', { bubbles: true }));
+
+      expect(seen).toEqual([a]);
+      expect(toggle.indeterminate).toBe(true);
+      expect(toggle.checked).toBe(false);
+    });
+
+    it('the toggle emits one change event for the whole group', () => {
+      const { root, toggle } = mount(true, '<input type="checkbox" id="a"><input type="checkbox" id="b">');
+      const form = document.querySelector('form')!;
+      let count = 0;
+      form.addEventListener('change', (e) => {
+        if (e.target !== toggle) count++;
+      });
+
+      toggle.checked = true;
+      toggle.dispatchEvent(new Event('change', { bubbles: true }));
+
+      expect(count).toBe(1);
+      expect(Array.from(root.querySelectorAll<HTMLInputElement>('#a, #b')).every((i) => i.checked)).toBe(true);
+    });
+
+    it('ignores disabled checkboxes when toggling and when computing the toggle state', () => {
+      const { root, toggle } = mount(
+        true,
+        '<input type="checkbox" id="a"><input type="checkbox" id="b"><input type="checkbox" id="locked" disabled>',
+      );
+      const locked = root.querySelector<HTMLInputElement>('#locked')!;
+
+      toggle.checked = true;
+      toggle.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(locked.checked).toBe(false);
+      expect(root.querySelector<HTMLInputElement>('#a')!.checked).toBe(true);
+
+      // All enabled choices checked → toggle fully checked even though the disabled one is not.
+      const b = root.querySelector<HTMLInputElement>('#b')!;
+      b.checked = false;
+      b.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(toggle.indeterminate).toBe(true);
+      b.checked = true;
+      b.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(toggle.checked).toBe(true);
+      expect(toggle.indeterminate).toBe(false);
+
+      toggle.checked = false;
+      toggle.dispatchEvent(new Event('change', { bubbles: true }));
+      locked.checked = true; // server-side preselected and locked
+      b.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(toggle.checked).toBe(false);
+      expect(toggle.indeterminate).toBe(false);
+    });
+
+    it('a disabled checked choice does not make the initial state indeterminate', () => {
+      const { toggle } = mount(true, '<input type="checkbox" id="a"><input type="checkbox" id="locked" disabled checked>');
+      expect(toggle.checked).toBe(false);
+      expect(toggle.indeterminate).toBe(false);
+    });
+
+    it('ignores disabled options in collapsed mode', () => {
+      const { root, toggle } = mount(
+        false,
+        '<select multiple><option value="a">A</option><option value="b">B</option><option value="x" disabled>X</option></select>',
+      );
+      const select = root.querySelector('select')!;
+      let count = 0;
+      document.querySelector('form')!.addEventListener('change', (e) => {
+        if (e.target === select) count++;
+      });
+
+      toggle.checked = true;
+      toggle.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(count).toBe(1);
+      expect(Array.from(select.options).map((o) => o.selected)).toEqual([true, true, false]);
+
+      select.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(toggle.checked).toBe(true);
+      expect(toggle.indeterminate).toBe(false);
+
+      toggle.checked = false;
+      toggle.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(Array.from(select.options).map((o) => o.selected)).toEqual([false, false, false]);
+    });
+  });
+
   describe('runInit with nowo-select-all-choice', () => {
     it('initializes custom element root the same as legacy div', () => {
       document.body.innerHTML = `

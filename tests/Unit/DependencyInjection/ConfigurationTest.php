@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 
+use function array_keys;
+
 final class ConfigurationTest extends TestCase
 {
     public function testProcessesDefaultConfig(): void
@@ -63,5 +65,23 @@ final class ConfigurationTest extends TestCase
         $this->expectExceptionMessage('default_position must be "before" or "after"');
 
         $processor->processConfiguration($configuration, [['default_position' => 'invalid']]);
+    }
+
+    public function testAcceptsEverySupportedFormTheme(): void
+    {
+        $processor = new Processor();
+
+        foreach (array_keys(Configuration::FORM_THEME_MAP) as $theme) {
+            $processed = $processor->processConfiguration(new Configuration(), [['form_theme' => $theme]]);
+            self::assertSame($theme, $processed['form_theme']);
+        }
+    }
+
+    public function testRejectsUnknownFormTheme(): void
+    {
+        $this->expectException(InvalidConfigurationException::class);
+        $this->expectExceptionMessage('bootstrap_5_layout.html.twig');
+
+        (new Processor())->processConfiguration(new Configuration(), [['form_theme' => 'bootstrap5.html.twig']]);
     }
 }
