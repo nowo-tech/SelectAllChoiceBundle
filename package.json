@@ -11,10 +11,10 @@
   },
   "devDependencies": {
     "@hotwired/stimulus": "^3.2.2",
-    "@vitest/coverage-v8": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.12",
     "jsdom": "^25.0.1",
     "typescript": "~5.7.3",
     "vite": "^6.4.4",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.12"
   }
 }
