@@ -8,6 +8,16 @@
 | Method | Manual review of every PHP file under `src/` (form type extension, Twig extension, DI extension, configuration, compiler pass, bundle class) and `src/Resources/config/services.yaml`; PHPStan classic + `ruleset-worker-no-kernel-reset` + hardening |
 | **Verdict** | ✅ **100% compatible** with FrankenPHP worker mode and **`FRANKENPHP_RESET_KERNEL` unset/false** (scenario A below; also safe under B) |
 
+## Table of contents
+
+- [Execution model assumed](#execution-model-assumed)
+- [Summary](#summary)
+- [Services reviewed](#services-reviewed)
+- [Findings](#findings)
+- [Demo (REQ-DEMO-010)](#demo-req-demo-010)
+- [Usage recommendations in worker mode](#usage-recommendations-in-worker-mode)
+- [Re-audit triggers](#re-audit-triggers)
+
 ## Execution model assumed
 
 FrankenPHP worker mode boots the Symfony kernel once per worker and serves many requests with the same container. This audit targets the **default throughput profile**: `FRANKENPHP_RESET_KERNEL` is **unset or false**, so the kernel instance is reused. `services_resetter` still clears services that implement `ResetInterface` / are tagged `kernel.reset`. Scenarios:

@@ -10,11 +10,9 @@ Regenerate with `make -C demo/symfony8 demo-screenshots` (REQ-DEMO-013).
 
 Enable the "Select all" toggle on a multiple choice field by setting `select_all => true`. You can override the label, position and CSS per field.
 
-
 ## Table of contents
 
 - [Screenshots](#screenshots)
-
 - [Including the frontend script](#including-the-frontend-script)
 - [Basic example (expanded checkboxes)](#basic-example-expanded-checkboxes)
 - [Multi-select (collapsed)](#multi-select-collapsed)
@@ -25,6 +23,7 @@ Enable the "Select all" toggle on a multiple choice field by setting `select_all
   - [Overriding translations](#overriding-translations)
   - [Overriding templates](#overriding-templates)
 - [Behaviour](#behaviour)
+- [Debug (frontend)](#debug-frontend)
 
 ## Including the frontend script
 

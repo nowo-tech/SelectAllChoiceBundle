@@ -1,6 +1,6 @@
 # Select All Choice Bundle
 
-[![CI](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/select-all-choice-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/select-all-choice-bundle.svg)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6.4%20%7C%207.x%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com)
+[![CI](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml/badge.svg)](https://github.com/nowo-tech/SelectAllChoiceBundle/actions/workflows/ci.yml) [![Packagist Version](https://img.shields.io/packagist/v/nowo-tech/select-all-choice-bundle.svg?style=flat)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![Packagist Downloads](https://img.shields.io/packagist/dt/nowo-tech/select-all-choice-bundle.svg)](https://packagist.org/packages/nowo-tech/select-all-choice-bundle) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![PHP](https://img.shields.io/badge/PHP-8.2%2B-777BB4?logo=php)](https://php.net) [![Symfony](https://img.shields.io/badge/Symfony-6.4%20%7C%207.x%20%7C%208.0%20%7C%208.1%2B-000000?logo=symfony)](https://symfony.com) [![GitHub stars](https://img.shields.io/github/stars/nowo-tech/select-all-choice-bundle.svg?style=social&label=Star)](https://github.com/nowo-tech/SelectAllChoiceBundle) [![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen)](#tests-and-coverage)
 
 > ⭐ **Found this useful?** Give it a **star** on [GitHub](https://github.com/nowo-tech/SelectAllChoiceBundle) so more developers can find it.
 
@@ -22,7 +22,6 @@ This bundle is **FrankenPHP worker mode friendly** — including **`FRANKENPHP_R
     </td>
   </tr>
 </table>
-
 
 ## Table of contents
 
@@ -150,15 +149,12 @@ make -C demo/symfony8 test-e2e
 make -C demo/symfony8 demo-screenshots   # refreshes docs/images/demo/*.webp
 ```
 
-
 Run tests and QA with Docker: `make up && make install && make test` (or `make test-coverage`, `make qa`). Without Docker: `composer install && composer test`. See [Makefile](Makefile) for all targets.
 
 ## Documentation
 
-- [GitHub Actions CI requirements](docs/GITHUB_CI.md)
 - [Installation](docs/INSTALLATION.md)
 - [Configuration](docs/CONFIGURATION.md)
-- [PSR evaluation (REQ-CS-007)](docs/PSR.md)
 - [Usage](docs/USAGE.md)
 - [Contributing](docs/CONTRIBUTING.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
@@ -172,6 +168,8 @@ Run tests and QA with Docker: `make up && make install && make test` (or `make t
 
 ### Additional documentation
 
+- [GitHub Actions CI requirements](docs/GITHUB_CI.md)
+- [PSR evaluation (REQ-CS-007)](docs/PSR.md)
 - [Theming](docs/THEMING.md) — CSS classes, overriding the form theme (custom HTML), and [overriding bundle template files](docs/THEMING.md#overriding-bundle-template-files)
 - [Overriding translations](docs/CONFIGURATION.md#translations) — use your app’s `translations/` with the same domain and locale to override bundle messages
 - [FrankenPHP worker audit (`FRANKENPHP_RESET_KERNEL` unset/false)](docs/FRANKENPHP-WORKER-AUDIT.md)

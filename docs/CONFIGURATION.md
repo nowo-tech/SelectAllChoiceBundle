@@ -2,6 +2,19 @@
 
 SelectAllChoiceBundle can be configured globally in `config/packages/nowo_select_all_choice.yaml`. All keys are optional; defaults are applied when omitted.
 
+## Table of contents
+
+- [Full example](#full-example)
+- [Options](#options)
+- [Translations](#translations)
+- [Form theme (Symfony layouts)](#form-theme-symfony-layouts)
+  - [Values with dedicated theme](#values-with-dedicated-theme)
+  - [Example with Bootstrap 5](#example-with-bootstrap-5)
+- [Theme / CSS framework presets](#theme--css-framework-presets)
+  - [Bootstrap (default)](#bootstrap-default)
+  - [Tailwind CSS](#tailwind-css)
+  - [Custom classes](#custom-classes)
+
 ## Full example
 
 ```yaml

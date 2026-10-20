@@ -1,5 +1,11 @@
 # Security policy
 
+## Table of contents
+
+- [Supported versions](#supported-versions)
+- [Reporting a vulnerability](#reporting-a-vulnerability)
+- [Release security checklist (12.4.1)](#release-security-checklist-1241)
+
 ## Supported versions
 
 Security fixes are applied to the current major version line. Please upgrade to the latest patch release to receive security updates.

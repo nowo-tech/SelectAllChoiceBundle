@@ -2,6 +2,13 @@
 
 This document describes how to cut a new release of SelectAllChoiceBundle.
 
+## Table of contents
+
+- [Pre-release (v1.5.5)](#pre-release-v155)
+- [Pre-release (every release)](#pre-release-every-release)
+- [Tag and release](#tag-and-release)
+- [Post-release](#post-release)
+
 ## Pre-release (v1.5.5)
 
 - [x] CHANGELOG: [1.5.5] with date and changes; [Unreleased] empty.

@@ -2,6 +2,16 @@
 
 This document covers how to style the "Select all" toggle (Bootstrap, Tailwind, custom classes) and how to **override the form theme** to change the HTML structure.
 
+## Table of contents
+
+- [Overriding bundle template files](#overriding-bundle-template-files)
+- [CSS classes (config and per field)](#css-classes-config-and-per-field)
+- [Overriding the form theme](#overriding-the-form-theme)
+  - [1. Add your form theme](#1-add-your-form-theme)
+  - [2. Override the blocks](#2-override-the-blocks)
+  - [3. Fully custom markup](#3-fully-custom-markup)
+- [Summary](#summary)
+
 ## Overriding bundle template files
 
 The bundle registers its Twig views so that `@NowoSelectAllChoiceBundle/...` works, and adds its path **after** the application paths. Your overrides in **`templates/bundles/NowoSelectAllChoiceBundle/`** are therefore checked first: you can override any bundle template by placing a file there with the **same relative path** as inside the bundle.
