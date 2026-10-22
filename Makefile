@@ -9,7 +9,7 @@ RUN          := $(COMPOSE) exec -T $(SERVICE_PHP)
 .PHONY: help up down down-dev shell install test test-coverage coverage-check coverage-php-percent cs-check cs-fix qa clean ensure-up check-no-cursor-coauthor check-open-prs strip-cursor-coauthor-from-history check-twig-extra
 .PHONY: release-check release-check-demos demo-smoke composer-sync assets build rector rector-dry phpstan igor update validate validate-translations
 .PHONY: assets-test assets-dev assets-watch assets-clean
-.PHONY: up-symfony8 down-symfony8 setup-hooks
+.PHONY: up-symfony8 down-symfony8 setup-hooks check-no-raw-html-form
 
 help:
 	@echo "SelectAllChoiceBundle - Development Commands (Docker)"
@@ -129,7 +129,28 @@ check-twig-extra:
 # Run Igor worker-state audit (REQ-CS-008)
 igor: ensure-up
 	$(COMPOSE) exec -T php composer igor
-release-check: check-no-cursor-coauthor check-open-prs check-twig-extra ensure-up composer-sync cs-fix cs-check rector-dry phpstan igor coverage-check assets-test release-check-demos
+# REQ-MAKE-002: sequential chain, ensure-up first.
+release-check:
+	@$(MAKE) ensure-up
+	@$(MAKE) check-no-cursor-coauthor
+	@$(MAKE) check-open-prs
+	@$(MAKE) check-twig-extra
+	@$(MAKE) check-no-raw-html-form
+	@$(MAKE) composer-sync
+	@$(MAKE) cs-fix
+	@$(MAKE) cs-check
+	@$(MAKE) rector-dry
+	@$(MAKE) phpstan
+	@$(MAKE) igor
+	@$(MAKE) validate-translations
+	@$(MAKE) coverage-check
+	@$(MAKE) assets-test
+	@$(MAKE) release-check-demos
+
+# REQ-TWIG-005: no raw <form>/<input>/<textarea>/<select> in bundle views or demo templates.
+check-no-raw-html-form:
+	@chmod +x .scripts/check-no-raw-html-form.sh
+	@./.scripts/check-no-raw-html-form.sh
 
 release-check-demos:
 	@$(MAKE) -C demo release-check
@@ -167,6 +188,7 @@ assets-clean:
 	@echo "Assets build artifacts cleaned."
 
 validate-translations: ensure-up
+	python3 .scripts/check-translation-key-parity.py
 	$(RUN) vendor/bin/yaml-lint src/Resources/translations
 
 setup-hooks:

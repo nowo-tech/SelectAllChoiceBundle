@@ -43,7 +43,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Dependencies refreshed (Composer and pnpm/npm lock files of the bundle and its demos, campaign 2026-10-19).
 - `.php-cs-fixer.dist.php`: `new ParallelConfig(2)` (REQ-CS-001).
+- CI: new `phpstan` job on every push and pull request (REQ-CS-006).
+- `release-check` runs sequentially from `ensure-up` and adds `check-no-raw-html-form` and `validate-translations`, which now checks key parity across the 60 shipped locales (REQ-MAKE-002 / REQ-MAKE-004).
+- Flex recipe moved to the canonical layout `.symfony/recipe/nowo-tech/select-all-choice-bundle/1.0/manifest.json` (REQ-RECIPE-001).
+- `docs/SECURITY.md`: scope and attack surface, threat model, logging and dependency policy, AI security audit checklist row (REQ-SEC-001 / REQ-SEC-002).
 - Documentation: wave-1 REQ compliance — README GitHub stars + Coverage badges, README documentation list order, canonical issue templates, CONTRIBUTING Cursor Agent settings (REQ-IDE-006), tables of contents in long docs.
+
+### Fixed
+
+- `.scripts/check-no-cursor-coauthor.sh` also runs inside git worktrees (`.git` file instead of directory).
+- `rector-dry` failed after the Rector update: the renamed `GetFiltersAndFunctionsToAsTwigAttributeRector` rule is skipped (attribute Twig functions need Symfony 7.3+, the bundle supports 6.4).
 
 ## [1.6.0] - 2026-10-13
 
