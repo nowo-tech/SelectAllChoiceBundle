@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Nowo\SelectAllChoiceBundle\Tests\Unit\Form\Extension;
 
 use Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
@@ -285,7 +286,7 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
      * @param list<string> $submitted
      * @param list<string> $expected
      */
-    #[\PHPUnit\Framework\Attributes\DataProvider('submissions')]
+    #[DataProvider('submissions')]
     public function testARealFormKeepsTheTickedChoices(bool $expanded, array $submitted, array $expected): void
     {
         $factory = Forms::createFormFactoryBuilder()->addTypeExtension($this->extension)->getFormFactory();
