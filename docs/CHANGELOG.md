@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.6.2] - 2026-10-25](#162---2026-10-25)
 - [[1.6.1] - 2026-10-22](#161---2026-10-22)
 - [[1.6.0] - 2026-10-13](#160---2026-10-13)
 - [[1.5.8] - 2026-10-09](#158---2026-10-09)
@@ -40,6 +41,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.2] - 2026-10-25
+
+Fix: multiple checkbox fields keep the ticked choices (the null clean-up no longer re-indexes expanded data). See [UPGRADING](UPGRADING.md#to-162).
+
 ### Fixed
 
 - Multiple **checkbox** fields (`multiple` + `expanded`) saved the first N choices instead of the ticked ones: the null clean-up re-indexed the data after `ChoiceType` had keyed it by child. The keys now stay for checkboxes (a plain multiple select is unchanged).
@@ -47,6 +52,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Demo: `demo/index.html.twig` renders the form through the child loop (`form_row(child)`) instead of `form_label`/`form_widget`/`form_errors` per field; the `mb-4` wrapper moved to `row_attr` in `DemoFormType` (REQ-TWIG-003).
+
+[1.6.2]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.6.2
 
 ## [1.6.1] - 2026-10-22
 
@@ -437,7 +444,7 @@ Dependency refresh, wave-1 docs, PHPStan CI job, release-check gates, translatio
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.6.1...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.6.2...HEAD
 [1.5.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.5.4...v1.5.5
 [1.4.11]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.11
 [1.4.10]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.10
