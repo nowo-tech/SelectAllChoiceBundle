@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Demo: `demo/index.html.twig` renders the form through the child loop (`form_row(child)`) instead of `form_label`/`form_widget`/`form_errors` per field; the `mb-4` wrapper moved to `row_attr` in `DemoFormType` (REQ-TWIG-003).
+
 ## [1.6.1] - 2026-10-22
 
 Dependency refresh, wave-1 docs, PHPStan CI job, release-check gates, translation parity, security analysis, recipe layout. See [UPGRADING](UPGRADING.md#to-161).

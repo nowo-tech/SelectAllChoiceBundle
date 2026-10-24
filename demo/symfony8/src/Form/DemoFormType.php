@@ -14,8 +14,9 @@ class DemoFormType extends AbstractType
     {
         $builder
             ->add('roles', ChoiceType::class, [
-                'label'   => 'demo.roles_label',
-                'choices' => [
+                'label'    => 'demo.roles_label',
+                'row_attr' => ['class' => 'mb-4'],
+                'choices'  => [
                     'Admin' => 'ROLE_ADMIN',
                     'User'  => 'ROLE_USER',
                     'Guest' => 'ROLE_GUEST',
@@ -27,8 +28,9 @@ class DemoFormType extends AbstractType
                 'select_all_position' => 'before',
             ])
             ->add('tags', ChoiceType::class, [
-                'label'   => 'demo.tags_label',
-                'choices' => [
+                'label'    => 'demo.tags_label',
+                'row_attr' => ['class' => 'mb-4'],
+                'choices'  => [
                     'PHP'        => 'php',
                     'JavaScript' => 'js',
                     'Symfony'    => 'symfony',
@@ -40,8 +42,9 @@ class DemoFormType extends AbstractType
                 'select_all_position' => 'before',
             ])
             ->add('categories', ChoiceType::class, [
-                'label'   => 'demo.categories_label',
-                'choices' => [
+                'label'    => 'demo.categories_label',
+                'row_attr' => ['class' => 'mb-4'],
+                'choices'  => [
                     'Tech'   => 'tech',
                     'Sports' => 'sports',
                     'News'   => 'news',

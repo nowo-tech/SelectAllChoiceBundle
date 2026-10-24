@@ -24,22 +24,14 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 {{ form_start(form, { attr: { class: 'needs-validation' } }) }}
-                    <div class="mb-4">
-                        {{ form_label(form.roles) }}
-                        {{ form_widget(form.roles) }}
-                        {{ form_errors(form.roles) }}
-                    </div>
-                    <div class="mb-4">
-                        {{ form_label(form.tags) }}
-                        {{ form_widget(form.tags) }}
-                        {{ form_errors(form.tags) }}
-                    </div>
-                    <div class="mb-4">
-                        <p class="small text-muted mb-1">{{ 'demo.styles_hint'|trans }}</p>
-                        {{ form_label(form.categories) }}
-                        {{ form_widget(form.categories) }}
-                        {{ form_errors(form.categories) }}
-                    </div>
+                    {% for child in form %}
+                        {% if not child.rendered %}
+                            {% if child.vars.name == 'categories' %}
+                                <p class="small text-muted mb-1">{{ 'demo.styles_hint'|trans }}</p>
+                            {% endif %}
+                            {{ form_row(child) }}
+                        {% endif %}
+                    {% endfor %}
                     <button type="submit" class="btn btn-primary">{{ 'demo.submit'|trans }}</button>
                 {{ form_end(form) }}
             </div>
