@@ -11,6 +11,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Forms;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -257,5 +259,56 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
         $listener($event);
 
         self::assertSame('not-an-array', $event->getData());
+    }
+
+    public function testExpandedListenerKeepsTheChildKeys(): void
+    {
+        $listener = null;
+        $builder  = $this->createMock(FormBuilderInterface::class);
+        $builder->method('addEventListener')->willReturnCallback(
+            static function (string $event, callable $cb) use (&$listener, $builder) {
+                $listener = $cb;
+
+                return $builder;
+            },
+        );
+        $this->extension->buildForm($builder, ['multiple' => true, 'expanded' => true]);
+
+        self::assertNotNull($listener);
+        $event = new FormEvent($this->createMock(FormInterface::class), [2 => 'c', 3 => null, 5 => 'f']);
+        $listener($event);
+
+        self::assertSame([2 => 'c', 5 => 'f'], $event->getData());
+    }
+
+    /**
+     * @param list<string> $submitted
+     * @param list<string> $expected
+     */
+    #[\PHPUnit\Framework\Attributes\DataProvider('submissions')]
+    public function testARealFormKeepsTheTickedChoices(bool $expanded, array $submitted, array $expected): void
+    {
+        $factory = Forms::createFormFactoryBuilder()->addTypeExtension($this->extension)->getFormFactory();
+        $form    = $factory->createBuilder(FormType::class, ['choice' => []])
+            ->add('choice', ChoiceType::class, [
+                'multiple' => true,
+                'expanded' => $expanded,
+                'choices'  => ['A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd'],
+            ])
+            ->getForm();
+
+        $form->submit(['choice' => $submitted]);
+
+        self::assertTrue($form->isValid());
+        self::assertSame($expected, $form->getData()['choice']);
+    }
+
+    /**
+     * @return iterable<string, array{0: bool, 1: list<string>, 2: list<string>}>
+     */
+    public static function submissions(): iterable
+    {
+        yield 'checkboxes' => [true, ['c', 'd'], ['c', 'd']];
+        yield 'select' => [false, ['b', 'd'], ['b', 'd']];
     }
 }

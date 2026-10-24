@@ -40,6 +40,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Multiple **checkbox** fields (`multiple` + `expanded`) saved the first N choices instead of the ticked ones: the null clean-up re-indexed the data after `ChoiceType` had keyed it by child. The keys now stay for checkboxes (a plain multiple select is unchanged).
+
 ### Changed
 
 - Demo: `demo/index.html.twig` renders the form through the child loop (`form_row(child)`) instead of `form_label`/`form_widget`/`form_errors` per field; the `mb-4` wrapper moved to `row_attr` in `DemoFormType` (REQ-TWIG-003).

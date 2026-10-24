@@ -68,20 +68,24 @@ final class ChoiceTypeSelectAllExtension extends AbstractTypeExtension
             return;
         }
 
+        // Checkboxes (expanded): ChoiceType's own PRE_SUBMIT listener has already keyed the data by child name (the
+        // ticked boxes' indexes), so the keys must stay; re-indexing ticked the first N boxes instead of the chosen ones.
+        $expanded = (bool) ($options['expanded'] ?? false);
+
         // Clean up nulls from multi-select collections before ChoiceType processes the data
-        $builder->addEventListener(FormEvents::PRE_SUBMIT, static function (FormEvent $event): void {
+        $builder->addEventListener(FormEvents::PRE_SUBMIT, static function (FormEvent $event) use ($expanded): void {
             $data = $event->getData();
             if (!is_array($data)) {
                 return;
             }
 
             // Remove null entries to avoid array_flip warnings in ChoiceType
-            $data = array_values(array_filter(
+            $data = array_filter(
                 $data,
                 static fn ($value): bool => $value !== null,
-            ));
+            );
 
-            $event->setData($data);
+            $event->setData($expanded ? $data : array_values($data));
         });
     }
 
