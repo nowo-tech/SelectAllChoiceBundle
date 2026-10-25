@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.6.3] - 2026-10-25](#163---2026-10-25)
 - [[1.6.2] - 2026-10-25](#162---2026-10-25)
 - [[1.6.1] - 2026-10-22](#161---2026-10-22)
 - [[1.6.0] - 2026-10-13](#160---2026-10-13)
@@ -41,10 +42,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.3] - 2026-10-25
+
+Reproducible JS bundle: the build stamp is a hash of the sources instead of the build time. See [UPGRADING](UPGRADING.md#to-163).
+
 ### Changed
 
 - **Assets:** reproducible bundle build. `__SELECT_ALL_CHOICE_BUILD_TIME__` now holds a build id (a hash of the TypeScript/CSS sources and `pnpm-lock.yaml`) instead of the build time, so rebuilding unchanged sources (`make assets`, `make release-check`) no longer rewrites the committed JS; the console line reads `script loaded, build: <id>`.
 - Developer tooling: `pnpm run typecheck` checks `src/Resources/assets/src` (the `tsconfig.json` include pointed at a missing `assets/` folder, so tsc failed with no inputs); the logger test uses the `Mock` type from Vitest.
+
+[1.6.3]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.6.3
 
 ## [1.6.2] - 2026-10-25
 
@@ -449,7 +456,7 @@ Dependency refresh, wave-1 docs, PHPStan CI job, release-check gates, translatio
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.6.2...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.6.3...HEAD
 [1.5.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.5.4...v1.5.5
 [1.4.11]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.11
 [1.4.10]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.10
