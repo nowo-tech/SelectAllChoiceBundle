@@ -41,6 +41,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Assets:** reproducible bundle build. `__SELECT_ALL_CHOICE_BUILD_TIME__` now holds a build id (a hash of the TypeScript/CSS sources and `pnpm-lock.yaml`) instead of the build time, so rebuilding unchanged sources (`make assets`, `make release-check`) no longer rewrites the committed JS; the console line reads `script loaded, build: <id>`.
+- Developer tooling: `pnpm run typecheck` checks `src/Resources/assets/src` (the `tsconfig.json` include pointed at a missing `assets/` folder, so tsc failed with no inputs); the logger test uses the `Mock` type from Vitest.
+
 ## [1.6.2] - 2026-10-25
 
 Fix: multiple checkbox fields keep the ticked choices (the null clean-up no longer re-indexes expanded data). See [UPGRADING](UPGRADING.md#to-162).
