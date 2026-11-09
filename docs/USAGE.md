@@ -23,6 +23,7 @@ Enable the "Select all" toggle on a multiple choice field by setting `select_all
   - [Overriding translations](#overriding-translations)
   - [Overriding templates](#overriding-templates)
 - [Behaviour](#behaviour)
+- [Using it from a DDD / hexagonal application](#using-it-from-a-ddd--hexagonal-application)
 - [Debug (frontend)](#debug-frontend)
 
 ## Including the frontend script
@@ -190,6 +191,32 @@ After changing overrides, run `php bin/console cache:clear` if needed. A full li
 - If the user selects or deselects options manually, the toggle state is updated (checked / unchecked / indeterminate).
 - A `change` event is dispatched with `bubbles: true` so other scripts (e.g. TomSelect, validators) can react.
 - For multi-select fields, the backend normalizes submitted data by dropping `null` entries before Symfony’s core `ChoiceType` processes it, preventing low-level warnings about non-scalar values in `array_flip()`; this is transparent for consumers.
+
+## Using it from a DDD / hexagonal application
+
+SelectAllChoice is a **presentation** component: a `ChoiceType` form type extension, form themes and a small browser
+script. It has no model, no persistence and no Doctrine dependency, and it never reads or writes the form's data
+beyond dropping `null` entries from a submitted multiple choice.
+
+**Keep the domain free of the bundle**
+
+- Bind the form to a command / input DTO in your UI layer, not to an entity, and use a `ChoiceType` whose choices are
+  ids or enum cases provided by an application query. `select_all: true` works the same as on `EntityType`.
+- Map the DTO to your domain command in the controller or handler; nothing from the bundle reaches the domain.
+
+```php
+$builder->add('memberIds', ChoiceType::class, [
+    'choices'    => $memberChoices,   // ['Ada' => '0b5c…', …] from an application read port
+    'multiple'   => true,
+    'expanded'   => true,
+    'select_all' => true,
+]);
+```
+
+**Known limitations**
+
+- No server-side ports or events: there is nothing to adapt. "Select all" is a client-side convenience; the submitted
+  value is the list of ticked choices, validated by `ChoiceType` as usual.
 
 ## Debug (frontend)
 
