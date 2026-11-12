@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.7.0] - 2026-11-12](#170---2026-11-12)
 - [[1.6.3] - 2026-10-25](#163---2026-10-25)
 - [[1.6.2] - 2026-10-25](#162---2026-10-25)
 - [[1.6.1] - 2026-10-22](#161---2026-10-22)
@@ -41,6 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [[1.0.0] - 2025-03-02](#100---2025-03-02)
 
 ## [Unreleased]
+
+## [1.7.0] - 2026-11-12
 
 Planned as **1.7.0** (minor): per-group "Select all" boxes. Every new option is opt-in; fields without them render
 exactly as in 1.6.x. See [UPGRADING](UPGRADING.md#to-170).
@@ -89,6 +92,8 @@ exactly as in 1.6.x. See [UPGRADING](UPGRADING.md#to-170).
 ### Documentation
 
 - USAGE: new section "Using it from a DDD / hexagonal application" (where the bundle sits in a hexagonal host, the ports, events and DTOs to build an anti-corruption layer on, and the known limitations).
+
+[1.7.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.7.0
 
 ## [1.6.3] - 2026-10-25
 
@@ -504,7 +509,7 @@ Dependency refresh, wave-1 docs, PHPStan CI job, release-check gates, translatio
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.6.3...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.7.0...HEAD
 [1.5.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.5.4...v1.5.5
 [1.4.11]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.11
 [1.4.10]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.10
