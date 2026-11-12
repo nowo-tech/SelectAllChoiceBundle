@@ -1,2 +1,3 @@
 form:
   select_all: 'Selectează tot'
+  select_all_in_group: 'Selectează tot în %group%'

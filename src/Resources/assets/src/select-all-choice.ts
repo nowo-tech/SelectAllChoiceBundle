@@ -13,6 +13,8 @@ import {
   runInitAndObserve,
   runInit,
   initSelectAllContainer,
+  destroySelectAllContainer,
+  refreshSelectAllContainer,
   getLogger,
 } from './select-all-choice-lib';
 
@@ -32,11 +34,15 @@ if (typeof window !== 'undefined') {
   (window as unknown as {
     NowoSelectAllChoice?: {
       initSelectAllContainer: typeof initSelectAllContainer;
+      destroySelectAllContainer: typeof destroySelectAllContainer;
+      refreshSelectAllContainer: typeof refreshSelectAllContainer;
       runInit: typeof runInit;
       runInitAndObserve: typeof runInitAndObserve;
     };
   }).NowoSelectAllChoice = {
     initSelectAllContainer,
+    destroySelectAllContainer,
+    refreshSelectAllContainer,
     runInit,
     runInitAndObserve,
   };

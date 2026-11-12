@@ -49,7 +49,8 @@ A bundle that is safe under **B** is safe under **A** and under classic mode / P
 
 | Service | Shared | Mutable state | Scenario A | Scenario B |
 |---------|--------|---------------|------------|------------|
-| `Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension` | yes (`form.type_extension`, autoconfigured) | none (8 `readonly` config values, `src/Form/Extension/ChoiceTypeSelectAllExtension.php`) | ✅ | ✅ |
+| `Nowo\SelectAllChoiceBundle\Form\Extension\ChoiceTypeSelectAllExtension` | yes (`form.type_extension`, autoconfigured) | none (9 `readonly` config values since 1.7.0, `src/Form/Extension/ChoiceTypeSelectAllExtension.php`); `finishView()` creates a new `SelectAllGroupsViewBuilder` per call | ✅ | ✅ |
+| `Nowo\SelectAllChoiceBundle\Form\SelectAllGroupsViewBuilder` (1.7.0, not a service) | no (instantiated per `finishView()` call) | none; no properties, works only on the given view and options | ✅ | ✅ |
 | `Nowo\SelectAllChoiceBundle\Twig\NowoSelectAllChoiceTwigExtension` | yes (`twig.extension`) | none; pure functions over constants; no Twig globals | ✅ | ✅ |
 
 `SelectAllChoiceExtension`, `Configuration` and `TwigPathsPass` only run at container compile time. The `PRE_SUBMIT` listener in `buildForm()` is a `static` closure bound to the form being built; it filters `null` entries from submitted data and keeps nothing.

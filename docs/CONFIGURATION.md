@@ -14,6 +14,7 @@ SelectAllChoiceBundle can be configured globally in `config/packages/nowo_select
   - [Bootstrap (default)](#bootstrap-default)
   - [Tailwind CSS](#tailwind-css)
   - [Custom classes](#custom-classes)
+- [Per-group "Select all"](#per-group-select-all)
 
 ## Full example
 
@@ -21,6 +22,7 @@ SelectAllChoiceBundle can be configured globally in `config/packages/nowo_select
 nowo_select_all_choice:
   form_theme: 'form_div_layout.html.twig'   # or bootstrap_5_layout.html.twig, etc.
   default_label: 'form.select_all'
+  default_group_label: 'form.select_all_in_group'   # select_all_groups (receives %group%)
   default_position: 'before'                 # 'before' | 'after'
   default_toggle_css_class: 'form-check-input'
   default_wrapper_css_class: 'form-check'
@@ -36,6 +38,7 @@ nowo_select_all_choice:
 |--------|------|---------|-------------|
 | `form_theme` | enum | `form_div_layout.html.twig` | Base form layout used for choice widgets. See [Form theme (Symfony layouts)](#form-theme-symfony-layouts) below. |
 | `default_label` | string | `form.select_all` | Default translation key for the "Select all" toggle label. |
+| `default_group_label` | string | `form.select_all_in_group` | Default translation key for the per-group box label ("Select all in %group%") used by the field option `select_all_groups`. Since 1.7.0. |
 | `default_position` | string | `before` | Position of the toggle relative to the choices: `before` or `after`. |
 | `default_toggle_css_class` | string | `form-check-input` | CSS class applied to the toggle checkbox input. |
 | `default_wrapper_css_class` | string | `form-check` | CSS class for the wrapper div that contains the toggle and its label. |
@@ -46,7 +49,7 @@ nowo_select_all_choice:
 
 ## Translations
 
-The bundle uses the translation domain **`NowoSelectAllChoiceBundle`** (CamelCase with `Bundle` suffix). The default label key is `form.select_all`. Translations are shipped for 60 locales in `src/Resources/translations/NowoSelectAllChoiceBundle.{locale}.yaml`.
+The bundle uses the translation domain **`NowoSelectAllChoiceBundle`** (CamelCase with `Bundle` suffix). The default label key is `form.select_all`; the per-group box label key is `form.select_all_in_group` (parameter `%group%`). Translations are shipped for 60 locales in `src/Resources/translations/NowoSelectAllChoiceBundle.{locale}.yaml`.
 
 **Override translations in your application:** create YAML (or XLIFF) files in your project’s `translations/` directory with the same domain and locale, e.g. `translations/NowoSelectAllChoiceBundle.es.yaml`. Define only the keys you want to override (e.g. `form.select_all`); Symfony will fall back to the bundle’s messages for the rest. You can also set `translation_domain` in config or per field (`select_all_translation_domain`) to use another domain (e.g. `messages`).
 
@@ -120,3 +123,12 @@ Or override per field (see [USAGE.md](USAGE.md#per-field-css-classes)).
 ### Custom classes
 
 Use any class names you want for toggle, wrapper, label and container. Ensure your CSS (or utility framework) styles the checkbox and label as needed.
+
+## Per-group "Select all"
+
+The field option `select_all_groups` (since 1.7.0) has no bundle-level switch: it is off unless a field enables it.
+Its label key comes from `default_group_label`, and the group box reuses `default_toggle_css_class`,
+`default_wrapper_css_class` and `default_label_css_class`. The group-specific attributes
+(`select_all_groups_attr`, `select_all_group_attr`, `select_all_group_legend_attr`, `select_all_group_toggle_attr`,
+`select_all_group_choices_attr`, `select_all_group_choice_attr`) are per field; see
+[USAGE.md](USAGE.md#per-group-select-all-select_all_groups).

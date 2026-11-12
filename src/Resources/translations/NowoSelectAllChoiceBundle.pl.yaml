@@ -1,2 +1,3 @@
 form:
   select_all: 'Zaznacz wszystko'
+  select_all_in_group: 'Zaznacz wszystko w %group%'

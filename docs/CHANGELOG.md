@@ -42,6 +42,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+Planned as **1.7.0** (minor): per-group "Select all" boxes. Every new option is opt-in; fields without them render
+exactly as in 1.6.x. See [UPGRADING](UPGRADING.md#to-170).
+
+### Added
+
+- **Per-group "Select all"** (`select_all_groups`, expanded multiple `ChoiceType`): one `fieldset` + `legend` per
+  choice group, each with its own box labelled "Select all in {group}". Groups come from `group_by` / nested
+  `choices` and, optionally, from a `data-*` key of `choice_attr` (`select_all_group_key`). Each box shows the right
+  checked / unchecked / indeterminate state on load (rendered server-side, corrected on connect), when a child
+  changes and after a validation error re-renders the form; the global `select_all` box stays optional, sits above
+  the groups and stays consistent with them (indeterminate while any group is partial).
+- **Accessibility:** the legend names the group; each group box has its own label, `aria-controls` listing its
+  children and `aria-checked` kept in sync with `indeterminate` (`mixed`). The global box now also sets
+  `aria-checked` and `aria-controls`.
+- **Never submitted:** the group and global boxes have no `name` (a host cannot add one), so they never reach the
+  request data or validation; a test submits every rendered checkbox of each form theme and checks the data equals the
+  children only.
+- **CSS hooks:** BEM classes `nowo-select-all-choice__groups`, `__group`, `__group-legend`, `__group-toggle`,
+  `__group-toggle-input`, `__group-toggle-label`, `__group-choices`, `__ungrouped`, `__choice`, plus the options
+  `select_all_groups_attr`, `select_all_group_attr` (array or callable), `select_all_group_legend_attr`,
+  `select_all_group_toggle_attr`, `select_all_group_choices_attr` and `select_all_group_choice_attr` (e.g. cards in
+  three columns).
+- Bundle option `default_group_label` (default `form.select_all_in_group`) and field option `select_all_group_label`;
+  the key is translated in all 60 catalogues.
+- JS: `destroySelectAllContainer()` and `refreshSelectAllContainer()` (also on `window.NowoSelectAllChoice`).
+
+### Changed
+
+- The Stimulus controller and the `<nowo-select-all-choice>` element clean up on disconnect (listeners and the
+  generated global box removed, init marker cleared), so forms inside dialogs loaded via `fetch` and forms re-rendered
+  after a validation error are initialized again with no duplicate listeners. Choice changes are now handled by one
+  delegated listener, which also covers choices re-rendered inside the field after init.
+- Bundle form themes follow the Twig-CS-Fixer standard (`include()` function, single quotes); the output is unchanged.
+
+### Fixed
+
+- The Foundation 5 and Foundation 6 themes failed to compile ("cannot be used as a trait"): Symfony's Foundation
+  layouts extend `form_div_layout`, so the bundle themes now extend them and call `parent()`.
+
 ### Documentation
 
 - USAGE: new section "Using it from a DDD / hexagonal application" (where the bundle sits in a hexagonal host, the ports, events and DTOs to build an anti-corruption layer on, and the known limitations).

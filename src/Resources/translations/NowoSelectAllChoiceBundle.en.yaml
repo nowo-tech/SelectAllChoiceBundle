@@ -1,2 +1,3 @@
 form:
   select_all: 'Select all'
+  select_all_in_group: 'Select all in %group%'

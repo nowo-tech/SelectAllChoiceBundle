@@ -21,6 +21,7 @@ final class ConfigurationTest extends TestCase
         $processed = $processor->processConfiguration($configuration, [[]]);
 
         self::assertSame('form.select_all', $processed['default_label']);
+        self::assertSame('form.select_all_in_group', $processed['default_group_label']);
         self::assertSame('before', $processed['default_position']);
         self::assertSame('form-check-input', $processed['default_toggle_css_class']);
         self::assertSame('form-check', $processed['default_wrapper_css_class']);

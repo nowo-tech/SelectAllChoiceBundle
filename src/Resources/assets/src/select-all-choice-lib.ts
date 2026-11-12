@@ -52,6 +52,12 @@ export const TAG_NOWO_SELECT_ALL_CHOICE = 'nowo-select-all-choice';
 /** Selector for container elements (standalone script, custom element, and Stimulus). */
 export const SELECTOR_CONTAINER = `${TAG_NOWO_SELECT_ALL_CHOICE},[data-controller*="select-all"]`;
 
+/** Target value for a group container (`fieldset`, rendered by the form theme with select_all_groups). */
+export const TARGET_GROUP = 'group';
+
+/** Target value for a group "select all" box (rendered by the form theme, no `name`). */
+export const TARGET_GROUP_TOGGLE = 'groupToggle';
+
 export type ContainerConfig = {
   position: 'before' | 'after';
   expanded: boolean;
@@ -60,28 +66,28 @@ export type ContainerConfig = {
   wrapperClass: string;
   labelClass: string;
   debug: boolean;
+  /** When false, no global "Select all" box is created (select_all_groups without select_all). */
+  global: boolean;
+  /** When true, the choices contain group fieldsets with their own boxes. */
+  groups: boolean;
 };
+
+/** Tri-state of a "select all" box. */
+export type ToggleState = 'checked' | 'unchecked' | 'mixed';
 
 type ContainerState = {
   toggleCheckbox: HTMLInputElement | null;
+  toggleWrapper: HTMLElement | null;
+  listeners: AbortController;
   isDispatchingFromToggle: boolean;
   isDispatchingChange: boolean;
 };
 
+/**
+ * Per-container state, keyed by the container element itself: nothing is shared between containers, and the entry
+ * goes away with the element (WeakMap) or on destroySelectAllContainer().
+ */
 const stateByContainer = new WeakMap<HTMLElement, ContainerState>();
-
-function getState(container: HTMLElement): ContainerState {
-  let state = stateByContainer.get(container);
-  if (!state) {
-    state = {
-      toggleCheckbox: null,
-      isDispatchingFromToggle: false,
-      isDispatchingChange: false,
-    };
-    stateByContainer.set(container, state);
-  }
-  return state;
-}
 
 function getConfig(element: HTMLElement): ContainerConfig {
   const get = (attr: string, def: string) => element.getAttribute(attr) ?? def;
@@ -95,6 +101,8 @@ function getConfig(element: HTMLElement): ContainerConfig {
     wrapperClass: get('data-select-all-wrapper-class-value', 'form-check'),
     labelClass: get('data-select-all-label-class-value', 'form-check-label'),
     debug: get('data-select-all-debug-value', '0') === '1',
+    global: get('data-select-all-global-value', 'true') !== 'false',
+    groups: expanded && get('data-select-all-groups-value', 'false') === 'true',
   };
 }
 
@@ -147,7 +155,10 @@ export function logConfiguredContainerCount(): void {
   hasLoggedConfiguredContainerCount = true;
 }
 
-function createToggle(container: HTMLElement, config: ContainerConfig, choicesEl: HTMLElement): HTMLInputElement | null {
+function createToggle(config: ContainerConfig, choicesEl: HTMLElement): HTMLElement | null {
+  const parent = choicesEl.parentNode;
+  if (!parent) return null;
+
   const wrapper = document.createElement('div');
   wrapper.className = config.wrapperClass;
   wrapper.setAttribute(ATTR_TARGET, TARGET_TOGGLE_WRAPPER);
@@ -168,68 +179,80 @@ function createToggle(container: HTMLElement, config: ContainerConfig, choicesEl
   wrapper.appendChild(checkbox);
   wrapper.appendChild(labelEl);
 
-  const parent = choicesEl.parentNode;
-  if (!parent) return null;
   if (config.position === 'before') {
     parent.insertBefore(wrapper, choicesEl);
   } else {
     parent.insertBefore(wrapper, choicesEl.nextSibling);
   }
-  return checkbox;
+  return wrapper;
 }
 
-/** Enabled checkboxes only: disabled choices cannot be toggled by the user nor by "Select all". */
-const SELECTOR_ENABLED_CHECKBOX = 'input[type="checkbox"]:not(:disabled)';
+/**
+ * Choice checkboxes: every checkbox except the bundle's own boxes (they all carry a data-select-all-target).
+ * The global box lives outside the choices target; the group boxes live inside it.
+ */
+const SELECTOR_CHOICE_CHECKBOX = `input[type="checkbox"]:not([${ATTR_TARGET}])`;
+
+/** Enabled choice checkboxes only: disabled choices cannot be toggled by the user nor by "Select all". */
+const SELECTOR_ENABLED_CHECKBOX = `${SELECTOR_CHOICE_CHECKBOX}:not(:disabled)`;
 
 /** Enabled options only (disabled options are never submitted). */
 const SELECTOR_ENABLED_OPTION = 'option:not(:disabled)';
 
-function enabledCheckboxes(choicesEl: HTMLElement): HTMLInputElement[] {
-  return Array.from(choicesEl.querySelectorAll<HTMLInputElement>(SELECTOR_ENABLED_CHECKBOX));
+function enabledCheckboxes(scope: HTMLElement): HTMLInputElement[] {
+  return Array.from(scope.querySelectorAll<HTMLInputElement>(SELECTOR_ENABLED_CHECKBOX));
 }
 
 function enabledOptions(select: HTMLSelectElement): HTMLOptionElement[] {
   return Array.from(select.querySelectorAll<HTMLOptionElement>(SELECTOR_ENABLED_OPTION));
 }
 
-function areAllCheckboxesChecked(choicesEl: HTMLElement): boolean {
-  const inputs = enabledCheckboxes(choicesEl);
-  if (inputs.length === 0) return false;
-  return inputs.every((input) => input.checked);
+function stateOf(items: Array<{ readonly checked?: boolean; readonly selected?: boolean }>): ToggleState {
+  const on = items.filter((item) => item.checked === true || item.selected === true).length;
+  if (items.length > 0 && on === items.length) return 'checked';
+  return on === 0 ? 'unchecked' : 'mixed';
 }
 
-function areAllCheckboxesUnchecked(choicesEl: HTMLElement): boolean {
-  return enabledCheckboxes(choicesEl).every((input) => !input.checked);
+/** Applies a tri-state to a box: checked, indeterminate and aria-checked always agree. */
+export function applyToggleState(toggle: HTMLInputElement, state: ToggleState): void {
+  toggle.checked = state === 'checked';
+  toggle.indeterminate = state === 'mixed';
+  toggle.setAttribute('aria-checked', state === 'mixed' ? 'mixed' : String(state === 'checked'));
 }
 
-function areAllSelectOptionsSelected(choicesEl: HTMLElement): boolean {
+function choicesState(choicesEl: HTMLElement, expanded: boolean): ToggleState {
+  if (expanded) return stateOf(enabledCheckboxes(choicesEl));
   const select = choicesEl.querySelector<HTMLSelectElement>('select');
-  if (!select) return false;
-  const options = enabledOptions(select);
-  if (options.length === 0) return false;
-  return options.every((opt) => opt.selected);
+  return stateOf(select ? enabledOptions(select) : []);
 }
 
-function areAllSelectOptionsUnselected(choicesEl: HTMLElement): boolean {
-  const select = choicesEl.querySelector<HTMLSelectElement>('select');
-  if (!select) return true;
-  return enabledOptions(select).every((opt) => !opt.selected);
+function groupsOf(choicesEl: HTMLElement): HTMLElement[] {
+  return Array.from(choicesEl.querySelectorAll<HTMLElement>(`[${ATTR_TARGET}="${TARGET_GROUP}"]`));
 }
 
-function syncToggleFromChoices(
-  checkbox: HTMLInputElement,
-  choicesEl: HTMLElement,
-  expanded: boolean,
-): void {
-  const allSelected = expanded ? areAllCheckboxesChecked(choicesEl) : areAllSelectOptionsSelected(choicesEl);
-  const noneSelected = expanded ? areAllCheckboxesUnchecked(choicesEl) : areAllSelectOptionsUnselected(choicesEl);
-  checkbox.checked = allSelected;
-  checkbox.indeterminate = !allSelected && !noneSelected;
+function groupToggleOf(group: HTMLElement): HTMLInputElement | null {
+  return group.querySelector<HTMLInputElement>(`input[${ATTR_TARGET}="${TARGET_GROUP_TOGGLE}"]`);
 }
 
-function toggleCheckboxes(choicesEl: HTMLElement, selected: boolean): void {
-  enabledCheckboxes(choicesEl).forEach((input) => {
-    input.checked = selected;
+/** Recomputes every box of the container (groups first, then the global one) from the choices. */
+function syncAll(config: ContainerConfig, state: ContainerState, choicesEl: HTMLElement): void {
+  if (config.groups) {
+    groupsOf(choicesEl).forEach((group) => {
+      const toggle = groupToggleOf(group);
+      if (!toggle) return;
+      const children = enabledCheckboxes(group);
+      toggle.disabled = children.length === 0;
+      applyToggleState(toggle, stateOf(children));
+    });
+  }
+  if (state.toggleCheckbox) {
+    applyToggleState(state.toggleCheckbox, choicesState(choicesEl, config.expanded));
+  }
+}
+
+function setChecked(inputs: HTMLInputElement[], checked: boolean): void {
+  inputs.forEach((input) => {
+    input.checked = checked;
   });
 }
 
@@ -255,8 +278,13 @@ function dispatchChange(choicesEl: HTMLElement, expanded: boolean, state: Contai
   }
 }
 
+function idsOf(elements: HTMLElement[]): string {
+  return elements.map((el) => el.id).filter((id) => id !== '').join(' ');
+}
+
 /**
- * Initializes one "select-all" container: creates the toggle, syncs state, binds listeners.
+ * Initializes one "select-all" container: creates the global toggle (unless disabled), wires the group boxes,
+ * syncs every box from the choices and binds the listeners (all removed by destroySelectAllContainer).
  * Idempotent: if the container is already initialized (data-select-all-init="1"), returns false.
  *
  * @param element - Root element: `nowo-select-all-choice` or legacy `data-controller*="select-all"`, with data-select-all-* attributes.
@@ -274,6 +302,8 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
     position: config.position,
     expanded: config.expanded,
     label: config.label,
+    global: config.global,
+    groups: config.groups,
   });
 
   const choicesEl = findChoices(element);
@@ -282,51 +312,85 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
     return false;
   }
 
+  // A previous init whose marker was cleared (e.g. by a re-render) is torn down first: no duplicate listeners.
+  teardown(element);
   element.setAttribute(ATTR_INIT, '1');
-  const state = getState(element);
+  const state: ContainerState = {
+    toggleCheckbox: null,
+    toggleWrapper: null,
+    listeners: new AbortController(),
+    isDispatchingFromToggle: false,
+    isDispatchingChange: false,
+  };
+  stateByContainer.set(element, state);
+  const { signal } = state.listeners;
 
-  const checkbox = createToggle(element, config, choicesEl);
-  if (!checkbox) return true;
-  state.toggleCheckbox = checkbox;
+  if (config.global) {
+    const wrapper = createToggle(config, choicesEl);
+    if (!wrapper) return true;
+    state.toggleWrapper = wrapper;
+    const checkbox = wrapper.querySelector<HTMLInputElement>(`input[${ATTR_TARGET}="${TARGET_TOGGLE}"]`) as HTMLInputElement;
+    state.toggleCheckbox = checkbox;
+    const controls = config.expanded
+      ? idsOf(Array.from(choicesEl.querySelectorAll<HTMLInputElement>(SELECTOR_CHOICE_CHECKBOX)))
+      : idsOf(Array.from(choicesEl.querySelectorAll<HTMLSelectElement>('select')));
+    if (controls !== '') checkbox.setAttribute('aria-controls', controls);
 
-  checkbox.addEventListener('change', () => {
-    const checked = checkbox.checked;
-    getLogger().debug('toggleAll', { checked, expanded: config.expanded });
-    if (config.expanded) {
-      toggleCheckboxes(choicesEl, checked);
-    } else {
-      toggleSelectOptions(choicesEl, checked);
-    }
-    state.isDispatchingFromToggle = true;
-    try {
-      dispatchChange(choicesEl, config.expanded, state);
-    } finally {
-      state.isDispatchingFromToggle = false;
-    }
-  });
+    checkbox.addEventListener('change', () => {
+      const checked = checkbox.checked;
+      getLogger().debug('toggleAll', { checked, expanded: config.expanded });
+      if (config.expanded) {
+        setChecked(enabledCheckboxes(choicesEl), checked);
+      } else {
+        toggleSelectOptions(choicesEl, checked);
+      }
+      syncAll(config, state, choicesEl);
+      state.isDispatchingFromToggle = true;
+      try {
+        dispatchChange(choicesEl, config.expanded, state);
+      } finally {
+        state.isDispatchingFromToggle = false;
+      }
+    }, { signal });
+  }
 
-  syncToggleFromChoices(checkbox, choicesEl, config.expanded);
+  syncAll(config, state, choicesEl);
 
   if (config.expanded) {
-    const checkboxes = choicesEl.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-    getLogger().debug('initSelectAllContainer: bound change listeners to checkboxes', { count: checkboxes.length });
-    checkboxes.forEach((input) => {
-      // The native change event already bubbles to the form / host listeners: only sync the toggle
-      // (re-dispatching here produced a second change event per user click).
-      input.addEventListener('change', () => {
-        syncToggleFromChoices(checkbox, choicesEl, config.expanded);
-      });
+    getLogger().debug('initSelectAllContainer: delegated change listener on choices', {
+      count: choicesEl.querySelectorAll(SELECTOR_CHOICE_CHECKBOX).length,
+      groups: config.groups ? groupsOf(choicesEl).length : 0,
     });
+    // One delegated listener: it also covers choices or groups re-rendered inside the target after init.
+    choicesEl.addEventListener('change', (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLInputElement) || target.type !== 'checkbox') return;
+
+      if (target.getAttribute(ATTR_TARGET) === TARGET_GROUP_TOGGLE) {
+        const group = target.closest<HTMLElement>(`[${ATTR_TARGET}="${TARGET_GROUP}"]`);
+        if (!config.groups || !group) return;
+        getLogger().debug('toggleGroup', { checked: target.checked });
+        setChecked(enabledCheckboxes(group), target.checked);
+        syncAll(config, state, choicesEl);
+        // The group box itself is never submitted; like the global box, tell the host the choices changed.
+        dispatchChange(choicesEl, true, state);
+        return;
+      }
+
+      // The native change event of a choice already bubbles to the form / host listeners: only sync the boxes
+      // (re-dispatching here produced a second change event per user click).
+      syncAll(config, state, choicesEl);
+    }, { signal });
   } else {
     const select = choicesEl.querySelector<HTMLSelectElement>('select');
     if (select) {
       getLogger().debug('initSelectAllContainer: bound change listener to select');
       select.addEventListener('change', () => {
-        syncToggleFromChoices(checkbox, choicesEl, config.expanded);
+        syncAll(config, state, choicesEl);
         if (!state.isDispatchingFromToggle && !state.isDispatchingChange) {
           dispatchChange(choicesEl, config.expanded, state);
         }
-      });
+      }, { signal });
     } else {
       getLogger().warn('initSelectAllContainer: expanded=false but no select in choices target');
     }
@@ -334,6 +398,40 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
 
   getLogger().debug('initSelectAllContainer: done', { expanded: config.expanded });
   return true;
+}
+
+function teardown(element: HTMLElement): boolean {
+  const state = stateByContainer.get(element);
+  if (!state) return false;
+  state.listeners.abort();
+  state.toggleWrapper?.remove();
+  stateByContainer.delete(element);
+  return true;
+}
+
+/**
+ * Undoes initSelectAllContainer: removes every listener and the global box it created, and clears the init marker
+ * so the next connect (e.g. a dialog body re-inserted after a validation error) starts clean. The group boxes are
+ * server-rendered and stay. Safe to call more than once.
+ *
+ * @returns true when the container had been initialized.
+ */
+export function destroySelectAllContainer(element: HTMLElement): boolean {
+  const done = teardown(element);
+  element.removeAttribute(ATTR_INIT);
+  if (done) getLogger().debug('destroySelectAllContainer: listeners removed');
+  return done;
+}
+
+/**
+ * Re-reads the choices and updates every box (global and groups). Call it after changing choices from script
+ * without a change event; user changes are picked up automatically.
+ */
+export function refreshSelectAllContainer(element: HTMLElement): void {
+  const state = stateByContainer.get(element);
+  const choicesEl = findChoices(element);
+  if (!state || !choicesEl) return;
+  syncAll(getConfig(element), state, choicesEl);
 }
 
 /**
