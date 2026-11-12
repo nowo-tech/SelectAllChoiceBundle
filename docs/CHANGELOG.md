@@ -43,6 +43,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Tests
+
+- Tests: kept-alive worker test `WorkerKeptAliveTest` (one kernel or one kept set of services, never reset, 1,200 alternating iterations, memory bound) and `docs/FRANKENPHP-WORKER-AUDIT.md` refreshed for v1.7.0; no runtime change.
+
 ## [1.7.0] - 2026-11-12
 
 Planned as **1.7.0** (minor): per-group "Select all" boxes. Every new option is opt-in; fields without them render
