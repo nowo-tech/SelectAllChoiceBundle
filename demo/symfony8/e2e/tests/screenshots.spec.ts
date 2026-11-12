@@ -27,12 +27,12 @@ async function boxOf(
 
 /** Navbar → main → profiler (union), padded. */
 async function clipDemoFrame(page: import('@playwright/test').Page): Promise<Box> {
-  const nav = await boxOf(page, 'nav.navbar');
+  const nav = await boxOf(page, 'header.nowo-ui-header');
   const main = await boxOf(page, 'main');
   const profiler =
     (await boxOf(page, '.sf-toolbar')) ?? (await boxOf(page, '.sf-minitoolbar'));
   if (!nav || !main) {
-    throw new Error('Missing nav.navbar or main for SelectAllChoice screenshot clip');
+    throw new Error('Missing header.nowo-ui-header or main for SelectAllChoice screenshot clip');
   }
   const boxes = [nav, main, profiler].filter(Boolean) as Box[];
   const x = Math.min(...boxes.map((b) => b.x));
@@ -52,8 +52,8 @@ async function prepareDemoPage(page: import('@playwright/test').Page) {
   // Clip cannot exceed viewport — size for navbar + full form + profiler.
   await page.setViewportSize({ width: 1280, height: 1600 });
   await page.goto('/en');
-  await expect(page.locator('nav.navbar .navbar-brand')).toBeVisible();
-  await expect(page.locator('main .card')).toBeVisible();
+  await expect(page.locator('header.nowo-ui-header .nowo-ui-brand')).toBeVisible();
+  await expect(page.locator('main [data-testid="demo-case"]')).toBeVisible();
   await page.waitForFunction(() => document.querySelector('[data-select-all-target="toggle"]') !== null, {
     timeout: 8000,
   });
@@ -92,7 +92,7 @@ test.describe('SelectAllChoice screenshots (full demo context)', () => {
       await toggle.check();
       await expect(toggle).toBeChecked();
     }
-    await expect(page.locator('main .card .form-check-input:checked').first()).toBeVisible();
+    await expect(page.locator('main [data-testid="demo-case"] .nowo-ui-check__input:checked').first()).toBeVisible();
     const clip = await clipDemoFrame(page);
     if (clip.height >= 900) {
       await page.screenshot({ path: resolve(outDir, 'interaction.png'), clip });
