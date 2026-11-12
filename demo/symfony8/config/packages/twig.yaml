@@ -1,5 +1,5 @@
 twig:
   form_themes:
-    - 'bootstrap_5_layout.html.twig'
-    # Bundle theme is prepended automatically from nowo_select_all_choice.form_theme (bootstrap_5_layout → select_all_choice_theme_bootstrap5)
-    - '@NowoSelectAllChoice/Form/select_all_choice_theme_bootstrap5.html.twig'
+    # UiKit's form layout with the bundle's "select all" wrapper added on top (the bundle's own themes wrap Symfony's
+    # base layouts, not UiKit's)
+    - 'form/select_all_choice_ui_theme.html.twig'

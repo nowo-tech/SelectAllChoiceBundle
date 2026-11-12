@@ -1,0 +1,28 @@
+{#
+  Demo form theme: UiKit's form layout (nowo_ui_layout) with the "select all" wrapper of SelectAllChoiceBundle on top of
+  its choice blocks. Same logic as the bundle's select_all_choice_theme.html.twig, with UiKit's layout as the base.
+#}
+{% use '@NowoUiKit/form/nowo_ui_layout.html.twig' with choice_widget_expanded as ui_layout_choice_widget_expanded, choice_widget_collapsed as ui_layout_choice_widget_collapsed %}
+{% use '@NowoSelectAllChoiceBundle/Form/_select_all_choice_groups.html.twig' %}
+
+{% block choice_widget_expanded %}
+    {% if form.vars.select_all_groups_enabled is defined and form.vars.select_all_groups_enabled %}
+        {% set select_all_embedded_label = false %}
+        {% set inner_content %}{{ block('nowo_select_all_choice_groups') }}{% endset %}
+        {{ include('@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig', {form: form, expanded: true, inner_content: inner_content}) }}
+    {% elseif form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
+        {% set inner_content %}{{ block('ui_layout_choice_widget_expanded') }}{% endset %}
+        {{ include('@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig', {form: form, expanded: true, inner_content: inner_content}) }}
+    {% else %}
+        {{ block('ui_layout_choice_widget_expanded') }}
+    {% endif %}
+{% endblock %}
+
+{% block choice_widget_collapsed %}
+    {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
+        {% set inner_content %}{{ block('ui_layout_choice_widget_collapsed') }}{% endset %}
+        {{ include('@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig', {form: form, expanded: false, inner_content: inner_content}) }}
+    {% else %}
+        {{ block('ui_layout_choice_widget_collapsed') }}
+    {% endif %}
+{% endblock %}

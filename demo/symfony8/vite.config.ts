@@ -24,5 +24,7 @@ export default defineConfig({
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    // the bundle's sources live outside the demo (mounted at /var/...): resolve Stimulus from the demo's node_modules
+    alias: { '@hotwired/stimulus': path.resolve(__dirname, 'node_modules/@hotwired/stimulus') },
   },
 });
