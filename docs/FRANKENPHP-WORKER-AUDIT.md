@@ -3,8 +3,8 @@
 | Field | Value |
 |-------|-------|
 | Package | `nowo-tech/select-all-choice-bundle` (`symfony-bundle`) |
-| Audited revision | `v1.5.5` |
-| Audit date | 2026-09-25 |
+| Audited revision | `v1.7.0` (kept-alive test and rule-7 note re-checked 2026-11-12; earlier manual review kept below) |
+| Audit date | 2026-11-12 (first audit 2026-09) |
 | Method | Manual review of every PHP file under `src/` (form type extension, Twig extension, DI extension, configuration, compiler pass, bundle class) and `src/Resources/config/services.yaml`; PHPStan classic + `ruleset-worker-no-kernel-reset` + hardening |
 | **Verdict** | ✅ **100% compatible** with FrankenPHP worker mode and **`FRANKENPHP_RESET_KERNEL` unset/false** (scenario A below; also safe under B) |
 
@@ -14,6 +14,7 @@
 - [Summary](#summary)
 - [Services reviewed](#services-reviewed)
 - [Findings](#findings)
+- [Kept-alive test (REQ-RUNTIME-002)](#kept-alive-test-req-runtime-002)
 - [Demo (REQ-DEMO-010)](#demo-req-demo-010)
 - [Usage recommendations in worker mode](#usage-recommendations-in-worker-mode)
 - [Re-audit triggers](#re-audit-triggers)
@@ -62,6 +63,14 @@ No findings. The package keeps no state between requests under either scenario A
 ## Demo (REQ-DEMO-010)
 
 Default `FRANKENPHP_MODE=worker` with image `Caddyfile` using `php_server { hot_reload; worker { file …; watch } }`. Set `FRANKENPHP_MODE=classic` to swap in `Caddyfile.dev` (no worker). Leave `FRANKENPHP_RESET_KERNEL` unset. See [DEMO-FRANKENPHP.md](DEMO-FRANKENPHP.md).
+
+## Kept-alive test (REQ-RUNTIME-002)
+
+Test: `Nowo\SelectAllChoiceBundle\Tests\Integration\Worker\WorkerKeptAliveTest` (`tests/Integration/Worker/WorkerKeptAliveTest.php`). It uses one form factory with the type extension, one Twig environment, form renderer and translator kept for the whole run; `services_resetter` / `kernel.reset` is **never** called. It runs 1,200 iterations alternating two inputs (choice sets) and two locales (en/es), asserts every result contains only its own data (no value of the other input appears), and that memory growth after a 100-iteration warm-up stays below 4 MiB.
+
+Result: no state is carried between requests, so the bundle is **safe with kernel reset false**.
+
+Rule 7: the bundle never clears or resets the host's default EntityManager (it uses no persistence), and nothing in `ChoiceTypeSelectAllExtension` depends on it.
 
 ## Usage recommendations in worker mode
 
