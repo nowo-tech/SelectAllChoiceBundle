@@ -81,8 +81,17 @@ final class SelectAllGroupsViewBuilder
         /** @var array<string, true> $seen */
         $seen = [];
 
-        $choices = $view->vars['choices'] ?? [];
-        foreach (is_array($choices) ? $choices : [] as $key => $choice) {
+        // Preferred choices are only in preferred_choices when duplicate_preferred_choices is false: walk both lists
+        // (in that order of precedence for grouping), $seen keeps each child once.
+        $choices   = $view->vars['choices'] ?? [];
+        $preferred = $view->vars['preferred_choices'] ?? [];
+        $entries   = [];
+        foreach ([$choices, $preferred] as $list) {
+            foreach (is_array($list) ? $list : [] as $key => $choice) {
+                $entries[] = [$key, $choice];
+            }
+        }
+        foreach ($entries as [$key, $choice]) {
             if ($choice instanceof ChoiceGroupView) {
                 $this->addToGroup($raw, $groupPositions, $choice->label, $this->leafNames($view, $choice, $seen));
 

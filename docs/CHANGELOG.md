@@ -52,7 +52,9 @@ exactly as in 1.6.x. See [UPGRADING](UPGRADING.md#to-170).
   `choices` and, optionally, from a `data-*` key of `choice_attr` (`select_all_group_key`). Each box shows the right
   checked / unchecked / indeterminate state on load (rendered server-side, corrected on connect), when a child
   changes and after a validation error re-renders the form; the global `select_all` box stays optional, sits above
-  the groups and stays consistent with them (indeterminate while any group is partial).
+  the groups and stays consistent with them (indeterminate while any group is partial). Preferred choices stay in
+  their group (also with `duplicate_preferred_choices: false`), a form `reset` resyncs every box, and a group box
+  click emits one `change` event (from the choices), never one from the unnamed box itself.
 - **Accessibility:** the legend names the group; each group box has its own label, `aria-controls` listing its
   children and `aria-checked` kept in sync with `indeterminate` (`mixed`). The global box now also sets
   `aria-checked` and `aria-controls`.

@@ -194,7 +194,7 @@ describe('select-all groups', () => {
       const choices = root.querySelector('[data-select-all-target="choices"]')!;
       const fromChoices: EventTarget[] = [];
       document.querySelector('form')!.addEventListener('change', (e) => {
-        if (e.target === choices) fromChoices.push(e.target);
+        fromChoices.push(e.target!);
       });
       const [availability] = groupToggles(root);
 
@@ -203,7 +203,7 @@ describe('select-all groups', () => {
       expect(childrenOf(root, 1)[0].checked).toBe(false);
       expect(states([availability])).toEqual(['on:true']);
       expect(states([globalToggle(root)!])).toEqual(['off/mixed:mixed']);
-      expect(fromChoices).toHaveLength(1);
+      expect(fromChoices).toEqual([choices]); // one event per click, from the choices, never from the box
 
       change(availability, false);
       expect(childrenOf(root, 0).map((c) => c.checked)).toEqual([false, false, false]);
@@ -240,6 +240,22 @@ describe('select-all groups', () => {
 
       expect(() => refreshSelectAllContainer(root)).not.toThrow();
       expect(groupToggles(root)).toHaveLength(2);
+    });
+  });
+
+  describe('form reset', () => {
+    it('resyncs every box after the form is reset', async () => {
+      document.body.innerHTML = `<form>${groupsHtml(BEACON)}</form>`;
+      const root = document.querySelector<HTMLElement>('nowo-select-all-choice')!;
+      change(groupToggles(root)[1], true);
+      change(groupToggles(root)[2], true);
+      expect(states([globalToggle(root)!])).toEqual(['on:true']);
+
+      document.querySelector('form')!.reset();
+      await tick();
+
+      expect(states(groupToggles(root))).toEqual(['on:true', 'off/mixed:mixed', 'off:false']);
+      expect(states([globalToggle(root)!])).toEqual(['off/mixed:mixed']);
     });
   });
 

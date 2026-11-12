@@ -198,6 +198,18 @@ final class SelectAllGroupsRenderingTest extends TestCase
         self::assertCount(2, $this->elements($xp, '//fieldset[1]//input[@name="form[targets][]"]'));
     }
 
+    public function testPreferredChoicesStayInTheirGroup(): void
+    {
+        $form = $this->notificationForm(['preferred_choices' => ['issue.new', 'task.failed'], 'duplicate_preferred_choices' => false]);
+        $xp   = $this->xpath($this->render($form, 'form_div_layout.html.twig'));
+
+        self::assertSame(['Incidents', 'Availability', 'Tasks'], $this->texts($xp, '//fieldset/legend'));
+        self::assertCount(2, $this->elements($xp, '//fieldset[1]//input[@name="form[targets][]"]'));
+        self::assertCount(1, $this->elements($xp, '//fieldset[3]//input[@value="task.failed"]'));
+        self::assertCount(0, $this->elements($xp, '//div[contains(@class, "nowo-select-all-choice__ungrouped")]'));
+        self::assertCount(5, $this->elements($xp, '//input[@name="form[targets][]"]'));
+    }
+
     public function testTheGroupLabelIsTranslated(): void
     {
         $form = $this->notificationForm(['select_all' => true]);

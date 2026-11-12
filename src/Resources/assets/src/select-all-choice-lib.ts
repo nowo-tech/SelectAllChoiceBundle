@@ -372,7 +372,9 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
         getLogger().debug('toggleGroup', { checked: target.checked });
         setChecked(enabledCheckboxes(group), target.checked);
         syncAll(config, state, choicesEl);
-        // The group box itself is never submitted; like the global box, tell the host the choices changed.
+        // The group box itself is never submitted: stop its own event here and emit one change from the choices,
+        // so form-level listeners see exactly one event per click.
+        event.stopPropagation();
         dispatchChange(choicesEl, true, state);
         return;
       }
@@ -394,6 +396,14 @@ export function initSelectAllContainer(element: HTMLElement): boolean {
     } else {
       getLogger().warn('initSelectAllContainer: expanded=false but no select in choices target');
     }
+  }
+
+  // A form reset restores the choices without change events: resync once the browser has applied it.
+  const form = element.closest('form');
+  if (form) {
+    form.addEventListener('reset', () => {
+      setTimeout(() => syncAll(config, state, choicesEl), 0);
+    }, { signal });
   }
 
   getLogger().debug('initSelectAllContainer: done', { expanded: config.expanded });

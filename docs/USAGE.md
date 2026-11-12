@@ -171,7 +171,11 @@ Every box shows the right state, **checked**, **unchecked** or **indeterminate**
 
 - on load: the form theme renders the state from the children, and the controller corrects it on connect;
 - when a child changes, or a group / global box is clicked;
-- after a validation error: the re-rendered form carries the submitted children, so the boxes follow them.
+- after a validation error: the re-rendered form carries the submitted children, so the boxes follow them;
+- after a form `reset`.
+
+A click on a group box emits a single bubbling `change` event from the choices container (the box's own event is
+stopped, since the box is not a form value).
 
 The global box and the group boxes always agree: ticking a group updates the global box, and the global box is
 indeterminate while any group is partial. Disabled children are never changed and do not count; a group whose
