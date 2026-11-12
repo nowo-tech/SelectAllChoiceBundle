@@ -48,6 +48,7 @@ Looking for **Symfony ChoiceType select all**, **multiple choice select all chec
 - ✅ **Two modes** — Works with `expanded=true` (checkboxes) and `expanded=false` (multi-select)
 - ✅ **Translatable label** — Default key `form.select_all`, overridable with `select_all_label`; 60 languages included
 - ✅ **Configurable** — Position (before/after), CSS classes for toggle and container
+- ✅ **Per-group "Select all"** — `select_all_groups => true` renders each choice group (`group_by`, optgroups or a `data-*` key) as a `fieldset` with its own box, tri-state and `aria-checked="mixed"`, never submitted; CSS hooks for card layouts ([USAGE](docs/USAGE.md#per-group-select-all-select_all_groups))
 - ✅ **Sync state** — Toggle reflects "all selected" / "none" / indeterminate; manual selection updates the toggle
 - ✅ **Events** — Dispatches `change` with `bubbles: true` so other libs (TomSelect, validators) can react
 - ✅ **Multiple fields** — Safe with several select-all choice fields on the same page

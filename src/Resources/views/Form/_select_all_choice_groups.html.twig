@@ -1,0 +1,69 @@
+{#
+  Per-group "Select all" markup (field option select_all_groups, expanded choices only).
+  Imported with {% use %} by every bundle form theme; the theme sets select_all_embedded_label to true when its
+  checkbox widget renders its own label (Bootstrap, Foundation 5). Override any of these blocks in your own form
+  theme to change the markup; keep the data-select-all-target attributes, the controller relies on them.
+
+  The group boxes have no name attribute: they are never submitted and never reach the form data or validation.
+#}
+{%- block nowo_select_all_choice_groups -%}
+    {%- set attr = attr|merge(select_all_groups_attr)|merge({class: (select_all_groups_attr.class ~ ' ' ~ attr.class|default(''))|trim}) -%}
+    <div {{ block('widget_container_attributes') }}>
+        {%- for section in select_all_group_sections -%}
+            {%- if section.type == 'group' -%}
+                {{- block('nowo_select_all_choice_group') -}}
+            {%- else -%}
+                {{- block('nowo_select_all_choice_ungrouped') -}}
+            {%- endif -%}
+        {%- endfor -%}
+    </div>
+{%- endblock nowo_select_all_choice_groups -%}
+
+{%- block nowo_select_all_choice_group -%}
+    {%- set group_label = choice_translation_domain is same as(false) ? section.label : section.label|trans({}, choice_translation_domain) -%}
+    <fieldset
+        {%- with {attr: section.attr} %}{{ block('attributes') }}{% endwith %} data-select-all-target="group" data-select-all-group-index="{{ section.index }}">
+        <legend
+            {%- with {attr: select_all_group_legend_attr} %}{{ block('attributes') }}{% endwith %}>{{ group_label }}</legend>
+        <div class="{{ select_all_group_toggle_wrapper_class }}">
+            <input type="checkbox" id="{{ section.toggle_id }}"
+                {%- with {attr: select_all_group_toggle_attr} %}{{ block('attributes') }}{% endwith %} data-select-all-target="groupToggle" aria-controls="{{ section.controls }}" aria-checked="{{ section.state == 'mixed' ? 'mixed' : (section.state == 'checked' ? 'true' : 'false') }}"
+                {%- if section.state == 'checked' %} checked="checked"{% endif %}
+                {%- if section.disabled %} disabled="disabled"{% endif %}>
+            <label for="{{ section.toggle_id }}" class="{{ select_all_group_toggle_label_class }}">{{ select_all_group_label|trans({'%group%': group_label}, select_all_translation_domain) }}</label>
+        </div>
+        <div
+            {%- with {attr: select_all_group_choices_attr} %}{{ block('attributes') }}{% endwith %} data-select-all-target="groupChoices">
+            {%- for name in section.children -%}
+                {%- set child = form[name] -%}
+                {{- block('nowo_select_all_choice_group_child') -}}
+            {%- endfor -%}
+        </div>
+    </fieldset>
+{%- endblock nowo_select_all_choice_group -%}
+
+{%- block nowo_select_all_choice_ungrouped -%}
+    <div
+        {%- with {attr: select_all_ungrouped_attr} %}{{ block('attributes') }}{% endwith %}>
+        {%- for name in section.children -%}
+            {%- set child = form[name] -%}
+            {{- block('nowo_select_all_choice_group_child') -}}
+        {%- endfor -%}
+    </div>
+{%- endblock nowo_select_all_choice_ungrouped -%}
+
+{%- block nowo_select_all_choice_group_child -%}
+    <div
+        {%- with {attr: select_all_group_choice_attr} %}{{ block('attributes') }}{% endwith %}>
+        {%- if select_all_embedded_label|default(false) -%}
+            {{- form_widget(child, {
+                parent_label_class: label_attr.class|default(''),
+                translation_domain: choice_translation_domain,
+                valid: valid,
+            }) -}}
+        {%- else -%}
+            {{- form_widget(child) -}}
+            {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+        {%- endif -%}
+    </div>
+{%- endblock nowo_select_all_choice_group_child -%}

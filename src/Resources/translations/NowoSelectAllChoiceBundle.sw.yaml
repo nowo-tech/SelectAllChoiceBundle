@@ -1,2 +1,3 @@
 form:
   select_all: 'Chagua zote'
+  select_all_in_group: 'Chagua zote katika %group%'

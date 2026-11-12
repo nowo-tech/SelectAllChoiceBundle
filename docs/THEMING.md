@@ -33,6 +33,7 @@ Copy the original from `vendor/nowo-tech/select-all-choice-bundle/src/Resources/
 | Path (relative to bundle `Resources/views/`) | Purpose |
 |---------------------------------------------|---------|
 | `Form/_select_all_choice_wrapper.html.twig` | Wrapper fragment included by all theme variants (toggle + choices container). Default host is `<nowo-select-all-choice>` with `data-controller="select-all"`. |
+| `Form/_select_all_choice_groups.html.twig` | Blocks of the per-group markup (`select_all_groups`): `nowo_select_all_choice_groups`, `nowo_select_all_choice_group`, `nowo_select_all_choice_ungrouped`, `nowo_select_all_choice_group_child`. Imported with `{% use %}` by every theme. |
 | `Form/select_all_choice_theme.html.twig` | Default form theme (form_div_layout). |
 | `Form/select_all_choice_theme_table.html.twig` | Table layout theme. |
 | `Form/select_all_choice_theme_bootstrap5.html.twig` | Bootstrap 5 theme. |
@@ -57,6 +58,8 @@ The bundle outputs configurable CSS classes for:
 | **Wrapper** | `default_wrapper_css_class` → `form-check` | Div wrapping toggle + label |
 | **Label** | `default_label_css_class` → `form-check-label` | The "Select all" label |
 | **Container** | `default_container_css_class` → `form-check mb-2` | Outer host (default: `<nowo-select-all-choice>`; toggle block + choices) |
+
+With `select_all_groups`, every group element also gets a fixed BEM hook class (`nowo-select-all-choice__group`, `__group-legend`, `__group-toggle-input`, `__group-choices`, `__choice`, …) plus the classes of the `select_all_group*_attr` options; see [USAGE.md — CSS hooks](USAGE.md#css-hooks-cards-in-3-columns).
 
 You can set them globally in `config/packages/nowo_select_all_choice.yaml` or per field with `select_all_css_class`, `select_all_wrapper_css_class`, `select_all_label_css_class`, `select_all_container_css_class`. See [CONFIGURATION.md](CONFIGURATION.md#theme--css-framework-presets) and [USAGE.md](USAGE.md#per-field-css-classes-bootstrap-tailwind-custom).
 

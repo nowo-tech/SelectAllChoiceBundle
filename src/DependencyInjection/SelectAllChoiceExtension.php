@@ -58,6 +58,7 @@ final class SelectAllChoiceExtension extends Extension implements PrependExtensi
         $config        = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('nowo_select_all_choice.default_label', $config['default_label']);
+        $container->setParameter('nowo_select_all_choice.default_group_label', $config['default_group_label']);
         $container->setParameter('nowo_select_all_choice.default_position', $config['default_position']);
         $container->setParameter('nowo_select_all_choice.default_toggle_css_class', $config['default_toggle_css_class']);
         $container->setParameter('nowo_select_all_choice.default_wrapper_css_class', $config['default_wrapper_css_class']);

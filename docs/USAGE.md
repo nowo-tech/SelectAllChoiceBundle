@@ -18,6 +18,13 @@ Enable the "Select all" toggle on a multiple choice field by setting `select_all
 - [Multi-select (collapsed)](#multi-select-collapsed)
 - [Per-field options](#per-field-options)
   - [Per-field CSS classes (Bootstrap, Tailwind, custom)](#per-field-css-classes-bootstrap-tailwind-custom)
+- [Per-group "Select all" (select_all_groups)](#per-group-select-all-select_all_groups)
+  - [Where the groups come from](#where-the-groups-come-from)
+  - [Group options](#group-options)
+  - [CSS hooks (cards in 3 columns)](#css-hooks-cards-in-3-columns)
+  - [Accessibility](#accessibility)
+  - [The boxes are never submitted](#the-boxes-are-never-submitted)
+  - [Dialogs and forms loaded via fetch](#dialogs-and-forms-loaded-via-fetch)
 - [Full FormType example](#full-formtype-example)
 - [Overriding templates and translations](#overriding-templates-and-translations)
   - [Overriding translations](#overriding-translations)
@@ -92,6 +99,15 @@ $builder->add('tags', ChoiceType::class, [
 | `select_all_label_css_class` | string | bundle config | CSS class for the toggle label. |
 | `select_all_container_css_class` | string | bundle config | CSS class for the outer wrapper (toggle + choices). |
 | `select_all_translation_domain` | string\|null | bundle config | Translation domain for the label. |
+| `select_all_groups` | bool | `false` | One "Select all in {group}" box per choice group (expanded only). See [Per-group "Select all"](#per-group-select-all-select_all_groups). |
+| `select_all_group_key` | string\|null | `null` | `choice_attr` key (`data-*`) that groups the choices outside a `group_by` / optgroup. |
+| `select_all_group_label` | string\|null | bundle config (`form.select_all_in_group`) | Translation key of the group box label; receives `%group%`. |
+| `select_all_groups_attr` | array | `[]` | Attributes of the element that holds every group (the grid). |
+| `select_all_group_attr` | array\|callable | `[]` | Attributes of each group `fieldset`; a callable receives `(string $group, int $index)`. |
+| `select_all_group_legend_attr` | array | `[]` | Attributes of each group `legend`. |
+| `select_all_group_toggle_attr` | array | `[]` | Attributes of each group box (checkbox). `name`, `form`, `value`, `type`, `id`, `checked`, `disabled`, `aria-controls`, `aria-checked` and `data-select-all-target` are ignored, in any letter case. |
+| `select_all_group_choices_attr` | array | `[]` | Attributes of the children list of each group (and of the ungrouped list). |
+| `select_all_group_choice_attr` | array | `[]` | Attributes of the element that wraps each child (checkbox + label). |
 
 ### Per-field CSS classes (Bootstrap, Tailwind, custom)
 
@@ -122,6 +138,150 @@ $builder->add('tags', ChoiceType::class, [
 'select_all_label_css_class'      => 'my-toggle-label',
 'select_all_container_css_class'  => 'my-select-all-block',
 ```
+
+## Per-group "Select all" (select_all_groups)
+
+*Since 1.7.0.* For an **expanded** multiple `ChoiceType` (checkboxes) whose choices are grouped, `select_all_groups: true`
+renders each group as a `fieldset` with a `legend` and its own "Select all in {group}" box. The global
+`select_all` box stays optional; when enabled it sits above the groups (default position `before`).
+
+```php
+$builder->add('notificationTargets', ChoiceType::class, [
+    'choices' => [
+        'notifications.group.incidents' => [
+            'notifications.target.new_issue'  => 'issue.new',
+            'notifications.target.regression' => 'issue.regression',
+        ],
+        'notifications.group.availability' => [
+            'notifications.target.monitor_down' => 'monitor.down',
+            'notifications.target.monitor_up'   => 'monitor.up',
+        ],
+        'notifications.group.tasks' => [
+            'notifications.target.task_failed' => 'task.failed',
+        ],
+    ],
+    'multiple'          => true,
+    'expanded'          => true,
+    'select_all'        => true,  // optional global box
+    'select_all_groups' => true,
+]);
+```
+
+Every box shows the right state, **checked**, **unchecked** or **indeterminate** (some children checked):
+
+- on load: the form theme renders the state from the children, and the controller corrects it on connect;
+- when a child changes, or a group / global box is clicked;
+- after a validation error: the re-rendered form carries the submitted children, so the boxes follow them;
+- after a form `reset`.
+
+**`change` events** (what form-level listeners see):
+
+- A click on a **group box** emits exactly **one** bubbling `change`, dispatched from the choices container
+  (`data-select-all-target="choices"`); the box's own native `change` is stopped, since the box is not a form value.
+- A click on the **global box** still emits **two** events, as in 1.6.x: its own native `change` (target: the global
+  box) plus the synthetic one from the choices container (or from the `<select>` when collapsed).
+- Children ticked or unticked by a group or global box fire **no `change` of their own** (as in 1.6.x): only the
+  container event above is emitted. Hosts that bind per child, for example Symfony UX LiveComponent `data-model` on
+  each checkbox, must listen on the container (or the form) instead.
+
+The global box and the group boxes always agree: ticking a group updates the global box, and the global box is
+indeterminate while any group is partial. Disabled children are never changed and do not count; a group whose
+children are all disabled gets a disabled box.
+
+`select_all_groups` is ignored for collapsed fields (`expanded: false`, a `<select>`): the global `select_all` keeps
+working there.
+
+### Where the groups come from
+
+1. **`group_by`** or **nested `choices`** (the groups Symfony renders as `<optgroup>` in a `<select>`). Nested groups
+   are merged into their top-level group (one box per top-level group).
+2. Optionally, for choices that are **not** in such a group, a **`data-*` key of `choice_attr`**:
+
+```php
+'choice_attr'          => fn (string $value): array => ['data-group' => $this->categoryOf($value)],
+'select_all_group_key' => 'data-group',
+```
+
+Choices with the same key value share a group (first-seen order). Choices without a group stay in an "ungrouped"
+list, in their original order. Group labels are translated with `choice_translation_domain`, like optgroup labels.
+
+### Group options
+
+See [Per-field options](#per-field-options) for the full table. The group box label is the translation key
+`form.select_all_in_group` ("Select all in %group%", shipped in all 60 catalogues) unless you set
+`select_all_group_label` or the bundle option `default_group_label`. It is translated in
+`select_all_translation_domain` with the translated group label as `%group%`.
+
+The group box reuses `select_all_css_class` (input), `select_all_wrapper_css_class` (box + label wrapper) and
+`select_all_label_css_class` (label), so Bootstrap / Tailwind presets apply to it too.
+
+### CSS hooks (cards in 3 columns)
+
+The bundle always outputs these classes (BEM, like UiKit's `nowo-ui-*` blocks), followed by the classes you pass:
+
+| Element | Hook class | Option for your classes |
+|---------|------------|-------------------------|
+| Element holding every group (gets the field `id` and `attr`) | `nowo-select-all-choice__groups` | `select_all_groups_attr` |
+| Group container (`fieldset`) | `nowo-select-all-choice__group` | `select_all_group_attr` |
+| Group title (`legend`) | `nowo-select-all-choice__group-legend` | `select_all_group_legend_attr` |
+| Group box wrapper | `nowo-select-all-choice__group-toggle` | `select_all_wrapper_css_class` |
+| Group box (checkbox) | `nowo-select-all-choice__group-toggle-input` | `select_all_group_toggle_attr`, `select_all_css_class` |
+| Group box label | `nowo-select-all-choice__group-toggle-label` | `select_all_label_css_class` |
+| Children list of a group | `nowo-select-all-choice__group-choices` | `select_all_group_choices_attr` |
+| Choices outside any group | `nowo-select-all-choice__ungrouped` | `select_all_group_choices_attr` |
+| One child (checkbox + label) | `nowo-select-all-choice__choice` | `select_all_group_choice_attr` |
+
+Cards in three columns with Tailwind:
+
+```php
+'select_all_container_css_class' => 'block',
+'select_all_groups_attr'         => ['class' => 'grid gap-4 md:grid-cols-3'],
+'select_all_group_attr'          => fn (string $group, int $index): array => [
+    'class'       => 'rounded-lg border p-4',
+    'data-testid' => 'notification-group-'.$index,
+],
+'select_all_group_legend_attr'   => ['class' => 'px-1 text-sm font-semibold'],
+'select_all_group_choices_attr'  => ['class' => 'mt-2 space-y-1'],
+'select_all_group_choice_attr'   => ['class' => 'flex items-center gap-2'],
+```
+
+Or in plain CSS, with the hooks only:
+
+```css
+.nowo-select-all-choice__groups { display: grid; gap: 1rem; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.nowo-select-all-choice__group { border: 1px solid #ddd; border-radius: .5rem; padding: 1rem; }
+@media (max-width: 48rem) { .nowo-select-all-choice__groups { grid-template-columns: 1fr; } }
+```
+
+### Accessibility
+
+- Each group is a `fieldset` whose `legend` names the group.
+- Each group box is a native checkbox (Space toggles it, Tab reaches it) with its own `<label>`
+  ("Select all in Incidents") and `aria-controls` listing the ids of its children.
+- The mixed state is exposed twice: the `indeterminate` property and `aria-checked="mixed"`. `aria-checked` is kept in
+  sync (`true` / `false` / `mixed`) on every change, on the group boxes and on the global box.
+
+### The boxes are never submitted
+
+The group boxes and the global box have **no `name` attribute** (a host cannot add one through
+`select_all_group_toggle_attr`), so the browser never sends them: the request data and the validation only ever see
+the children. The bundle tests render each form theme, tick every checkbox on the page as a browser would and check
+that the submitted data equals the children only.
+
+### Dialogs and forms loaded via fetch
+
+The behaviour is attached by the `<nowo-select-all-choice>` custom element and the `select-all` Stimulus controller.
+Both initialize the element when it is inserted (for example a UiKit dialog body loaded via `fetch`, or a form
+re-rendered after a 422) and **clean up when it is removed**: listeners are dropped, the global box created by the
+script is removed and the init marker is cleared, so the same markup can be inserted again. No state is shared between
+two fields or two dialogs. If you change children from script without a `change` event, call
+`window.NowoSelectAllChoice.refreshSelectAllContainer(element)` (or the exported function) to update the boxes.
+
+**Hand-written markup with the standalone script only.** If you render your own `<div data-controller="select-all">`
+host (not `<nowo-select-all-choice>`) and use the standalone `select-all-choice.js` without Stimulus, nothing is
+notified when that markup is removed. Before replacing it via AJAX, call
+`window.NowoSelectAllChoice.destroySelectAllContainer(element)`; otherwise its listeners, including the `reset`
+listener on the owning form, stay attached to the form that remains in the page.
 
 ## Full FormType example
 
@@ -187,7 +347,7 @@ After changing overrides, run `php bin/console cache:clear` if needed. A full li
 
 ## Behaviour
 
-- The toggle selects or deselects all options when clicked.
+- The toggle selects or deselects all options when clicked (with `select_all_groups`, a group box does the same for its group).
 - If the user selects or deselects options manually, the toggle state is updated (checked / unchecked / indeterminate).
 - A `change` event is dispatched with `bubbles: true` so other scripts (e.g. TomSelect, validators) can react.
 - For multi-select fields, the backend normalizes submitted data by dropping `null` entries before Symfony’s core `ChoiceType` processes it, preventing low-level warnings about non-scalar values in `array_flip()`; this is transparent for consumers.

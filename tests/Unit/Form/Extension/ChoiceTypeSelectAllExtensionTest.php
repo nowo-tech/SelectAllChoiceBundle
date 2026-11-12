@@ -56,6 +56,76 @@ final class ChoiceTypeSelectAllExtensionTest extends TestCase
         self::assertSame('form-check-label', $resolved['select_all_label_css_class']);
         self::assertSame('form-check mb-2', $resolved['select_all_container_css_class']);
         self::assertNull($resolved['select_all_translation_domain']);
+        self::assertFalse($resolved['select_all_groups']);
+        self::assertNull($resolved['select_all_group_key']);
+        self::assertNull($resolved['select_all_group_label']);
+        foreach (['groups', 'group', 'group_legend', 'group_toggle', 'group_choices', 'group_choice'] as $element) {
+            self::assertSame([], $resolved['select_all_' . $element . '_attr']);
+        }
+    }
+
+    public function testGroupKeyMustBeADataAttribute(): void
+    {
+        $resolver = new OptionsResolver();
+        $this->extension->configureOptions($resolver);
+
+        self::assertSame('data-group', $resolver->resolve(['select_all_group_key' => 'data-group'])['select_all_group_key']);
+
+        $this->expectException(InvalidOptionsException::class);
+        $resolver->resolve(['select_all_group_key' => 'onclick']);
+    }
+
+    public function testGroupsOnlyOnCollapsedChoicesSetNoWidgetVars(): void
+    {
+        $view = new FormView();
+        $this->extension->buildView($view, $this->createMock(FormInterface::class), [
+            'multiple'          => true,
+            'expanded'          => false,
+            'select_all'        => false,
+            'select_all_groups' => true,
+        ]);
+
+        self::assertFalse($view->vars['select_all_enabled']);
+        self::assertFalse($view->vars['select_all_groups_enabled']);
+        self::assertArrayNotHasKey('select_all_label', $view->vars);
+
+        $this->extension->finishView($view, $this->createMock(FormInterface::class), []);
+        self::assertArrayNotHasKey('select_all_group_sections', $view->vars);
+    }
+
+    public function testGroupsWithoutTheGlobalBoxSetTheGroupVars(): void
+    {
+        $extension = new ChoiceTypeSelectAllExtension(
+            'form.select_all',
+            'before',
+            'form-check-input',
+            'form-check',
+            'form-check-label',
+            'form-check mb-2',
+            'NowoSelectAllChoiceBundle',
+            false,
+            'custom.group_label',
+        );
+        $factory = Forms::createFormFactoryBuilder()->addTypeExtension($extension)->getFormFactory();
+        $form    = $factory->create(ChoiceType::class, null, [
+            'choices'                      => ['G' => ['A' => 'a']],
+            'multiple'                     => true,
+            'expanded'                     => true,
+            'select_all_groups'            => true,
+            'select_all_group_toggle_attr' => ['class' => 'x', 'aria-checked' => 'true', 'data-select-all-target' => 'toggle'],
+        ]);
+        $view = $form->createView();
+
+        self::assertFalse($view->vars['select_all_enabled']);
+        self::assertTrue($view->vars['select_all_groups_enabled']);
+        self::assertSame('custom.group_label', $view->vars['select_all_group_label']);
+        self::assertSame(['class' => 'nowo-select-all-choice__group-toggle-input form-check-input x'], $view->vars['select_all_group_toggle_attr']);
+        self::assertSame('nowo-select-all-choice__group-toggle form-check', $view->vars['select_all_group_toggle_wrapper_class']);
+        self::assertSame('nowo-select-all-choice__group-toggle-label form-check-label', $view->vars['select_all_group_toggle_label_class']);
+        self::assertSame(['class' => 'nowo-select-all-choice__groups'], $view->vars['select_all_groups_attr']);
+        self::assertSame(['class' => 'nowo-select-all-choice__ungrouped'], $view->vars['select_all_ungrouped_attr']);
+        self::assertCount(1, $view->vars['select_all_group_sections']);
+        self::assertSame('G', $view->vars['select_all_group_sections'][0]['label']);
     }
 
     public function testConfigureOptionsResolvesCustomOptions(): void

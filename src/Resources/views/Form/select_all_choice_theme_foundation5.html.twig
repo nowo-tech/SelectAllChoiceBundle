@@ -1,23 +1,32 @@
 {#
   Form theme for ChoiceType (Foundation 5 base). When select_all is true, wraps the widget
   and passes config via data attributes; Stimulus creates and manages the "Select all" toggle.
+  When select_all_groups is true (expanded), it renders one fieldset per group with its own box (see
+  _select_all_choice_groups.html.twig).
+  Symfony's Foundation layouts extend form_div_layout, so they cannot be imported with "use": this theme extends
+  the layout and calls parent() instead.
 #}
-{% use "foundation_5_layout.html.twig" with choice_widget_expanded as form_layout_choice_widget_expanded, choice_widget_collapsed as form_layout_choice_widget_collapsed %}
+{% extends 'foundation_5_layout.html.twig' %}
+{% use '@NowoSelectAllChoiceBundle/Form/_select_all_choice_groups.html.twig' %}
 
 {% block choice_widget_expanded %}
-    {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
-        {% set inner_content %}{{ block('form_layout_choice_widget_expanded') }}{% endset %}
-        {% include '@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: true, inner_content: inner_content } %}
+    {% if form.vars.select_all_groups_enabled is defined and form.vars.select_all_groups_enabled %}
+        {% set select_all_embedded_label = true %}
+        {% set inner_content %}{{ block('nowo_select_all_choice_groups') }}{% endset %}
+        {{ include('@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig', {form: form, expanded: true, inner_content: inner_content}) }}
+    {% elseif form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
+        {% set inner_content %}{{ parent() }}{% endset %}
+        {{ include('@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig', {form: form, expanded: true, inner_content: inner_content}) }}
     {% else %}
-        {{ block('form_layout_choice_widget_expanded') }}
+        {{ parent() }}
     {% endif %}
 {% endblock %}
 
 {% block choice_widget_collapsed %}
     {% if form.vars.select_all_enabled is defined and form.vars.select_all_enabled %}
-        {% set inner_content %}{{ block('form_layout_choice_widget_collapsed') }}{% endset %}
-        {% include '@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig' with { form: form, expanded: false, inner_content: inner_content } %}
+        {% set inner_content %}{{ parent() }}{% endset %}
+        {{ include('@NowoSelectAllChoiceBundle/Form/_select_all_choice_wrapper.html.twig', {form: form, expanded: false, inner_content: inner_content}) }}
     {% else %}
-        {{ block('form_layout_choice_widget_collapsed') }}
+        {{ parent() }}
     {% endif %}
 {% endblock %}

@@ -1,2 +1,3 @@
 form:
   select_all: 'Vali kõik'
+  select_all_in_group: 'Vali kõik: %group%'

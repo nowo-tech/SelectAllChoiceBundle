@@ -21,6 +21,7 @@ final class SelectAllChoiceExtensionTest extends TestCase
         $extension->load([[]], $container);
 
         self::assertSame('form.select_all', $container->getParameter('nowo_select_all_choice.default_label'));
+        self::assertSame('form.select_all_in_group', $container->getParameter('nowo_select_all_choice.default_group_label'));
         self::assertSame('before', $container->getParameter('nowo_select_all_choice.default_position'));
         self::assertSame('form-check-input', $container->getParameter('nowo_select_all_choice.default_toggle_css_class'));
         self::assertSame('form-check', $container->getParameter('nowo_select_all_choice.default_wrapper_css_class'));

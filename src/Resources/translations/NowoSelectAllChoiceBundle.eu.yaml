@@ -1,2 +1,3 @@
 form:
   select_all: 'Hautatu guztiak'
+  select_all_in_group: 'Hautatu guztiak: %group%'

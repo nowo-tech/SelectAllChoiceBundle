@@ -17,3 +17,4 @@ services:
       $defaultContainerCssClass: '%nowo_select_all_choice.default_container_css_class%'
       $translationDomain: '%nowo_select_all_choice.translation_domain%'
       $debug: '%nowo_select_all_choice.debug%'
+      $defaultGroupLabel: '%nowo_select_all_choice.default_group_label%'

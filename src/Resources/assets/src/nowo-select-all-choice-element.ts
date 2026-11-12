@@ -9,7 +9,7 @@
  * when the parser inserts markup).
  */
 
-import { initSelectAllContainer, TAG_NOWO_SELECT_ALL_CHOICE } from './select-all-choice-lib';
+import { destroySelectAllContainer, initSelectAllContainer, TAG_NOWO_SELECT_ALL_CHOICE } from './select-all-choice-lib';
 
 export class NowoSelectAllChoiceElement extends HTMLElement {
   constructor() {
@@ -23,6 +23,10 @@ export class NowoSelectAllChoiceElement extends HTMLElement {
 
   connectedCallback(): void {
     initSelectAllContainer(this);
+  }
+
+  disconnectedCallback(): void {
+    destroySelectAllContainer(this);
   }
 }
 
