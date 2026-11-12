@@ -138,6 +138,62 @@ final class SelectAllGroupsRenderingTest extends TestCase
         }
     }
 
+    /**
+     * Reserved attribute names are dropped whatever their case (HTML attribute names are case-insensitive): a mixed-case
+     * NAME / Form / Value / Checked / Disabled on the group box must neither submit it nor desync its state.
+     */
+    #[DataProvider('themes')]
+    public function testMixedCaseReservedToggleAttributesAreDroppedAndNothingExtraIsSubmitted(string $base): void
+    {
+        $options = ['select_all' => true, 'select_all_group_toggle_attr' => [
+            'NAME'                   => 'hijack',
+            'Form'                   => 'other-form',
+            'Value'                  => 'x',
+            'Type'                   => 'text',
+            'Id'                     => 'dup',
+            'CHECKED'                => 'checked',
+            'Disabled'               => 'disabled',
+            'Aria-Controls'          => 'nothing',
+            'ARIA-CHECKED'           => 'true',
+            'Data-Select-All-Target' => 'toggle',
+            'Class'                  => 'host-upper',
+        ]];
+        $xp = $this->xpath($this->render($this->notificationForm($options), $base));
+
+        $toggles = $this->elements($xp, '//input[@data-select-all-target="groupToggle"]');
+        self::assertCount(3, $toggles);
+        foreach ($toggles as $index => $toggle) {
+            foreach (['name', 'form', 'value', 'checked', 'disabled'] as $attribute) {
+                self::assertFalse($toggle->hasAttribute($attribute), $base . ': group box has no ' . $attribute);
+            }
+            self::assertSame('checkbox', $toggle->getAttribute('type'));
+            self::assertSame('form_targets_select_all_group_' . $index, $toggle->getAttribute('id'));
+            self::assertSame('false', $toggle->getAttribute('aria-checked'));
+            self::assertStringEndsWith(' host-upper', $toggle->getAttribute('class'));
+        }
+
+        $pairs = [];
+        foreach ($this->elements($xp, '//input[@type="checkbox"]') as $checkbox) {
+            if ($checkbox->hasAttribute('name')) {
+                $pairs[] = $checkbox->getAttribute('name') . '=' . $checkbox->getAttribute('value');
+            }
+        }
+        parse_str(implode('&', $pairs), $request);
+        self::assertIsArray($request['form'] ?? null);
+        self::assertSame(['targets'], array_keys($request['form']));
+
+        $submitted = $this->notificationForm($options);
+        $submitted->submit($request['form']);
+        self::assertTrue($submitted->isValid());
+        self::assertSame([], $submitted->getExtraData());
+        $data = $submitted->get('targets')->getData();
+        self::assertIsArray($data);
+        sort($data);
+        $expected = self::ALL_VALUES;
+        sort($expected);
+        self::assertSame($expected, $data);
+    }
+
     public function testCssHooksAndHostClassesAreRendered(): void
     {
         $form = $this->notificationForm([

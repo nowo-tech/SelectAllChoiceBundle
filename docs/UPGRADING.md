@@ -69,6 +69,14 @@ Nothing to change: every new option is opt-in and the markup of existing fields 
   Stimulus controller and the custom element now clean up on disconnect (listeners and the generated global box are
   removed, the `data-select-all-init` marker is cleared), so markup removed and re-inserted is initialized again.
   `window.NowoSelectAllChoice` gains `destroySelectAllContainer()` and `refreshSelectAllContainer()`.
+- **`change` events:** a group box click emits exactly one `change`, from the choices container (its own native event
+  is stopped). The global box is unchanged from 1.6.x: its native `change` plus the synthetic one from the container
+  (two events). Children set in bulk by either box fire no `change` of their own (as in 1.6.x); if you bind per child
+  (e.g. LiveComponent `data-model` on each checkbox), listen on the container or the form instead.
+- **Hand-written `data-controller="select-all"` markup with the standalone script and no Stimulus:** call
+  `window.NowoSelectAllChoice.destroySelectAllContainer(element)` before replacing that markup via AJAX, or its
+  listeners (including the form `reset` listener) stay attached. The `<nowo-select-all-choice>` element and the Stimulus
+  controller clean up by themselves.
 - **Fixed:** the Foundation 5 / Foundation 6 themes (`form_theme: foundation_5_layout.html.twig` /
   `foundation_6_layout.html.twig`) failed to compile ("cannot be used as a trait"); they now extend the Symfony layout.
 

@@ -105,7 +105,7 @@ $builder->add('tags', ChoiceType::class, [
 | `select_all_groups_attr` | array | `[]` | Attributes of the element that holds every group (the grid). |
 | `select_all_group_attr` | array\|callable | `[]` | Attributes of each group `fieldset`; a callable receives `(string $group, int $index)`. |
 | `select_all_group_legend_attr` | array | `[]` | Attributes of each group `legend`. |
-| `select_all_group_toggle_attr` | array | `[]` | Attributes of each group box (checkbox). `name`, `form`, `value`, `type`, `id`, `checked`, `disabled`, `aria-controls`, `aria-checked` and `data-select-all-target` are ignored. |
+| `select_all_group_toggle_attr` | array | `[]` | Attributes of each group box (checkbox). `name`, `form`, `value`, `type`, `id`, `checked`, `disabled`, `aria-controls`, `aria-checked` and `data-select-all-target` are ignored, in any letter case. |
 | `select_all_group_choices_attr` | array | `[]` | Attributes of the children list of each group (and of the ungrouped list). |
 | `select_all_group_choice_attr` | array | `[]` | Attributes of the element that wraps each child (checkbox + label). |
 
@@ -174,8 +174,15 @@ Every box shows the right state, **checked**, **unchecked** or **indeterminate**
 - after a validation error: the re-rendered form carries the submitted children, so the boxes follow them;
 - after a form `reset`.
 
-A click on a group box emits a single bubbling `change` event from the choices container (the box's own event is
-stopped, since the box is not a form value).
+**`change` events** (what form-level listeners see):
+
+- A click on a **group box** emits exactly **one** bubbling `change`, dispatched from the choices container
+  (`data-select-all-target="choices"`); the box's own native `change` is stopped, since the box is not a form value.
+- A click on the **global box** still emits **two** events, as in 1.6.x: its own native `change` (target: the global
+  box) plus the synthetic one from the choices container (or from the `<select>` when collapsed).
+- Children ticked or unticked by a group or global box fire **no `change` of their own** (as in 1.6.x): only the
+  container event above is emitted. Hosts that bind per child, for example Symfony UX LiveComponent `data-model` on
+  each checkbox, must listen on the container (or the form) instead.
 
 The global box and the group boxes always agree: ticking a group updates the global box, and the global box is
 indeterminate while any group is partial. Disabled children are never changed and do not count; a group whose
@@ -269,6 +276,12 @@ re-rendered after a 422) and **clean up when it is removed**: listeners are drop
 script is removed and the init marker is cleared, so the same markup can be inserted again. No state is shared between
 two fields or two dialogs. If you change children from script without a `change` event, call
 `window.NowoSelectAllChoice.refreshSelectAllContainer(element)` (or the exported function) to update the boxes.
+
+**Hand-written markup with the standalone script only.** If you render your own `<div data-controller="select-all">`
+host (not `<nowo-select-all-choice>`) and use the standalone `select-all-choice.js` without Stimulus, nothing is
+notified when that markup is removed. Before replacing it via AJAX, call
+`window.NowoSelectAllChoice.destroySelectAllContainer(element)`; otherwise its listeners, including the `reset`
+listener on the owning form, stay attached to the form that remains in the page.
 
 ## Full FormType example
 

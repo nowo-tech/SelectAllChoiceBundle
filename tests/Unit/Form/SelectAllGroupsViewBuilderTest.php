@@ -117,6 +117,14 @@ final class SelectAllGroupsViewBuilderTest extends TestCase
             SelectAllGroupsViewBuilder::mergeAttr(['hook-a', 'hook-b'], ['class' => 'host', 'name' => 'n', 'data-x' => '1'], ['name']),
         );
         self::assertSame(['class' => 'hook'], SelectAllGroupsViewBuilder::mergeAttr(['hook'], ['class' => ['array']]));
+        self::assertSame(
+            ['class' => 'hook upper', 'data-ok' => '1'],
+            SelectAllGroupsViewBuilder::mergeAttr(
+                ['hook'],
+                ['NAME' => 'x', 'Form' => 'other', 'Value' => 'v', 'CHECKED' => 'checked', 'CLASS' => 'upper', 'data-ok' => '1'],
+                SelectAllGroupsViewBuilder::RESERVED_TOGGLE_ATTRIBUTES,
+            ),
+        );
     }
 
     /**

@@ -15,6 +15,7 @@ use function in_array;
 use function is_array;
 use function is_callable;
 use function is_scalar;
+use function strtolower;
 use function trim;
 
 /**
@@ -137,7 +138,7 @@ final class SelectAllGroupsViewBuilder
     }
 
     /**
-     * Merges hook classes in front of the host's `class` attribute and drops the reserved keys.
+     * Merges hook classes in front of the host's `class` attribute and drops the reserved keys (case-insensitive).
      *
      * @param list<string> $hookClasses Classes the bundle always outputs (CSS hooks)
      * @param array<mixed> $attr Host attributes
@@ -147,16 +148,22 @@ final class SelectAllGroupsViewBuilder
      */
     public static function mergeAttr(array $hookClasses, array $attr, array $reserved = []): array
     {
-        $merged = [];
+        // HTML attribute names are case-insensitive: compare lower-cased, so NAME / Form / Checked are dropped too.
+        $merged    = [];
+        $hostClass = '';
         foreach ($attr as $name => $value) {
-            $name = (string) $name;
-            if ($name === 'class' || in_array($name, $reserved, true)) {
+            $name  = (string) $name;
+            $lower = strtolower($name);
+            if ($lower === 'class') {
+                $hostClass = trim($hostClass . ' ' . (is_scalar($value) ? (string) $value : ''));
+
+                continue;
+            }
+            if (in_array($lower, $reserved, true)) {
                 continue;
             }
             $merged[$name] = $value;
         }
-
-        $hostClass = isset($attr['class']) && is_scalar($attr['class']) ? (string) $attr['class'] : '';
 
         return ['class' => trim(implode(' ', $hookClasses) . ' ' . $hostClass)] + $merged;
     }

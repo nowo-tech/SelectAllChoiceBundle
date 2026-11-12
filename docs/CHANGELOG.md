@@ -58,9 +58,10 @@ exactly as in 1.6.x. See [UPGRADING](UPGRADING.md#to-170).
 - **Accessibility:** the legend names the group; each group box has its own label, `aria-controls` listing its
   children and `aria-checked` kept in sync with `indeterminate` (`mixed`). The global box now also sets
   `aria-checked` and `aria-controls`.
-- **Never submitted:** the group and global boxes have no `name` (a host cannot add one), so they never reach the
-  request data or validation; a test submits every rendered checkbox of each form theme and checks the data equals the
-  children only.
+- **Never submitted:** the group and global boxes have no `name` (a host cannot add one; reserved attribute names such
+  as `name`, `form`, `value`, `checked`, `disabled` are dropped from `select_all_group_toggle_attr` in any letter case),
+  so they never reach the request data or validation; a test submits every rendered checkbox of each form theme
+  (also with mixed-case reserved attributes) and checks the data equals the children only.
 - **CSS hooks:** BEM classes `nowo-select-all-choice__groups`, `__group`, `__group-legend`, `__group-toggle`,
   `__group-toggle-input`, `__group-toggle-label`, `__group-choices`, `__ungrouped`, `__choice`, plus the options
   `select_all_groups_attr`, `select_all_group_attr` (array or callable), `select_all_group_legend_attr`,
@@ -68,7 +69,9 @@ exactly as in 1.6.x. See [UPGRADING](UPGRADING.md#to-170).
   three columns).
 - Bundle option `default_group_label` (default `form.select_all_in_group`) and field option `select_all_group_label`;
   the key is translated in all 60 catalogues.
-- JS: `destroySelectAllContainer()` and `refreshSelectAllContainer()` (also on `window.NowoSelectAllChoice`).
+- JS: `destroySelectAllContainer()` and `refreshSelectAllContainer()` (also on `window.NowoSelectAllChoice`). Call
+  `destroySelectAllContainer()` before replacing hand-written `data-controller="select-all"` markup that runs on the
+  standalone script without Stimulus.
 
 ### Changed
 
