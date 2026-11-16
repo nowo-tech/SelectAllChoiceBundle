@@ -2,7 +2,7 @@
 
 **Baseline spec**: [`spec.md`](spec.md)  
 **Package**: `nowo-tech/select-all-choice-bundle`  
-**Last audited**: 2026-09-25 (FrankenPHP worker / `FRANKENPHP_RESET_KERNEL` unset — FR-RUNTIME-001)
+**Last audited**: 2026-11-16 (1.7.0 per-group "Select all"; FrankenPHP worker / `FRANKENPHP_RESET_KERNEL` unset — FR-RUNTIME-001)
 
 This file proves that **every production source artifact** under `src/` is referenced by the baseline specification. PHPUnit under `tests/` is out of scope unless promoted in the spec.
 
@@ -16,6 +16,7 @@ This file proves that **every production source artifact** under `src/` is refer
 | `DependencyInjection/Compiler/TwigPathsPass.php` | Twig namespace paths | FR-DI-002, FR-TWIG-001 |
 | `Form/Extension/ChoiceTypeSelectAllExtension.php` | ChoiceType extension | FR-FORM-001, FR-RUNTIME-001 |
 | `Twig/NowoSelectAllChoiceTwigExtension.php` | Asset path helper | FR-TWIG-EXT-001, FR-RUNTIME-001 |
+| `Form/SelectAllGroupsViewBuilder.php` | Per-group sections (1.7.0) | FR-FORM-002, FR-RUNTIME-001 |
 
 ## Symfony config (`src/Resources/config/`)
 
@@ -39,6 +40,7 @@ This file proves that **every production source artifact** under `src/` is refer
 | `Resources/views/Form/select_all_choice_theme_foundation5.html.twig` | Foundation 5 | FR-TWIG-THEME-003 |
 | `Resources/views/Form/select_all_choice_theme_foundation6.html.twig` | Foundation 6 | FR-TWIG-THEME-003 |
 | `Resources/views/Form/select_all_choice_theme_tailwind2.html.twig` | Tailwind 2 | FR-TWIG-THEME-003 |
+| `Resources/views/Form/_select_all_choice_groups.html.twig` | Per-group fieldsets (1.7.0) | FR-FORM-002, FR-TWIG-THEME-004 |
 
 ## TypeScript production (`src/Resources/assets/`)
 
@@ -58,6 +60,7 @@ This file proves that **every production source artifact** under `src/` is refer
 | `Resources/assets/src/nowo-select-all-choice-element.test.ts` | Vitest: custom element | FR-TEST-001 |
 | `Resources/assets/src/select-all-choice-lib.test.ts` | Vitest: core lib | FR-TEST-001 |
 | `Resources/assets/controllers/select_all_controller.test.ts` | Vitest: Stimulus | FR-TEST-001 |
+| `Resources/assets/src/select-all-groups.test.ts` | Per-group box tests (1.7.0) | FR-TEST-001, FR-ASSET-LIB-002 |
 
 ## Legacy compiled JS (`src/Resources/public/`)
 
@@ -134,11 +137,11 @@ This file proves that **every production source artifact** under `src/` is refer
 
 | Category | Files | Mapped |
 | --- | ---: | ---: |
-| PHP classes | 6 | 6 |
+| PHP classes | 7 | 7 |
 | YAML config | 1 | 1 |
-| Form themes (Twig) | 12 | 12 |
+| Form themes (Twig) | 13 | 13 |
 | TS production | 5 | 5 |
-| TS co-located tests | 4 | 4 |
+| TS co-located tests | 5 | 5 |
 | Legacy JS | 1 | 1 |
 | Translations | 60 | 60 |
-| **Total `src/` artifacts** | **89** | **89** |
+| **Total `src/` artifacts** | **92** | **92** |

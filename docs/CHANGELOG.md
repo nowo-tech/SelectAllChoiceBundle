@@ -43,6 +43,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Documentation
+
+- Spec Kit baseline maps all 92 tracked `src/` files (1.7.0 per-group files); `spec.md` gains User Story 5, FR-FORM-002, FR-TWIG-THEME-004 and FR-ASSET-LIB-002 (REQ-SPECKIT-001/003).
+- README Tests and coverage: Python N/A (REQ-TEST-007).
+
+### Changed (tooling)
+
+- Demo `release-verify` follows redirects and requires HTTP 200 (REQ-TEST-011).
+- `.github/CODEOWNERS`: duplicated block removed.
+
 ### Tests
 
 - CI: the coverage run is now `composer test-coverage-100` (new script, `.scripts/check-coverage.php`), so a pull request that drops statement or element coverage below **100%** fails the build; before, nothing in CI checked a threshold. The suite is already at 100%.
