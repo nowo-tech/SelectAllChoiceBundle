@@ -41,6 +41,10 @@ See user stories US-01…US-05 in [`docs/SPEC-DRIVEN-DEVELOPMENT.md`](../../docs
 
 ---
 
+### User Story 5 — Select all per group (Priority: P2)
+
+A form with grouped choices (e.g. permissions by module) shows one "Select all in {group}" box per group so a user can tick a whole group at once; the global box, when enabled, stays above the groups and reflects their state.
+
 ## Requirements
 
 ### Bundle & configuration
@@ -54,12 +58,15 @@ See user stories US-01…US-05 in [`docs/SPEC-DRIVEN-DEVELOPMENT.md`](../../docs
 
 - **FR-FORM-001**: `ChoiceTypeSelectAllExtension` MUST add options `select_all`, `select_all_label`, `select_all_position`, CSS classes; filter nulls on `PRE_SUBMIT`; expose Twig vars only when enabled.
 
+- **FR-FORM-002**: Opt-in `select_all_groups` (expanded multiple `ChoiceType`, 1.7.0): `SelectAllGroupsViewBuilder` builds one section per choice group (`group_by`, nested `choices`, or a `choice_attr` `data-*` key via `select_all_group_key`) with its own unnamed "Select all in {group}" box rendered in the correct checked / unchecked / indeterminate state; group and global boxes never carry a `name` (reserved attributes dropped), so they never reach submitted data.
+
 ### Twig
 
 - **FR-TWIG-001**: Namespace `NowoSelectAllChoiceBundle` MUST allow app overrides.
 - **FR-TWIG-EXT-001**: `nowo_select_all_choice_asset_path()` MUST resolve public bundle assets safely (no path traversal).
 - **FR-TWIG-THEME-001**: Default + table themes MUST wrap choices in `<nowo-select-all-choice>` with Stimulus `select-all` controller.
 - **FR-TWIG-THEME-002 / FR-TWIG-THEME-003**: Bootstrap and Foundation/Tailwind themes MUST extend the correct Symfony parent layouts.
+- **FR-TWIG-THEME-004**: `_select_all_choice_groups.html.twig` renders each group as `fieldset` + `legend` with BEM hooks (`nowo-select-all-choice__group*`) and accessible group boxes (`aria-controls`, `aria-checked="mixed"` when partial).
 
 ### Runtime (FrankenPHP)
 
@@ -69,6 +76,7 @@ See user stories US-01…US-05 in [`docs/SPEC-DRIVEN-DEVELOPMENT.md`](../../docs
 ### Frontend assets
 
 - **FR-ASSET-LIB-001**: Core library MUST create toggle, sync all/none, handle indeterminate, observe DOM mutations.
+- **FR-ASSET-LIB-002**: The library keeps every group box and the global box consistent (indeterminate while any group is partial), resyncs on form `reset`, emits one `change` per group click and exposes `destroySelectAllContainer()` / `refreshSelectAllContainer()`.
 - **FR-ASSET-WC-001**: Custom element MUST delegate to library on `connectedCallback`.
 - **FR-ASSET-STIMULUS-001**: Stimulus controller MUST register element and init container on connect.
 - **FR-ASSET-ENTRY-001**: Standalone entry MUST define element and expose `window.NowoSelectAllChoice`.
@@ -81,7 +89,7 @@ See user stories US-01…US-05 in [`docs/SPEC-DRIVEN-DEVELOPMENT.md`](../../docs
 
 ## Success Criteria
 
-- **SC-001**: **89/89** files mapped in [`code-inventory.md`](code-inventory.md).
+- **SC-001**: **92/92** files mapped in [`code-inventory.md`](code-inventory.md).
 - **SC-002**: Config keys match [`docs/CONFIGURATION.md`](../../docs/CONFIGURATION.md).
 - **SC-003**: PHPUnit + Vitest + PHPStan pass in CI.
 - **SC-004**: Partial/indeterminate selection behaviour covered by tests.
