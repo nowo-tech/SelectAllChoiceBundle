@@ -1,26 +1,24 @@
-{#- REQ-DEMO-014: the demo shell is UiKit's admin layout with UiKit's default theme (nowo-ui.css from the bundle's own
-    asset package, no CSS framework, no CDN). The scripts are the bundle's own select-all runtime. -#}
-{% extends '@NowoUiKit/layout/admin.html.twig' %}
-
+{#- REQ-DEMO-014: the demo runs inside UiKit's shared demo platform shell. This file only declares the demo. The scripts are
+    the bundle's own select-all runtime. -#}
+{% extends '@NowoUiKit/demo_platform/layout.html.twig' %}
+{% set _locale = app.request.locale|default('en') %}
+{% set nowo_ui_demo_platform = {
+    bundle: 'Select All Choice',
+    home_route: 'demo_index',
+    home_params: {_locale: _locale},
+    repository: 'https://github.com/nowo-tech/SelectAllChoiceBundle',
+    translation_domain: 'messages',
+    locales: ['en', 'es'],
+    nav: [
+        {label: 'demo.heading', route: 'demo_index', params: {_locale: _locale}, section: 'demo.brand'},
+    ],
+} %}
 {% block nowo_ui_document_title %}{% block title %}{{ 'demo.title'|trans }}{% endblock %}{% endblock %}
 
 {% block nowo_ui_styles %}
     {{ parent() }}
     {% block styles %}{% endblock %}
 {% endblock %}
-
-{% block nowo_ui_navigation %}
-    <header class="nowo-ui-header" data-testid="demo-masthead">
-        <a class="nowo-ui-brand" href="{{ path('demo_index', { _locale: app.request.locale }) }}">{{ 'demo.brand'|trans }}</a>
-        <nav class="nowo-ui-menu" aria-label="{{ 'demo.language'|trans }}">
-            {% for loc in ['en', 'es'] %}
-                <a class="nowo-ui-link" href="{{ path('demo_index', { _locale: loc }) }}"{% if app.request.locale == loc %} aria-current="page"{% endif %}>{{ loc|upper }}</a>
-            {% endfor %}
-        </nav>
-    </header>
-{% endblock %}
-
-{% block nowo_ui_content %}{% block body %}{% endblock %}{% endblock %}
 
 {% block nowo_ui_scripts %}
     {{ parent() }}
