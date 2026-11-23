@@ -32,6 +32,7 @@ Enable the "Select all" toggle on a multiple choice field by setting `select_all
 - [Behaviour](#behaviour)
 - [Using it from a DDD / hexagonal application](#using-it-from-a-ddd--hexagonal-application)
 - [Debug (frontend)](#debug-frontend)
+- [Browser console](#browser-console)
 
 ## Including the frontend script
 
@@ -390,3 +391,7 @@ The bundle’s Stimulus controller uses a shared logger. By default only a singl
 ```
 
 Use this only in development; leave it unset or remove it in production to avoid noisy console output.
+
+## Browser console
+
+The bundle's script logs one line when it loads (`📦 [select-all-choice] script loaded, build: 2026-11-23 14:05 UTC`) so a developer can tell which build a page runs. To silence it, set `<html data-nowo-console="quiet">` or `globalThis.NOWO_CONSOLE = 'quiet'` before the script loads; nothing is printed then. The default is unchanged.
