@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.8.0] - 2026-11-23](#180---2026-11-23)
 - [[1.7.0] - 2026-11-12](#170---2026-11-12)
 - [[1.6.3] - 2026-10-25](#163---2026-10-25)
 - [[1.6.2] - 2026-10-25](#162---2026-10-25)
@@ -43,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.0] - 2026-11-23
+
 ### Documentation
 
 - Spec Kit baseline maps all 92 tracked `src/` files (1.7.0 per-group files); `spec.md` gains User Story 5, FR-FORM-002, FR-TWIG-THEME-004 and FR-ASSET-LIB-002 (REQ-SPECKIT-001/003).
@@ -70,6 +73,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Console**: quiet switch for the script-loaded line: `<html data-nowo-console="quiet">` or `globalThis.NOWO_CONSOLE = 'quiet'` prints nothing. The default is unchanged.
+
+[1.8.0]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.8.0
 
 ## [1.7.0] - 2026-11-12
 
@@ -537,7 +542,7 @@ Dependency refresh, wave-1 docs, PHPStan CI job, release-check gates, translatio
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.8.0...HEAD
 [1.5.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.5.4...v1.5.5
 [1.4.11]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.11
 [1.4.10]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.10

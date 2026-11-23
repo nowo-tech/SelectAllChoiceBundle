@@ -5,6 +5,7 @@ This document describes upgrade steps between major or notable versions of Selec
 ## Table of contents
 
 - [Unreleased](#unreleased)
+- [To 1.8.0](#to-180)
 - [To 1.7.0](#to-170)
   - [To 1.7.0](#to-170-1)
 - [To 1.6.3](#to-163)
@@ -45,6 +46,14 @@ This document describes upgrade steps between major or notable versions of Selec
 - [General](#general)
 
 ## Unreleased
+
+## To 1.8.0
+
+From **1.7.0**:
+
+```bash
+composer update nowo-tech/select-all-choice-bundle
+```
 
 ## To 1.7.0
 
