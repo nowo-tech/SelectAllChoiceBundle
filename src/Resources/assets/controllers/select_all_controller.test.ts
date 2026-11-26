@@ -11,6 +11,11 @@ import {
 import { createBundleLogger } from '../src/logger';
 import SelectAllController from './select_all_controller';
 
+// REQ-ASSETS-005: every test starts with an empty once-guard registry.
+beforeEach(() => {
+  delete (globalThis as { __nowoScriptBannerNames?: unknown }).__nowoScriptBannerNames;
+});
+
 describe('select_all_controller', () => {
   let application: Application;
 

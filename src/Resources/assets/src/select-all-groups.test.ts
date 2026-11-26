@@ -12,6 +12,11 @@ import {
 } from './select-all-choice-lib';
 import SelectAllController from '../controllers/select_all_controller';
 
+// REQ-ASSETS-005: every test starts with an empty once-guard registry.
+beforeEach(() => {
+  delete (globalThis as { __nowoScriptBannerNames?: unknown }).__nowoScriptBannerNames;
+});
+
 type Child = { value: string; checked?: boolean; disabled?: boolean };
 type Group = { label: string; children: Child[]; serverState?: 'true' | 'false' | 'mixed' };
 
