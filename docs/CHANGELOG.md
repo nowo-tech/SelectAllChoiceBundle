@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Table of contents
 
 - [[Unreleased]](#unreleased)
+- [[1.8.1] - 2026-11-26](#181---2026-11-26)
 - [[1.8.0] - 2026-11-23](#180---2026-11-23)
 - [[1.7.0] - 2026-11-12](#170---2026-11-12)
 - [[1.6.3] - 2026-10-25](#163---2026-10-25)
@@ -44,9 +45,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.8.1] - 2026-11-26
+
 ### Fixed
 
 - The `📦 [name] script loaded` console banner now prints once per page, even when the script is loaded twice: per-name once-guard (a `Set` on `globalThis`) in `logger.ts`, with a Vitest test and rebuilt assets (REQ-ASSETS-005).
+
+[1.8.1]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.8.1
 
 ## [1.8.0] - 2026-11-23
 
@@ -546,7 +551,7 @@ Dependency refresh, wave-1 docs, PHPStan CI job, release-check gates, translatio
 - [THEMING.md](THEMING.md): how to override the form theme (custom HTML) and use Bootstrap/Tailwind/custom classes.
 - Demos (Symfony 7 and 8): locale in the URL (`/en`, `/es`), navbar language dropdown, visible EN|ES switch, Web Profiler (dev), and a "Categories" field with Tailwind-style classes; documentation for language switching and styles in demo READMEs.
 
-[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.8.1...HEAD
 [1.5.5]: https://github.com/nowo-tech/SelectAllChoiceBundle/compare/v1.5.4...v1.5.5
 [1.4.11]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.11
 [1.4.10]: https://github.com/nowo-tech/SelectAllChoiceBundle/releases/tag/v1.4.10
