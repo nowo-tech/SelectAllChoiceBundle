@@ -13,6 +13,11 @@ import {
 import { ensureNowoSelectAllChoiceDefined } from './nowo-select-all-choice-element';
 import { createBundleLogger } from './logger';
 
+// REQ-ASSETS-005: every test starts with an empty once-guard registry.
+beforeEach(() => {
+  delete (globalThis as { __nowoScriptBannerNames?: unknown }).__nowoScriptBannerNames;
+});
+
 describe('select-all-choice-lib', () => {
   beforeEach(() => {
     vi.spyOn(console, 'debug').mockImplementation(() => {});
